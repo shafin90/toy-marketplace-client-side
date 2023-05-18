@@ -8,18 +8,19 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css'
-import Layout from './components/Layout/Layout';
-import Home from './components/Home/Home';
+import Layout from './component/Layout/Layout';
+import Home from './component/Home/Home';
+// import Provider from './component/Provider/Provider';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout></Layout>,
-    children:[
+    children: [
       {
-        path:"/",
-        element:<Home></Home>
+        path: "/",
+        element: <Home></Home>
       }
     ]
   }
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    
+      <RouterProvider router={router} />
+    
   </React.StrictMode>
 );

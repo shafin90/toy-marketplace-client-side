@@ -1,17 +1,14 @@
 footer{
-
-    width: 100%;
-    
-}
-
-footer img{
     position: relative;
-    right: 22px;
+    bottom: 0px;
+    width: 100%;
 }
 
-footer h5{
+footer  h5{
     font-size: 15px;
 }
+
 footer p{
     font-size: 12px;
 }
+

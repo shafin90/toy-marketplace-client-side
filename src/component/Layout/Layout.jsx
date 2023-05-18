@@ -1,15 +1,18 @@
-import { Container } from "react-bootstrap";
+import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { Outlet } from "react-router-dom";
+
 
 const Layout = () => {
     return (
-        <Container fluid className="px-0">
+        <div>
             <Header></Header>
             <Outlet></Outlet>
             <Footer></Footer>
-        </Container>
+
+
+            
+        </div>
     );
 };
 
