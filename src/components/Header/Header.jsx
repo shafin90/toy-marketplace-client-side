@@ -3,7 +3,7 @@ import logo from '../../../public/image/car_logo_PNG1646-1024x544.png'
 
 const Header = () =>  {
     return (
-      <Navbar  expand="lg" variant="light" sticky="top">
+      <Navbar className='bg-light' expand="lg" variant="light" sticky="top">
         <Container className='mt-3'>
           <Navbar.Brand className='h6 mb-0 py-0' href="/">
             <img
