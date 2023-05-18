@@ -1,0 +1,376 @@
+[
+    {
+        "picture": "https://example.com/toy_car1.jpg",
+        "name": "Sports Car Deluxe",
+        "seller_name": "Toyland Toys",
+        "seller_email": "info@toylandtoys.com",
+        "prices": {
+            "original": 29.99,
+            "discounted": 24.99
+        },
+        "ratings": 4.5,
+        "available_quantity": 10,
+        "detail_description": "The Sports Car Deluxe is a high-speed toy car with sleek design and realistic features. It comes with working headlights and a remote control for easy maneuvering. Perfect for racing enthusiasts!",
+        "sub_category": "Sports Car"
+    },
+    {
+        "picture": "https://example.com/toy_car2.jpg",
+        "name": "Monster Truck Madness",
+        "seller_name": "FunTime Toys",
+        "seller_email": "sales@funtimetoys.com",
+        "prices": {
+            "original": 39.99,
+            "discounted": 34.99
+        },
+        "ratings": 4.2,
+        "available_quantity": 5,
+        "detail_description": "The Monster Truck Madness toy car is perfect for off-road adventures. It features large wheels, suspension system, and a durable body. Get ready to crush obstacles and conquer the toughest terrains!",
+        "sub_category": "Truck"
+    },
+    {
+        "picture": "https://example.com/toy_car3.jpg",
+        "name": "City Cruiser",
+        "seller_name": "Kidz World",
+        "seller_email": "info@kidzworldtoys.com",
+        "prices": {
+          "original": 19.99,
+          "discounted": 16.99
+        },
+        "ratings": 4.7,
+        "available_quantity": 20,
+        "detail_description": "The City Cruiser toy car is a classic design that's perfect for everyday play. It's compact, easy to handle, and features realistic details. Let your imagination drive you to exciting adventures!",
+        "sub_category": "Regular Car"
+      }
+,
+{
+    "picture": "https://example.com/toy_car4.jpg",
+    "name": "Mini Fire Truck Hero",
+    "seller_name": "Toy Galaxy",
+    "seller_email": "sales@toygala.com",
+    "prices": {
+      "original": 14.99,
+      "discounted": 12.99
+    },
+    "ratings": 4.9,
+    "available_quantity": 8,
+    "detail_description": "The Mini Fire Truck Hero is a small but mighty toy fire truck. It comes with a working siren, extendable ladder, and realistic fire department details. Be the hero and save the day!",
+    "sub_category": "Mini Fire Truck"
+  }
+,
+{
+    "picture": "https://example.com/toy_car5.jpg",
+    "name": "Police Pursuit",
+    "seller_name": "Toytopia",
+    "seller_email": "sales@toytopia.com",
+    "prices": {
+      "original": 22.99,
+      "discounted": 19.99
+    },
+    "ratings": 4.4,
+    "available_quantity": 15,
+    "detail_description": "The Police Pursuit toy car is a law enforcement vehicle with realistic sirens and flashing lights. It's perfect for little ones who love playing cops and robbers!",
+    "sub_category": "Mini Police Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car6.jpg",
+    "name": "Off-Road Explorer",
+    "seller_name": "Adventure Toys",
+    "seller_email": "info@adventuretoys.com",
+    "prices": {
+      "original": 32.99,
+      "discounted": 28.99
+    },
+    "ratings": 4.6,
+    "available_quantity": 7,
+    "detail_description": "The Off-Road Explorer is a rugged toy car built for extreme terrains. It features oversized wheels, suspension system, and a removable top for open-air adventures!",
+    "sub_category": "Truck"
+  }
+,
+{
+    "picture": "https://example.com/toy_car7.jpg",
+    "name": "Speedster",
+    "seller_name": "Speedy Toys",
+    "seller_email": "sales@speedytoys.com",
+    "prices": {
+      "original": 27.99,
+      "discounted": 23.99
+    },
+    "ratings": 4.3,
+    "available_quantity": 12,
+    "detail_description": "The Speedster toy car is built for speed! Its aerodynamic design and powerful motor allow it to zoom past the competition. Get ready for thrilling races!",
+    "sub_category": "Sports Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car8.jpg",
+    "name": "Family Van",
+    "seller_name": "Playtime Paradise",
+    "seller_email": "info@playtimeparadise.com",
+    "prices": {
+      "original": 18.99,
+      "discounted": 15.99
+    },
+    "ratings": 4.8,
+    "available_quantity": 9,
+    "detail_description": "The Family Van toy car is perfect for imaginative play. It features seating for multiple toy figures and a sliding side door. Take your toy family on exciting road trips!",
+    "sub_category": "Regular Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car9.jpg",
+    "name": "Rescue Ranger",
+    "seller_name": "Rescue Toys Inc.",
+    "seller_email": "sales@rescuetoysinc.com",
+    "prices": {
+      "original": 26.99,
+      "discounted": 21.99
+    },
+    "ratings": 4.5,
+    "available_quantity": 11,
+    "detail_description": "The Rescue Ranger toy car is a versatile emergency vehicle equipped with a siren, flashing lights, and rescue accessories. Save the day and be a hero!",
+    "sub_category": "Mini Fire Truck"
+  }
+,
+{
+    "picture": "https://example.com/toy_car10.jpg",
+    "name": "Race Day Champion",
+    "seller_name": "Raceway Toys",
+    "seller_email": "info@racewaytoys.com",
+    "prices": {
+      "original": 34.99,
+      "discounted": 29.99
+    },
+    "ratings": 4.7,
+    "available_quantity": 6,
+    "detail_description": "The Race Day Champion toy car is designed for ultimate speed and performance. Its streamlined body and advanced features make it a winner on the race track!",
+    "sub_category": "Sports Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car11.jpg",
+    "name": "Dump Truck Hero",
+    "seller_name": "Mighty Toys",
+    "seller_email": "sales@mightytoys.com",
+    "prices": {
+      "original": 21.99,
+      "discounted": 17.99
+    },
+    "ratings": 4.4,
+    "available_quantity": 18,
+    "detail_description": "The Dump Truck Hero is a heavy-duty toy truck that can handle any construction job. It features a tilting dump bed and realistic construction sounds!",
+    "sub_category": "Truck"
+  }
+,
+{
+    "picture": "https://example.com/toy_car12.jpg",
+    "name": "City Cruiser Convertible",
+    "seller_name": "FunWorld Toys",
+    "seller_email": "info@funworldtoys.com",
+    "prices": {
+      "original": 23.99,
+      "discounted": 19.99
+    },
+    "ratings": 4.6,
+    "available_quantity": 14,
+    "detail_description": "The City Cruiser Convertible toy car is a stylish and fun convertible for city drives. Its removable roof allows for open-top cruising on sunny days!",
+    "sub_category": "Regular Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car13.jpg",
+    "name": "Patrol Police Car",
+    "seller_name": "Patrol Toys",
+    "seller_email": "sales@patroltoys.com",
+    "prices": {
+      "original": 19.99,
+      "discounted": 16.99
+    },
+    "ratings": 4.3,
+    "available_quantity": 17,
+    "detail_description": "The Patrol Police Car toy is a realistic police vehicle with working lights and sound. Help maintain law and order in your playtime adventures!",
+    "sub_category": "Mini Police Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car14.jpg",
+    "name": "Mud Monster",
+    "seller_name": "Adventure Toys",
+    "seller_email": "info@adventuretoys.com",
+    "prices": {
+      "original": 36.99,
+      "discounted": 31.99
+    },
+    "ratings": 4.7,
+    "available_quantity": 5,
+    "detail_description": "The Mud Monster toy car is built to conquer muddy terrains. Its rugged tires and waterproof body allow for exciting off-road adventures!",
+    "sub_category": "Truck"
+  }
+,
+{
+    "picture": "https://example.com/toy_car15.jpg",
+    "name": "Super Speed Racer",
+    "seller_name": "Speedy Toys",
+    "seller_email": "sales@speedytoys.com",
+    "prices": {
+      "original": 31.99,
+      "discounted": 26.99
+    },
+    "ratings": 4.5,
+    "available_quantity": 9,
+    "detail_description": "The Super Speed Racer toy car is a high-performance vehicle with sleek design and lightning-fast speed. It's the ultimate toy car for racing enthusiasts!",
+    "sub_category": "Sports Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car16.jpg",
+    "name": "Family SUV",
+    "seller_name": "Playtime Paradise",
+    "seller_email": "info@playtimeparadise.com",
+    "prices": {
+      "original": 24.99,
+      "discounted": 21.99
+    },
+    "ratings": 4.8,
+    "available_quantity": 10,
+    "detail_description": "The Family SUV toy car is a spacious and versatile vehicle for family adventures. It has room for multiple toy figures and luggage storage for long trips!",
+    "sub_category": "Regular Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car17.jpg",
+    "name": "Rescue Squad",
+    "seller_name": "Rescue Toys Inc.",
+    "seller_email": "sales@rescuetoysinc.com",
+    "prices": {
+      "original": 28.99,
+      "discounted": 24.99
+    },
+    "ratings": 4.6,
+    "available_quantity": 8,
+    "detail_description": "The Rescue Squad toy car is a team of emergency vehicles ready to respond to any situation. It includes a fire truck, police car, and ambulance!",
+    "sub_category": "Mini Fire Truck"
+  }
+
+  ,
+  {
+    "picture": "https://example.com/toy_car18.jpg",
+    "name": "Race Track Racer",
+    "seller_name": "Raceway Toys",
+    "seller_email": "info@racewaytoys.com",
+    "prices": {
+      "original": 33.99,
+      "discounted": 28.99
+    },
+    "ratings": 4.7,
+    "available_quantity": 6,
+    "detail_description": "The Race Track Racer toy car is specifically designed for speed and agility on race tracks. It's equipped with aerodynamic features and racing tires for maximum performance!",
+    "sub_category": "Sports Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car19.jpg",
+    "name": "Construction Crane Truck",
+    "seller_name": "Mighty Toys",
+    "seller_email": "sales@mightytoys.com",
+    "prices": {
+      "original": 23.99,
+      "discounted": 19.99
+    },
+    "ratings": 4.4,
+    "available_quantity": 14,
+    "detail_description": "The Construction Crane Truck toy is a versatile vehicle with a rotating crane and extendable arm. Perfect for building and construction-themed play!",
+    "sub_category": "Truck"
+  }
+,
+{
+    "picture": "https://example.com/toy_car20.jpg",
+    "name": "Convertible Cruiser",
+    "seller_name": "FunWorld Toys",
+    "seller_email": "info@funworldtoys.com",
+    "prices": {
+      "original": 18.99,
+      "discounted": 15.99
+    },
+    "ratings": 4.3,
+    "available_quantity": 16,
+    "detail_description": "The Convertible Cruiser toy car is a stylish and sleek convertible for cruising in style. Its convertible top can be opened or closed for different play scenarios!",
+    "sub_category": "Regular Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car21.jpg",
+    "name": "Rally Racer",
+    "seller_name": "Speedy Toys",
+    "seller_email": "sales@speedytoys.com",
+    "prices": {
+      "original": 29.99,
+      "discounted": 24.99
+    },
+    "ratings": 4.5,
+    "available_quantity": 12,
+    "detail_description": "The Rally Racer toy car is designed for off-road rally racing. It features a sturdy build, all-terrain tires, and a suspension system for tackling rough terrains!",
+    "sub_category": "Sports Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car22.jpg",
+    "name": "Garbage Truck Hero",
+    "seller_name": "Mighty Toys",
+    "seller_email": "sales@mightytoys.com",
+    "prices": {
+      "original": 22.99,
+      "discounted": 18.99
+    },
+    "ratings": 4.2,
+    "available_quantity": 20,
+    "detail_description": "The Garbage Truck Hero is a toy truck that lets kids play as sanitation workers. It features a functioning waste container and makes realistic garbage disposal sounds!",
+    "sub_category": "Truck"
+  }
+,
+{
+    "picture": "https://example.com/toy_car23.jpg",
+    "name": "Classic Cruiser",
+    "seller_name": "Playtime Paradise",
+    "seller_email": "info@playtimeparadise.com",
+    "prices": {
+      "original": 16.99,
+      "discounted": 13.99
+    },
+    "ratings": 4.7,
+    "available_quantity": 15,
+    "detail_description": "The Classic Cruiser toy car is a timeless design that captures the spirit of vintage cars. It's perfect for imaginative play and creating nostalgic adventures!",
+    "sub_category": "Regular Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car24.jpg",
+    "name": "Patrol SUV",
+    "seller_name": "Patrol Toys",
+    "seller_email": "sales@patroltoys.com",
+    "prices": {
+      "original": 18.99,
+      "discounted": 15.99
+    },
+    "ratings": 4.3,
+    "available_quantity": 18,
+    "detail_description": "The Patrol SUV toy car is a rugged police vehicle equipped with lights, sirens, and a removable roof for easy access. It's perfect for police-themed play!",
+    "sub_category": "Mini Police Car"
+  }
+,
+{
+    "picture": "https://example.com/toy_car25.jpg",
+    "name": "Mountain Climber",
+    "seller_name": "Adventure Toys",
+    "seller_email": "info@adventuretoys.com",
+    "prices": {
+      "original": 34.99,
+      "discounted": 29.99
+    },
+    "ratings": 4.6,
+    "available_quantity": 8,
+    "detail_description": "The Mountain Climber toy car is specially designed for scaling steep slopes and conquering mountainous terrains. It's equipped with a winch and all-terrain tires!",
+    "sub_category": "Truck"
+  }
+  
+]

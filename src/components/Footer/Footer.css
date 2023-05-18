@@ -1,0 +1,18 @@
+footer{
+    position : absolute;
+    bottom: 0px;
+    width: 100%;
+    
+}
+
+footer img{
+    position: relative;
+    right: 22px;
+}
+
+footer h5{
+    font-size: 15px;
+}
+footer p{
+    font-size: 12px;
+}
