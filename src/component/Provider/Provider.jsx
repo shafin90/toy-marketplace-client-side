@@ -6,6 +6,7 @@ import { app } from "../../../firebase.config";
 export const AuthContext = createContext();
 
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 
 const Provider = ({ children }) => {
@@ -66,6 +67,7 @@ const Provider = ({ children }) => {
         console.log("google handler is working....")
         signInWithPopup(auth, provider)
             .then((result) => {
+                console.log("user has been created")
                 setUser(result);
                 // ...
             }).catch((error) => {
