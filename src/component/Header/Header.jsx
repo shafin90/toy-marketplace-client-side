@@ -1,6 +1,30 @@
+import { useContext} from 'react';
+import {Link} from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-
+import { AuthContext } from '../Provider/Provider';
+import { useNavigate } from 'react-router-dom';
+import './Header.css'
 const Header = () => {
+
+
+
+
+// navigating to login page
+  const navigate = useNavigate();
+  const handleNavigateLogin = () =>{
+    navigate('/login')
+  }
+
+
+
+
+  
+ 
+
+
+
+
+
   return (
     <Navbar  className='py-3'  expand="lg" >
       <Container>
@@ -17,14 +41,15 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto ">
-            <Nav.Link href="#home" className='text-dark'>Home</Nav.Link>
-            <Nav.Link href="#all-toys" className='text-dark'>All Toys</Nav.Link>
-            <Nav.Link className='d-none text-dark' href="#my-toys">My Toys</Nav.Link>
-            <Nav.Link className='d-none text-dark' href="#add-toy">Add A Toy</Nav.Link>
-            <Nav.Link href="#blogs" className='text-dark'>Blogs</Nav.Link>
+            <Link  className='text-dark nav_li'>Home</Link>
+            <Link to='all_toy' className='text-dark nav_li'>All Toys</Link>
+            <Link className='d-none text-dark nav_li' >My Toys</Link>
+            <Link className='d-none text-dark nav_li' >Add A Toy</Link>
+            <Link className='text-dark nav_li'>Blogs</Link>
+            
           </Nav>
           <Nav>
-            <button className='btn btn-primary px-4'>Login</button>
+            <button onClick={handleNavigateLogin}  className='btn btn-primary px-4'>Login</button>
             {/* <NavDropdown
               align="end"
               title={<img src="profile.jpg" alt="User Profile" className="profile-picture" />}

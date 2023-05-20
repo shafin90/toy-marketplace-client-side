@@ -1,11 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/Provider";
 
 
 const Layout = () => {
+    const { handle_react_tab} = useContext(AuthContext);
     return (
-        <div>
+        <div onMouseEnter={handle_react_tab}>
             <Header></Header>
             <Outlet></Outlet>
             <Footer></Footer>

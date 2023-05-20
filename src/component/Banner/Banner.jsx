@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { AuthContext } from '../Provider/Provider';
 
 const Banner = () => {
+  
+  
   return (
+    
     <div className="banner my-5">
       <Container className='py-5 border-bottom'>
         <Row>
