@@ -15,6 +15,8 @@ import All_toy from './component/All_toy/All_toy';
 import Login from './component/Login/Login';
 import Register from './component/Register/Register';
 import ViewDetails from './component/ViewDetails/ViewDetails';
+import Add_a_toy from './component/Add_a_toy/Add_a_toy';
+import ToyTable from './component/ToyTable/ToyTable';
 // import Provider from './component/Provider/Provider';
 
 
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
         path:'/:id',
         element:<ViewDetails></ViewDetails>,
         loader:({params})=>fetch(`http://localhost:5000/users/${params.id}`)
+      },
+      {
+        path:'/add_a_toy',
+        element:<Add_a_toy></Add_a_toy>
+      },
+      {
+        path:'/toy_table',
+        element:<ToyTable></ToyTable>
       }
     
     ]

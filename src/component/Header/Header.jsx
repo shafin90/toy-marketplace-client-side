@@ -47,8 +47,8 @@ const Header = () => {
           <Nav className="mx-auto ">
             <Link  className='text-dark nav_li'>Home</Link>
             <Link to='all_toy' className='text-dark nav_li'>All Toys</Link>
-            <Link className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >My Toys</Link>
-            <Link className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >Add A Toy</Link>
+            <Link to='/toy_table' className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >My Toys</Link>
+            <Link to='/add_a_toy' className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >Add A Toy</Link>
             <Link className='text-dark nav_li'>Blogs</Link>
             
           </Nav>

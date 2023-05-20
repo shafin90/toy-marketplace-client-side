@@ -13,7 +13,7 @@ const ViewDetails = () => {
     };
   
     
-    const { picture, name, seller_name, seller_email, prices, ratings, available_quantity, detail_description, sub_category } = carData;
+    const { picture, name, seller_name, seller_email, price, ratings, available_quantity, detail_description, sub_category } = carData;
   
 
 
@@ -46,7 +46,7 @@ const ViewDetails = () => {
             </p>
             <p>
               <strong>Price: </strong>
-              <del className="text-muted">${prices.original}</del> ${prices.discounted}
+              <del className="text-muted">${price}</del>
             </p>
             <Button onClick={handleGoBack} variant="primary">Go Back</Button>
           </Col>

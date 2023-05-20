@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword , createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../../../firebase.config";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -17,10 +17,17 @@ const Provider = ({ children }) => {
     const [trucks, setTrucks] = useState([]);
     const [sportsCar, setSportsCar] = useState([]);
     const [user, setUser] = useState([]);
-    const[location,setLocation] = useState('');
+    const [location, setLocation] = useState('');
+    const [myToy, setMyToy] = useState([]);
+
+
 
 
    
+
+    
+
+
 
 
     // loading data========================================================================
@@ -29,6 +36,7 @@ const Provider = ({ children }) => {
             .then(res => res.json())
             .then(data => setData(data))
     }, [])
+
 
 
 
@@ -50,10 +58,7 @@ const Provider = ({ children }) => {
     }
 
 
-
-
-  
-
+    console.log(data)
 
 
 
@@ -75,27 +80,35 @@ const Provider = ({ children }) => {
 
 
 
-    
+
+
+
+
+
+
+
 
     // logout user=========================
-    const handleLogout=()=>{
+    const handleLogout = () => {
         signOut(auth).then(() => {
             // Sign-out successful.
             setUser(null);
-          }).catch((error) => {
+        }).catch((error) => {
             // An error happened.
-          });
-          
+        });
+
     }
 
 
 
     // onAuth Change==========================
-    useEffect(()=>{
+    useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, loggedUser => {
-            console.log('logged in user inside auth state observer', loggedUser)
+           
             setUser(loggedUser);
-            
+       
+        
+
         })
 
         return () => {
@@ -106,7 +119,7 @@ const Provider = ({ children }) => {
 
 
 
-
+    console.log(myToy)
 
 
 
@@ -123,7 +136,9 @@ const Provider = ({ children }) => {
         user,
         setUser,
         handleLogout,
-        auth
+        auth,
+        setMyToy,
+        myToy
 
 
 

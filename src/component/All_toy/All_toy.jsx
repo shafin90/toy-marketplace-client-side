@@ -89,7 +89,7 @@ const AllToy = () => {
               <td>{toy.seller_name ? toy.seller_name : '-'}</td>
               <td>{toy.name}</td>
               <td>{toy.sub_category}</td>
-              <td>{toy.prices.original}$</td>
+              <td>{toy.price}$</td>
               <td>{toy.available_quantity}</td>
               <td>
                 {console.log(toy._id)}
