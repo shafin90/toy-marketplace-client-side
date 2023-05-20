@@ -4,7 +4,7 @@ import { Table, Button, Form, FormControl } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const AllToy = () => {
-  const { data } = useContext(AuthContext);
+  const { data, user, setLocation } = useContext(AuthContext);
 
   const [twentyData, setTwentyData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,8 +37,18 @@ const AllToy = () => {
 
 
   const navigate = useNavigate();
-  const navigate_view=(id)=>{
-    navigate(`/${id}`)
+  const navigate_view = (id) => {
+
+    if (user) {
+      navigate(`/${id}`)
+    }
+    else{
+      setLocation(`/${id}`)
+      navigate('/login');
+      
+    }
+
+
   }
 
   return (
@@ -83,7 +93,7 @@ const AllToy = () => {
               <td>{toy.available_quantity}</td>
               <td>
                 {console.log(toy._id)}
-                <Button onClick={()=>navigate_view(toy._id)} variant="primary">View Details</Button>
+                <Button onClick={() => navigate_view(toy._id)} variant="primary">View Details</Button>
               </td>
             </tr>
           ))}

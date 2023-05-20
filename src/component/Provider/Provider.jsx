@@ -16,7 +16,8 @@ const Provider = ({ children }) => {
     const [regulerCar, setRegulerCar] = useState([]);
     const [trucks, setTrucks] = useState([]);
     const [sportsCar, setSportsCar] = useState([]);
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState([]);
+    const[location,setLocation] = useState('');
 
 
    
@@ -74,26 +75,7 @@ const Provider = ({ children }) => {
 
 
 
-    // create user by email pass===========================================
-    // const handleRegister = (email, password) => {
-    //     console.log(email,password);
-    //     createUserWithEmailAndPassword(auth, email, password)
-    //     .then((userCredential) => {
-    //         // Signed in 
-    //         console.log('registration done')
-    //         return  <Navigate to="/login" />;
-            
-             
-            
-            
-    //         // ...
-    //       })
-    //     .catch((error) => {
-    //       console.log(error)
-    //       // ..
-    //     });
-
-    // }
+    
 
     // logout user=========================
     const handleLogout=()=>{
@@ -136,9 +118,8 @@ const Provider = ({ children }) => {
         sportsCar,
         trucks,
         data,
-        
-    
-        
+        location,
+        setLocation,
         user,
         setUser,
         handleLogout,

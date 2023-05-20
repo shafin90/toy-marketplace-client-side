@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import GoogleButton from 'react-google-button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/Provider';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
@@ -9,7 +9,9 @@ const provider = new GoogleAuthProvider();
 
 const Login = () => {
     // Context API======================
-    const { auth, setUser } = useContext(AuthContext);
+    const { auth, setUser,location,setLocation } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,6 +22,15 @@ const Login = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 setUser(result)
+                if(location){
+                    navigate(location);
+                    setLocation('');
+
+
+                }
+                else{
+                    navigate('/');
+                }
             }).catch((error) => {
                 console.log(error)
             });
@@ -47,6 +58,15 @@ const Login = () => {
                 // Signed in 
                 console.log('sign-in by email-pass done');
                 setUser(userCredential)
+                if(location){
+                    navigate(location);
+                    setLocation('');
+
+
+                }
+                else{
+                    navigate('/');
+                }
                 // ...
             })
             .catch((error) => {
