@@ -1,10 +1,14 @@
 import { useContext} from 'react';
 import {Link} from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { AuthContext } from '../Provider/Provider';
 import { useNavigate } from 'react-router-dom';
 import './Header.css'
 const Header = () => {
+
+
+  // context API===================
+  const {user,handleLogout} = useContext(AuthContext);
 
 
 
@@ -43,21 +47,21 @@ const Header = () => {
           <Nav className="mx-auto ">
             <Link  className='text-dark nav_li'>Home</Link>
             <Link to='all_toy' className='text-dark nav_li'>All Toys</Link>
-            <Link className='d-none text-dark nav_li' >My Toys</Link>
-            <Link className='d-none text-dark nav_li' >Add A Toy</Link>
+            <Link className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >My Toys</Link>
+            <Link className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >Add A Toy</Link>
             <Link className='text-dark nav_li'>Blogs</Link>
             
           </Nav>
           <Nav>
-            <button onClick={handleNavigateLogin}  className='btn btn-primary px-4'>Login</button>
-            {/* <NavDropdown
+            {!user?<button onClick={handleNavigateLogin}  className='btn btn-primary px-4'>Login</button>:
+            <NavDropdown
               align="end"
               title={<img src="profile.jpg" alt="User Profile" className="profile-picture" />}
             >
              
           
-              <NavDropdown.Item href="#logout">Logout</NavDropdown.Item>
-            </NavDropdown> */}
+              <NavDropdown.Item   onClick={handleLogout}  href="#logout">Logout</NavDropdown.Item>
+            </NavDropdown>}
           </Nav>
         </Navbar.Collapse>
       </Container>

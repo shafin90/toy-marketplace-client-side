@@ -1,83 +1,66 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Provider/Provider';
 import { Table, Button, Form, FormControl } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const AllToy = () => {
   const { data } = useContext(AuthContext);
 
-  const [twentyData, setTwenyData] = useState([]);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [twentyData, setTwentyData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  setTimeout(() => {
+
+  useEffect(() => {
     if (data.length > 20) {
-      const newData = data.slice(0, 20);
-      setTwenyData(newData);
+      setTwentyData(data.slice(0, 20));
+    } else {
+      setTwentyData([...data]);
     }
-    else {
-      setTwenyData([...data])
+  }, [data]);
+
+  useEffect(() => {
+    if (searchQuery) {
+      const filteredData = data.filter((toy) =>
+        toy.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setTwentyData(filteredData.slice(0, 20));
+    } else {
+      setTwentyData([...data.slice(0, 20)]);
     }
+  }, [searchQuery, data]);
+
+  const handleClear = () => {
+    setSearchQuery('');
+    setTwentyData(data.slice(0, 20));
+  };
 
 
-  }, 1);
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // console.log(twentyData.map(event=>event.name))
-    const searchedProduct = twentyData.filter(event => event.name == e.target.name.value);
-    console.log(searchedProduct)
-    if (searchedProduct.length === 0) {
-      setErrorMsg('nothing found')
-      setTimeout(() => {
-        setErrorMsg('')
-
-      }, 2000)
-    }
-    // const num = [...setTwenyData]
-    setTwenyData(searchedProduct)
-    console.log(twentyData)
-
+  const navigate = useNavigate();
+  const navigate_view=(id)=>{
+    navigate(`/${id}`)
   }
-
-
-
-
-
-
-
-
-  const handleClear = (e) => {
-    e.target.reset();
-    setTwenyData([...data.slice(0, 20)])
-
-  }
-
-
 
   return (
-    <div className="table-responsive container">
-
-
-
-
-      <Form onSubmit={handleSubmit} className='container mb-5'>
-        <h3>Search by Name</h3>
-        <Form.Group className='mb-4' controlId="searchBar">
-          <Form.Label>Search:</Form.Label>
-          <FormControl type="text" name='name' placeholder="Enter your search query" />
+    <div className="container">
+      <h3 className="mt-5">Search by Name</h3>
+      <Form className="mb-4">
+        <Form.Group className='mb-3' controlId="searchBar">
+          <FormControl
+            type="text"
+            name="name"
+            placeholder="Enter your search query"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </Form.Group>
-        <p className='text-danger'>{errorMsg}</p>
-        <Button variant="primary" className='me-4' type="submit">Search</Button>
-        <Button variant="danger" onClick={() => handleClear()} type="submit">Clear</Button>
+        <Button variant="primary" className="me-2" type="submit">
+          Search
+        </Button>
+        <Button variant="danger" onClick={handleClear}>
+          Clear
+        </Button>
       </Form>
-
-
-
-
-
-
-
-
 
       <Table striped bordered hover>
         <thead>
@@ -99,7 +82,8 @@ const AllToy = () => {
               <td>{toy.prices.original}$</td>
               <td>{toy.available_quantity}</td>
               <td>
-                <Button variant="primary">View Details</Button>
+                {console.log(toy._id)}
+                <Button onClick={()=>navigate_view(toy._id)} variant="primary">View Details</Button>
               </td>
             </tr>
           ))}

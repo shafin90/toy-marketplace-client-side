@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { AuthContext } from '../Provider/Provider';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Register = () => {
+    // context Api==========
+    const {auth} = useContext(AuthContext);
+    
+
+
+
+
+
   const [isChecked, setIsChecked] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -42,6 +52,24 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform registration logic here
+    // handleRegister(email,password)
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        // Signed in 
+        console.log('registration done')
+        
+        
+         
+        
+        
+        // ...
+      })
+    .catch((error) => {
+      console.log(error)
+      // ..
+    });
+
   };
 
   return (

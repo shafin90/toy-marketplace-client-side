@@ -1,12 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword , createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../../../firebase.config";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+
 
 
 const Provider = ({ children }) => {
@@ -15,12 +16,15 @@ const Provider = ({ children }) => {
     const [regulerCar, setRegulerCar] = useState([]);
     const [trucks, setTrucks] = useState([]);
     const [sportsCar, setSportsCar] = useState([]);
-    const [user,setUser] = useState([])
+    const [user, setUser] = useState([])
+
+
+   
 
 
     // loading data========================================================================
     useEffect(() => {
-        fetch('data.json')
+        fetch('http://localhost:5000/users')
             .then(res => res.json())
             .then(data => setData(data))
     }, [])
@@ -47,6 +51,7 @@ const Provider = ({ children }) => {
 
 
 
+  
 
 
 
@@ -62,21 +67,59 @@ const Provider = ({ children }) => {
 
 
 
-    // sign in by google==================================================================
-    const handleGoogle = () => {
-        console.log("google handler is working....")
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log("user has been created")
-                setUser(result);
-                // ...
-            }).catch((error) => {
-                console.log(error)
-                // ...
-            });
 
 
+
+
+
+
+
+    // create user by email pass===========================================
+    // const handleRegister = (email, password) => {
+    //     console.log(email,password);
+    //     createUserWithEmailAndPassword(auth, email, password)
+    //     .then((userCredential) => {
+    //         // Signed in 
+    //         console.log('registration done')
+    //         return  <Navigate to="/login" />;
+            
+             
+            
+            
+    //         // ...
+    //       })
+    //     .catch((error) => {
+    //       console.log(error)
+    //       // ..
+    //     });
+
+    // }
+
+    // logout user=========================
+    const handleLogout=()=>{
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            setUser(null);
+          }).catch((error) => {
+            // An error happened.
+          });
+          
     }
+
+
+
+    // onAuth Change==========================
+    useEffect(()=>{
+        const unsubscribe = onAuthStateChanged(auth, loggedUser => {
+            console.log('logged in user inside auth state observer', loggedUser)
+            setUser(loggedUser);
+            
+        })
+
+        return () => {
+            unsubscribe();
+        }
+    }, [])
 
 
 
@@ -93,7 +136,13 @@ const Provider = ({ children }) => {
         sportsCar,
         trucks,
         data,
-        handleGoogle
+        
+    
+        
+        user,
+        setUser,
+        handleLogout,
+        auth
 
 
 

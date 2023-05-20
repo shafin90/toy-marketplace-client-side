@@ -14,6 +14,7 @@ import Provider from './component/Provider/Provider';
 import All_toy from './component/All_toy/All_toy';
 import Login from './component/Login/Login';
 import Register from './component/Register/Register';
+import ViewDetails from './component/ViewDetails/ViewDetails';
 // import Provider from './component/Provider/Provider';
 
 
@@ -37,8 +38,13 @@ const router = createBrowserRouter([
       {
         path:'/register',
         element:<Register></Register>
+      },
+      {
+        path:'/:id',
+        element:<ViewDetails></ViewDetails>,
+        loader:({params})=>fetch(`http://localhost:5000/users/${params.id}`)
       }
-
+    
     ]
   }
 ]);
