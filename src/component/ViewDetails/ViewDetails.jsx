@@ -46,7 +46,7 @@ const ViewDetails = () => {
             </p>
             <p>
               <strong>Price: </strong>
-              <del className="text-muted">${price}</del>
+              <p className="text-muted">${price}</p>
             </p>
             <Button onClick={handleGoBack} variant="primary">Go Back</Button>
           </Col>

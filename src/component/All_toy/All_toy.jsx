@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Provider/Provider';
 import { Table, Button, Form, FormControl } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import PageTitle from '../PageTitle/PageTitle';
 
 const AllToy = () => {
   const { data, user, setLocation } = useContext(AuthContext);
@@ -52,7 +53,9 @@ const AllToy = () => {
   }
 
   return (
+    
     <div className="container">
+       <PageTitle title={"All Toy"}></PageTitle>
       <h3 className="mt-5">Search by Name</h3>
       <Form className="mb-4">
         <Form.Group className='mb-3' controlId="searchBar">
@@ -92,7 +95,7 @@ const AllToy = () => {
               <td>{toy.price}$</td>
               <td>{toy.available_quantity}</td>
               <td>
-                {console.log(toy._id)}
+                
                 <Button onClick={() => navigate_view(toy._id)} variant="primary">View Details</Button>
               </td>
             </tr>

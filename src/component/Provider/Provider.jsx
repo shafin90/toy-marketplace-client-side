@@ -16,16 +16,23 @@ const Provider = ({ children }) => {
     const [regulerCar, setRegulerCar] = useState([]);
     const [trucks, setTrucks] = useState([]);
     const [sportsCar, setSportsCar] = useState([]);
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState({});
     const [location, setLocation] = useState('');
     const [myToy, setMyToy] = useState([]);
 
 
-
-
-   
-
     
+
+
+
+
+
+
+
+
+
+
+    console.log(data)
 
 
 
@@ -36,6 +43,29 @@ const Provider = ({ children }) => {
             .then(res => res.json())
             .then(data => setData(data))
     }, [])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -58,7 +88,7 @@ const Provider = ({ children }) => {
     }
 
 
-    console.log(data)
+
 
 
 
@@ -104,10 +134,10 @@ const Provider = ({ children }) => {
     // onAuth Change==========================
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, loggedUser => {
-           
+
             setUser(loggedUser);
-       
-        
+
+
 
         })
 
@@ -119,7 +149,7 @@ const Provider = ({ children }) => {
 
 
 
-    console.log(myToy)
+
 
 
 

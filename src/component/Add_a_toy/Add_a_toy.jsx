@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { AuthContext } from '../Provider/Provider';
+import PageTitle from '../PageTitle/PageTitle';
 
 const Add_a_toy = () => {
 
-    const { setMyToy, myToy ,data} = useContext(AuthContext);
+    const { setMyToy, myToy, data } = useContext(AuthContext);
 
 
 
@@ -32,7 +33,7 @@ const Add_a_toy = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
+
         // Send the form data to the backend using the POST method
         fetch('http://localhost:5000/users', {
             method: 'POST',
@@ -42,9 +43,9 @@ const Add_a_toy = () => {
             body: JSON.stringify(formData)
         })
             .then(response => response.json())
-            .then(data => {
+            .then(datas => {
                 // Handle the response from the backend as needed
-                console.log(data);
+                console.log(datas.insertedId);
                 // Clear the form fields
                 setFormData({
                     picture: '',
@@ -57,6 +58,8 @@ const Add_a_toy = () => {
                     available_quantity: '',
                     detail_description: ''
                 });
+                
+
             })
             .catch(error => {
                 // Handle any errors that occur during the POST request
@@ -66,11 +69,17 @@ const Add_a_toy = () => {
 
 
 
-            setMyToy(...myToy,data.slice(-1));
+
+
+
+
+
+
     };
 
     return (
         <Form className='container mb-5' onSubmit={handleSubmit}>
+             <PageTitle title={"Add a toy"}></PageTitle>
             <h1 className='h1 my-4 text-center'>Add an item</h1>
             <Row>
                 <Col xs={12} md={6}>

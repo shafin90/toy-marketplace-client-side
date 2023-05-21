@@ -21,7 +21,7 @@ const Banner = () => {
 
           {/* Right part with image */}
           <Col md={6} className="text-center">
-            <img src="http://www.freepngimg.com/download/car/11-2-car-picture.png" alt="Banner Image" className="img-fluid" />
+            <img src="https://pluspng.com/img-png/png-toy-car-img-830.png" alt="Banner Image" className="img-fluid" />
           </Col>
         </Row>
       </Container>

@@ -23,7 +23,7 @@ const Header = () => {
 
 
   
- 
+  
 
 
 
@@ -47,20 +47,20 @@ const Header = () => {
           <Nav className="mx-auto ">
             <Link  className='text-dark nav_li'>Home</Link>
             <Link to='all_toy' className='text-dark nav_li'>All Toys</Link>
-            <Link to='/toy_table' className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >My Toys</Link>
+            <Link to='/toy_table'  className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >My Toys</Link>
             <Link to='/add_a_toy' className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >Add A Toy</Link>
-            <Link className='text-dark nav_li'>Blogs</Link>
+            <Link to='/blog' className='text-dark nav_li'>Blogs</Link>
             
           </Nav>
           <Nav>
             {!user?<button onClick={handleNavigateLogin}  className='btn btn-primary px-4'>Login</button>:
             <NavDropdown
               align="end"
-              title={<img src="profile.jpg" alt="User Profile" className="profile-picture" />}
+              title={<img  src={`${user.photoURL?user.photoURL:'profile_jpg'}`} alt="User Profile" className="profile-picture profile-image" />}
             >
-             
+            
           
-              <NavDropdown.Item   onClick={handleLogout}  href="#logout">Logout</NavDropdown.Item>
+              <NavDropdown.Item  className='border-none' onClick={handleLogout}  href="#logout">Logout</NavDropdown.Item>
             </NavDropdown>}
           </Nav>
         </Navbar.Collapse>
