@@ -23,7 +23,7 @@ const Gallery = () => {
                 <h1 className='h1 my-4 text-center'>CarCarnival</h1>
                 <Row>
                     {images.map((image, index) => (
-                        <Col key={index} xs={6} md={3} className="gallery-item ">
+                        <Col key={index} xs={6} md={3}  className="gallery-item ">
                             <img
                                 src={image}
                                 alt={`Gallery Image ${index + 1}`}

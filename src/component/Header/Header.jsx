@@ -56,7 +56,7 @@ const Header = () => {
             {!user?<button onClick={handleNavigateLogin}  className='btn btn-primary px-4'>Login</button>:
             <NavDropdown
               align="end"
-              title={<img  src={`${user.photoURL?user.photoURL:'profile_jpg'}`} alt="User Profile" className="profile-picture profile-image" />}
+              title={<img data-bs-toggle="tooltip" title={user.displayName&&user.displayName} src={`${user.photoURL?user.photoURL:'profile_jpg'}`} alt="User Profile" className="profile-picture profile-image" />}
             >
             
           
