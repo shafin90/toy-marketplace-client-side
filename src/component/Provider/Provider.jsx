@@ -19,7 +19,8 @@ const Provider = ({ children }) => {
     const [user, setUser] = useState({});
     const [location, setLocation] = useState('');
     const [myToy, setMyToy] = useState([]);
-    const [spinner,setSpinner] = useState(false)
+    const [spinner,setSpinner] = useState(false);
+    const [photoUrl, setPhotoUrl] = useState('');
 
 
     
@@ -173,7 +174,8 @@ const Provider = ({ children }) => {
         auth,
         setMyToy,
         myToy,
-        spinner
+        spinner,
+        setPhotoUrl
 
 
 

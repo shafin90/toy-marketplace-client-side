@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Register = () => {
     // context Api==========
-    const {auth} = useContext(AuthContext);
+    const {auth,setPhotoUrl} = useContext(AuthContext);
     
 
 
@@ -19,7 +19,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
+ 
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
