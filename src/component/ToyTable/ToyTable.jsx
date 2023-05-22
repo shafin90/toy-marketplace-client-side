@@ -119,10 +119,13 @@ const ToyTable = () => {
 
 
   useEffect(() => {
-    fetch('http://localhost:5000/mytoys')
+    fetch('https://carz-server-shafin90.vercel.app/mytoys')
       .then(res => res.json())
       .then(data => setMyToy(data))
   }, [])
+
+
+
 
   const onDelete = (toyId) => {
     console.log(toyId)
@@ -144,10 +147,19 @@ const ToyTable = () => {
 
 
 
+
+
+  const ascending = ()=>{
+    fetch('/ascending-sorted-array')
+    .then(res => res.json())
+      .then(data => setMyToy(data))
+  }
+
   return (
 
 
     <div>
+      <button onClick={ascending}>Sort in Ascending way</button>
 
       <PageTitle title={"My Toy"}></PageTitle>
       <Modal show={showModal} onHide={handleCloseModal}>

@@ -9,7 +9,7 @@ const Footer = () => {
       <Container>
         <Row className="pt-4 pb-3">
           <Col xs={12} md={4} className="text-center text-md-left mb-4">
-            <img src="http://clipart-library.com/images_k/car-transparent-background/car-transparent-background-22.png" alt="Website Logo" height="40" className="mb-3" />
+            <img src="https://clipartmag.com/images/cartoon-images-of-cars-39.png" alt="Website Logo" height="40" className="mb-3" />
             <p>&copy; {new Date().getFullYear()} Website Name. All rights reserved.</p>
           </Col>
           <Col xs={6} md={4} className="text-center mb-4">

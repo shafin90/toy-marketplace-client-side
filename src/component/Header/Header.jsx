@@ -34,7 +34,7 @@ const Header = () => {
       <Container>
         <Navbar.Brand className='text-dark d-flex justify-content-center align-items-center' href="#home">
           <img
-            src="http://clipart-library.com/images_k/car-transparent-background/car-transparent-background-22.png"
+            src="https://clipartmag.com/images/cartoon-images-of-cars-39.png"
             width="70"
             height="60"
             className="d-inline-block align-top me-2"

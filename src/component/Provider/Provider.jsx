@@ -39,7 +39,7 @@ const Provider = ({ children }) => {
 
     // loading data========================================================================
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('https://carz-server-shafin90.vercel.app/users')
             .then(res => res.json())
             .then(data => setData(data))
     }, [])
