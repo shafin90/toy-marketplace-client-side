@@ -159,7 +159,7 @@ const ToyTable = () => {
 
 
     <div>
-      <button onClick={ascending}>Sort in Ascending way</button>
+   
 
       <PageTitle title={"My Toy"}></PageTitle>
       <Modal show={showModal} onHide={handleCloseModal}>
