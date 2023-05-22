@@ -2,3 +2,6 @@
     width: 100%;
     height: 200px;
 }
+.card-body{
+    background-color: #dfe4ea;
+}

@@ -32,7 +32,7 @@ const MyCard = ({ info }) => {
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img className='card_img' variant="top" src={picture} />
-      <Card.Body className='d-flex flex-column justify-content-between align-items-start'>
+      <Card.Body className='d-flex flex-column justify-content-between card-body align-items-start'>
         <Card.Title>{name}</Card.Title>
         <Card.Text>
           {/* Some quick example text to build on the card title and make up the bulk of the card's content. */}

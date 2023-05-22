@@ -4,6 +4,7 @@ import Footer from "../Footer/Footer";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/Provider";
 import PageTitle from "../PageTitle/PageTitle";
+import './Layout.css';
 
 
 const Layout = () => {
@@ -12,7 +13,7 @@ const Layout = () => {
     
    
     return (
-        <div onMouseEnter={handle_react_tab}>
+        <div className="body" onMouseEnter={handle_react_tab}>
            
             <Header></Header>
             <Outlet></Outlet>
