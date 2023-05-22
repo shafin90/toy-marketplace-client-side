@@ -19,6 +19,7 @@ const Provider = ({ children }) => {
     const [user, setUser] = useState({});
     const [location, setLocation] = useState('');
     const [myToy, setMyToy] = useState([]);
+    const [spinner,setSpinner] = useState(false)
 
 
     
@@ -84,6 +85,9 @@ const Provider = ({ children }) => {
 
         const subCatagory_sportsCar = data.filter(e => e.sub_category === 'Sports Car');
         setSportsCar([...subCatagory_sportsCar])
+
+
+        setSpinner(true)
 
     }
 
@@ -168,7 +172,8 @@ const Provider = ({ children }) => {
         handleLogout,
         auth,
         setMyToy,
-        myToy
+        myToy,
+        spinner
 
 
 
