@@ -18,6 +18,7 @@ import ViewDetails from './component/ViewDetails/ViewDetails';
 import Add_a_toy from './component/Add_a_toy/Add_a_toy';
 import ToyTable from './component/ToyTable/ToyTable';
 import Blog from './component/Blog/Blog';
+import NotFoundPage from './component/NotFoundPage/NotFoundPage';
 // import ToyTable from './component/ToyTable/ToyTable';
 // import Provider from './component/Provider/Provider';
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       }
     
     ]
+  },
+  {
+    path:'*',
+    element:<NotFoundPage></NotFoundPage>
   }
 ]);
 

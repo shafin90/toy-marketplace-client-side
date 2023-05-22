@@ -4,6 +4,8 @@ import { useContext, useEffect } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import PageTitle from '../PageTitle/PageTitle';
+import { Toaster, toast } from 'react-hot-toast';
+
 
 const ToyTable = () => {
   const { myToy, setMyToy } = useContext(AuthContext);
@@ -82,6 +84,9 @@ const ToyTable = () => {
           })
         );
         handleCloseModal();
+
+        // Show the toast message
+        toast.success('Item has been updated');
       })
       .catch((error) => {
         console.error('Error updating toy:', error);
@@ -129,6 +134,8 @@ const ToyTable = () => {
       .then((data) => {
         // Update the myToy state by removing the deleted toy
         setMyToy((prevMyToy) => prevMyToy.filter((toy) => toy._id !== toyId));
+        // Show the toast message
+        toast.success('Item has been deleted from database');
       })
       .catch((error) => {
         console.error('Error deleting toy:', error);
@@ -231,6 +238,7 @@ const ToyTable = () => {
           ))}
         </tbody>
       </Table>
+      <Toaster />
     </div>
   );
 };

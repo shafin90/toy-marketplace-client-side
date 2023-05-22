@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../Provider/Provider';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import './MyCard.css'
 
 const MyCard = ({ info }) => {
@@ -10,6 +10,7 @@ const MyCard = ({ info }) => {
 
   const { user, setLocation } = useContext(AuthContext)
   const navigation = useNavigate()
+
 
 
 
