@@ -38,7 +38,7 @@ const Add_a_toy = () => {
         event.preventDefault();
 
         // Send the form data to the backend using the POST method
-        fetch('http://localhost:5000/users', {
+        fetch('https://carz-server-shafin90.vercel.app/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

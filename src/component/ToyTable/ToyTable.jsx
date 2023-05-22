@@ -56,7 +56,7 @@ const ToyTable = () => {
 
   const handleUpdate = () => {
     // Make an API call to update the toy data in MongoDB
-    fetch(`http://localhost:5000/users/${toyId}`, {
+    fetch(`https://carz-server-shafin90.vercel.app/users/${toyId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const ToyTable = () => {
   const onDelete = (toyId) => {
     console.log(toyId)
     // Make an API call to delete the toy data from MongoDB
-    fetch(`http://localhost:5000/users/${toyId}`, {
+    fetch(`https://carz-server-shafin90.vercel.app/users/${toyId}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
