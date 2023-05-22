@@ -175,7 +175,8 @@ const Provider = ({ children }) => {
         setMyToy,
         myToy,
         spinner,
-        setPhotoUrl
+        setPhotoUrl,
+        photoUrl
 
 
 

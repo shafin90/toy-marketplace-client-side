@@ -13,7 +13,7 @@ const ExtraSection1 = () => {
                     </article>
                 </div>
                 <div className="col-12 col-md-6 d-flex justify-content-center align-items-center">
-                    <img className='img-fluid rounded' src="https://thumbs.dreamstime.com/b/toy-car-children-s-exhibition-sales-shenzhen-china-59953163.jpg" alt="" />
+                    <img className='img-fluid rounded' src="https://image.freepik.com/free-photo/colorful-car-toys_1194-2341.jpg?1" alt="" />
                 </div>
             </div>
 

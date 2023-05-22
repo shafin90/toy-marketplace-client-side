@@ -1,12 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/Provider';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Toaster, toast } from 'react-hot-toast';
+
 
 const Register = () => {
     // context Api==========
-    const {auth,setPhotoUrl} = useContext(AuthContext);
+    const {auth,setPhotoUrl,photoUrl} = useContext(AuthContext);
+
+    const navigate = useNavigate();
     
 
 
@@ -58,15 +62,17 @@ const Register = () => {
     .then((userCredential) => {
         // Signed in 
         console.log('registration done')
+        toast.success('Registration done');
         
-        
+        navigate('/login');
          
         
         
         // ...
       })
     .catch((error) => {
-      console.log(error)
+      console.log(error.message)
+      toast(`${error.message}`)
       // ..
     });
 
@@ -124,6 +130,7 @@ const Register = () => {
           </Form>
         </Col>
       </Row>
+      <Toaster />
     </Container>
   );
 };
