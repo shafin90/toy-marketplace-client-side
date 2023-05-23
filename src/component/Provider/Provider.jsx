@@ -44,6 +44,7 @@ const Provider = ({ children }) => {
         fetch('https://carz-server-shafin90.vercel.app/users')
             .then(res => res.json())
             .then(data => setData(data))
+            
     }, [])
 
 

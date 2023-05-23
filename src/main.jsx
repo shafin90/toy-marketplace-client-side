@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       {
         path:'/:id',
         element:<ViewDetails></ViewDetails>,
-        loader:({params})=>fetch(`http://localhost:5000/users/${params.id}`)
+        loader:({params})=>fetch(`https://carz-server-shafin90.vercel.app/users/${params.id}`)
       },
       {
         path:'/add_a_toy',
