@@ -19,11 +19,11 @@ const Provider = ({ children }) => {
     const [user, setUser] = useState({});
     const [location, setLocation] = useState('');
     const [myToy, setMyToy] = useState([]);
-    const [spinner,setSpinner] = useState(false);
+    const [spinner, setSpinner] = useState(false);
     const [photoUrl, setPhotoUrl] = useState('');
 
 
-    
+
 
 
 
@@ -44,7 +44,7 @@ const Provider = ({ children }) => {
         fetch('https://carz-server-shafin90.vercel.app/users')
             .then(res => res.json())
             .then(data => setData(data))
-            
+
     }, [])
 
 
@@ -76,7 +76,8 @@ const Provider = ({ children }) => {
 
 
     //handle react tab====================================================================== 
-    const handle_react_tab = () => {
+
+    useEffect(() => {
         const subCatagory_regulerCar = data.filter(e => e.sub_category === 'Regular Car');
         setRegulerCar([...subCatagory_regulerCar])
 
@@ -91,13 +92,15 @@ const Provider = ({ children }) => {
 
         setSpinner(true)
 
-    }
+    }, [data])
 
 
 
 
 
 
+
+console.log(regulerCar)
 
 
 
@@ -162,7 +165,7 @@ const Provider = ({ children }) => {
 
     // passing data================
     const info = {
-        handle_react_tab,
+
         regulerCar,
         sportsCar,
         trucks,

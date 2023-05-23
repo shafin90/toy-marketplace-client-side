@@ -22,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
     "react-hot-toast": "^2.4.1",
+    "react-parallax": "^3.5.1",
     "react-router-dom": "^6.11.2",
     "react-tabs": "^6.0.1",
     "sort-by": "^1.2.0"

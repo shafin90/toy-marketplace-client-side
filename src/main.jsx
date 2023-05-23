@@ -5,7 +5,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import {
   createBrowserRouter,
+  Route,
   RouterProvider,
+  Routes,
 } from "react-router-dom";
 import './index.css'
 import Layout from './component/Layout/Layout';
@@ -23,6 +25,8 @@ import NotFoundPage from './component/NotFoundPage/NotFoundPage';
 // import Provider from './component/Provider/Provider';
 
 
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,39 +37,40 @@ const router = createBrowserRouter([
         element: <Home></Home>
       },
       {
-        path:"/all_toy",
-        element:<All_toy></All_toy>
+        path: "/all_toy",
+        element: <All_toy></All_toy>
       },
       {
-        path:'/login',
-        element:<Login></Login>
+        path: '/login',
+        element: <Login></Login>
       },
       {
-        path:'/register',
-        element:<Register></Register>
+        path: '/register',
+        element: <Register></Register>
       },
       {
-        path:'/:id',
-        element:<ViewDetails></ViewDetails>,
-        loader:({params})=>fetch(`https://carz-server-shafin90.vercel.app/users/${params.id}`)
+        path: '/:id',
+        element: <ViewDetails></ViewDetails>,
+        loader: ({ params }) => fetch(`https://carz-server-shafin90.vercel.app/users/${params.id}`)
       },
       {
-        path:'/add_a_toy',
-        element:<Add_a_toy></Add_a_toy>
+        path: '/add_a_toy',
+        element: <Add_a_toy></Add_a_toy>
       },
       {
-        path:'/toy_table',
-        element:<ToyTable></ToyTable>
+        path: '/toy_table',
+        element: <ToyTable></ToyTable>
       },
       {
-        path:'/blog',
-        element:<Blog></Blog>
+        path: '/blog',
+        element: <Blog></Blog>
       },
-      {
-        path: "*",
-        element: <NotFoundPage />
-      }
+      
     ]
+  },
+  {
+    path: '*',
+    element:<NotFoundPage></NotFoundPage>
   }
 ]);
 

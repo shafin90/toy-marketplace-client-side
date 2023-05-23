@@ -9,11 +9,11 @@ import './Layout.css';
 
 const Layout = () => {
     
-    const { handle_react_tab} = useContext(AuthContext);
+
     
    
     return (
-        <div className="body" onMouseEnter={handle_react_tab}>
+        <div className="body">
            
             <Header></Header>
             <Outlet></Outlet>

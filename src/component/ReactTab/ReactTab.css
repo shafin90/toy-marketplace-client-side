@@ -6,6 +6,10 @@
 }
 
 
+
+
+
+
 @media screen and (max-width:575px) {
     .grid{
         grid-template-columns: 1fr;
