@@ -1,9 +1,13 @@
-import { useContext} from 'react';
-import {Link} from 'react-router-dom';
+import { useContext, useEffect, useState} from 'react';
+import {Link, useLocation} from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { AuthContext } from '../Provider/Provider';
 import { useNavigate } from 'react-router-dom';
 import './Header.css'
+
+
+
+
 const Header = () => {
 
 
@@ -11,6 +15,14 @@ const Header = () => {
   const {user,handleLogout,photoUrl} = useContext(AuthContext);
 
 
+
+  // state declaration=========================
+  const [email, setEmail] = useState('');
+
+
+
+  const location = useLocation();
+  console.log(location.pathname);
 
 
 // navigating to login page
@@ -23,7 +35,10 @@ const Header = () => {
 
 
   
-  
+
+  useEffect(()=>{
+    setEmail(user.email)
+  },[])
 
 
 
@@ -45,11 +60,11 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto ">
-            <Link  className='text-dark nav_li'>Home</Link>
-            <Link to='all_toy' className='text-dark nav_li'>All Toys</Link>
-            <Link to='/toy_table'  className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >My Toys</Link>
-            <Link to='/add_a_toy' className={!user?'d-none text-dark nav_li':'d-block text-dark nav_li'} >Add A Toy</Link>
-            <Link to='/blog' className='text-dark nav_li'>Blogs</Link>
+            <Link  className={location.pathname=='/'?'nav_li text-primary':'text-dark nav_li'}>Home</Link>
+            <Link to='all_toy' className={location.pathname=='/all_toy'?'nav_li text-primary':'text-dark nav_li'}>All Toys</Link>
+            <Link to='/toy_table'   className={!user?'d-none text-dark nav_li':`${location.pathname=='/toy_table'?'d-block text-primary nav_li':'d-block text-dark nav_li'}`} >My Toys</Link>
+            <Link to='/add_a_toy' className={!user?'d-none text-dark nav_li':`${location.pathname=='/add_a_toy'?'d-block text-primary nav_li':'d-block text-dark nav_li'}`} >Add A Toy</Link>
+            <Link to='/blog' className={location.pathname=='/blog'?'nav_li text-primary':'text-dark nav_li'}>Blogs</Link>
             
           </Nav>
           <Nav>

@@ -3,11 +3,20 @@ import { Container, Row, Col, Modal, Image } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './Gallery.css';
+import { useLocation } from 'react-router-dom';
 
 const Gallery = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const galleryRef = useRef(null);
+
+
+
+
+
+
+
+
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -45,8 +54,8 @@ const Gallery = () => {
   }, []);
 
   return (
-    <div className="gallery my-5 border-bottom" ref={galleryRef}>
-      <Container>
+    <div className="gallery my-5 " ref={galleryRef}>
+      <Container className='mb-5 pb-5 border-bottom'>
         <h1 className="h1 my-4 text-center">CarCarnival</h1>
         <Row>
           {images.map((image, index) => (

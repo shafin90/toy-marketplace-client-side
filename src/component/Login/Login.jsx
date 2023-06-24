@@ -102,7 +102,7 @@ const Login = () => {
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" placeholder="Enter your password" value={password} onChange={handlePasswordChange} />
                         </Form.Group>
-                        <p>Dont have an account? <Link to={'/register'}>Register</Link></p>
+                        <p className='mt-2'>Dont have an account? <Link   className='text-decoration-none' to={'/register'}>Register</Link></p>
 
                         <Button variant="primary" type="submit" block onClick={handleEmailLogin}>
                             Login

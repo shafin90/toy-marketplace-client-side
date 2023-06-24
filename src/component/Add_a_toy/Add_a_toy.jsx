@@ -8,9 +8,21 @@ import { Toaster, toast } from 'react-hot-toast';
 
 const Add_a_toy = () => {
 
-    const { setMyToy, myToy, data } = useContext(AuthContext);
+    const { setMyToy, myToy, data, user } = useContext(AuthContext);
+    // state declaration=========================
+    const [email, setEmail] = useState('');
 
 
+
+
+
+
+    useEffect(() => {
+        setEmail(user.email)
+    }, [])
+
+
+    console.log(email);
 
 
     const [formData, setFormData] = useState({
@@ -22,8 +34,11 @@ const Add_a_toy = () => {
         price: '',
         ratings: '',
         available_quantity: '',
-        detail_description: ''
+        detail_description: '',
+        email: user.email
+        
     });
+    
 
     const handleInputChange = (event) => {
         const { id, value } = event.target;
@@ -59,7 +74,9 @@ const Add_a_toy = () => {
                     price: '',
                     ratings: '',
                     available_quantity: '',
-                    detail_description: ''
+                    detail_description: '',
+                    email: user.email
+                
                 });
 
                 // Show the toast message
@@ -116,7 +133,7 @@ const Add_a_toy = () => {
                     </Form.Group>
                     <Form.Group controlId="price">
                         <Form.Label>Price</Form.Label>
-                        <Form.Control required  type="number" placeholder="Enter price" value={formData.price} onChange={handleInputChange} />
+                        <Form.Control required type="number" placeholder="Enter price" value={formData.price} onChange={handleInputChange} />
                     </Form.Group>
                     <Form.Group controlId="ratings">
                         <Form.Label>Rating</Form.Label>
