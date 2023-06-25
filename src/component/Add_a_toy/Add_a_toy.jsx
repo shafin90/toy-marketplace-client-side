@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, Spinner } from 'react-bootstrap';
 import { AuthContext } from '../Provider/Provider';
 import PageTitle from '../PageTitle/PageTitle';
 import { Toaster, toast } from 'react-hot-toast';
@@ -15,14 +15,14 @@ const Add_a_toy = () => {
 
 
 
+    console.log(user)
 
 
-    useEffect(() => {
-        setEmail(user.email)
-    }, [])
 
 
-    console.log(email);
+
+
+  
 
 
     const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ const Add_a_toy = () => {
         ratings: '',
         available_quantity: '',
         detail_description: '',
-        email: user.email
+        email: user.email? user.email:user.user.email
         
     });
     
@@ -51,6 +51,7 @@ const Add_a_toy = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+       
 
         // Send the form data to the backend using the POST method
         fetch('https://carz-server-shafin90.vercel.app/users', {
@@ -75,7 +76,7 @@ const Add_a_toy = () => {
                     ratings: '',
                     available_quantity: '',
                     detail_description: '',
-                    email: user.email
+                    email: user.email? user.email:user.user.email
                 
                 });
 

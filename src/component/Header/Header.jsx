@@ -16,8 +16,7 @@ const Header = () => {
 
 
 
-  // state declaration=========================
-  const [email, setEmail] = useState('');
+
 
 
 
@@ -35,10 +34,6 @@ const Header = () => {
 
 
   
-
-  useEffect(()=>{
-    setEmail(user.email)
-  },[])
 
 
 

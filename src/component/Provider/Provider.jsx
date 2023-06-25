@@ -31,10 +31,11 @@ const Provider = ({ children }) => {
 
 
 
+    
 
 
 
-    console.log(data)
+
 
 
 
@@ -50,6 +51,7 @@ const Provider = ({ children }) => {
 
 
 
+    
 
 
 
@@ -70,6 +72,10 @@ const Provider = ({ children }) => {
 
 
 
+
+
+
+    // const userEmail = user&&user.email?user.email:user.user.email;
 
 
 
@@ -90,6 +96,10 @@ const Provider = ({ children }) => {
         setSportsCar([...subCatagory_sportsCar])
 
 
+        // const toys = data.filter(e=>e.email== userEmail);
+        // setMyToy(toys);
+
+
         setSpinner(true)
 
     }, [data])
@@ -100,7 +110,11 @@ const Provider = ({ children }) => {
 
 
 
-console.log(regulerCar)
+
+
+
+
+
 
 
 
@@ -139,6 +153,13 @@ console.log(regulerCar)
     }
 
 
+    console.log(user)
+    useEffect(()=>{
+        const toys = data.filter(e=>e.email==user.email?user.email:user.user.email)
+        setMyToy(toys)
+    },[])
+
+    console.log(myToy)
 
     // onAuth Change==========================
     useEffect(() => {
