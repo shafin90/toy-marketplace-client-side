@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         element: <Register></Register>
       },
       {
-        path: '/:id',
+        path: '/view_details/:id',
         element: <ViewDetails></ViewDetails>,
         loader: ({ params }) => fetch(`https://carz-server-shafin90.vercel.app/users/${params.id}`)
       },

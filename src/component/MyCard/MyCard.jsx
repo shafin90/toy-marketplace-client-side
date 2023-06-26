@@ -18,10 +18,10 @@ const MyCard = ({ info }) => {
   const handleNavigate = (id) => {
 
     if (user) {
-      navigation(`/${id}`)
+      navigation(`/view_details/${id}`)
     }
     else {
-      setLocation(`/${id}`)
+      setLocation(`/view_details/${id}`)
       navigation('/login');
 
     }

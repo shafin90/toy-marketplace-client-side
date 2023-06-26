@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../../../firebase.config";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
 export const AuthContext = createContext();
 
@@ -80,7 +81,7 @@ const Provider = ({ children }) => {
 
 
 
-
+console.log(user)
     //handle react tab====================================================================== 
 
     useEffect(() => {
@@ -94,6 +95,10 @@ const Provider = ({ children }) => {
 
         const subCatagory_sportsCar = data.filter(e => e.sub_category === 'Sports Car');
         setSportsCar([...subCatagory_sportsCar])
+
+
+        const toys = data.filter(e => e.email === user.email);
+        setMyToy([...toys])
 
 
         // const toys = data.filter(e=>e.email== userEmail);
@@ -153,13 +158,9 @@ const Provider = ({ children }) => {
     }
 
 
-    console.log(user)
-    useEffect(()=>{
-        const toys = data.filter(e=>e.email==user.email?user.email:user.user.email)
-        setMyToy(toys)
-    },[])
+  
 
-    console.log(myToy)
+  
 
     // onAuth Change==========================
     useEffect(() => {
