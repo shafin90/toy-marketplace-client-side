@@ -22,6 +22,7 @@ const Login = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 setUser(result)
+       
                 if(location){
                     navigate(location);
                     setLocation('');

@@ -32,7 +32,7 @@ const Provider = ({ children }) => {
 
 
 
-    
+
 
 
 
@@ -52,7 +52,7 @@ const Provider = ({ children }) => {
 
 
 
-    
+
 
 
 
@@ -81,7 +81,7 @@ const Provider = ({ children }) => {
 
 
 
-console.log(user)
+    console.log(user)
     //handle react tab====================================================================== 
 
     useEffect(() => {
@@ -97,9 +97,7 @@ console.log(user)
         setSportsCar([...subCatagory_sportsCar])
 
 
-        const toys = data.filter(e => e.email === user.email);
-        setMyToy([...toys])
-
+        
 
         // const toys = data.filter(e=>e.email== userEmail);
         // setMyToy(toys);
@@ -110,6 +108,14 @@ console.log(user)
     }, [data])
 
 
+
+
+    useEffect(() => {
+        const toys = data.filter(e => e.email == user.email);
+        setMyToy([...toys])
+
+
+    }, [user])
 
 
 
@@ -151,6 +157,7 @@ console.log(user)
         signOut(auth).then(() => {
             // Sign-out successful.
             setUser(null);
+
         }).catch((error) => {
             // An error happened.
         });
@@ -158,9 +165,9 @@ console.log(user)
     }
 
 
-  
 
-  
+
+
 
     // onAuth Change==========================
     useEffect(() => {

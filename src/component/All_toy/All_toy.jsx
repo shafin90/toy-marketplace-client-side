@@ -41,7 +41,7 @@ const AllToy = () => {
   const navigate_view = (id) => {
 
     if (user) {
-      navigate(`/${id}`)
+      navigate(`/view_details/${id}`)
     }
     else{
       setLocation(`/${id}`)

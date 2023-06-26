@@ -1,0 +1,24 @@
+.banner-img{
+    position: relative;
+    animation-name: moving;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+
+
+}
+
+
+@keyframes moving {
+    0%{
+        top: 0px;
+    }
+    50%{
+        top: 8px;
+    }
+    100%{
+        top: 0px;
+    }
+
+    
+}

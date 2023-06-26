@@ -70,7 +70,7 @@ const Header = () => {
             >
             
           
-              <NavDropdown.Item  className='border-none' onClick={handleLogout}  href="#logout">Logout</NavDropdown.Item>
+              <NavDropdown.Item  className='border-none' onClick={handleLogout}  as={Link} to='/' >Logout</NavDropdown.Item>
             </NavDropdown>}
           </Nav>
         </Navbar.Collapse>
