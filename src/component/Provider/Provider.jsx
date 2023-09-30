@@ -111,7 +111,7 @@ const Provider = ({ children }) => {
 
 
     useEffect(() => {
-        const toys = data.filter(e => e.email == user.email);
+        const toys = data.filter(e => e.email == user?.email);
         setMyToy([...toys])
 
 
