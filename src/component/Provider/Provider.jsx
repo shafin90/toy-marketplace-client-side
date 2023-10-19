@@ -22,11 +22,32 @@ const Provider = ({ children }) => {
     const [myToy, setMyToy] = useState([]);
     const [spinner, setSpinner] = useState(false);
     const [photoUrl, setPhotoUrl] = useState('');
+    const [latestToy, setLatestToy] = useState(null);// conains the latest 10 item of toys
+    const [featuredProducts, setFeaturedProducts] = useState(null) // contains the featured products
+    const [bestSellerProducts, setBestSellerProducts] = useState(null)// Contains best seller prodcuts
 
 
 
 
+    // some functionaliteis================================================================
 
+    // Taking top 10 items form the updated data
+    useEffect(() => {
+        const latestToys = data.slice(0, 10);
+        setLatestToy(latestToys);
+    }, [data]);
+
+    // Taking  featured items form the updated data
+    useEffect(() => {
+        const featuredItems = data.slice(0, 3);
+        setFeaturedProducts(featuredItems);
+    }, [data]);
+
+    // Taking the best seller products
+    useEffect(() => {
+        const bestSelleritems = data.slice(0, 5);
+        setBestSellerProducts(bestSelleritems);
+    }, [data]);
 
 
 
@@ -97,7 +118,7 @@ const Provider = ({ children }) => {
         setSportsCar([...subCatagory_sportsCar])
 
 
-        
+
 
         // const toys = data.filter(e=>e.email== userEmail);
         // setMyToy(toys);
@@ -115,40 +136,7 @@ const Provider = ({ children }) => {
         setMyToy([...toys])
 
 
-    }, [user])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }, [user, data])
 
 
 
@@ -209,10 +197,10 @@ const Provider = ({ children }) => {
         myToy,
         spinner,
         setPhotoUrl,
-        photoUrl
-
-
-
+        photoUrl,
+        latestToy,
+        featuredProducts,
+        bestSellerProducts
 
     }
 
