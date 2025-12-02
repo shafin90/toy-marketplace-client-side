@@ -1,14 +1,126 @@
-footer{
+footer {
     position: relative;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
 }
 
-footer  h5{
-    font-size: 15px;
+/* Footer - Clean & Minimal */
+.footer-custom {
+    background-color: white;
+    border-top: 3px solid var(--primary-color);
+    box-shadow: 0 -2px 8px rgba(66, 66, 66, 0.05);
+    padding: 3rem 0 1.5rem;
 }
 
-footer p{
-    font-size: 12px;
+.footer-logo {
+    margin-bottom: 1rem;
 }
 
+.footer-logo img {
+    filter: drop-shadow(0 2px 4px rgba(66, 66, 66, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.footer-logo img:hover {
+    transform: scale(1.05);
+}
+
+.footer-custom h5 {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+}
+
+.footer-custom p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.footer-tagline {
+    font-weight: 600;
+    font-size: 0.95rem !important;
+    color: var(--text-dark) !important;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    background-color: var(--soft-yellow);
+    color: var(--secondary-color);
+    border: 2px solid var(--border-color);
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    border-color: var(--primary-color);
+}
+
+/* Footer Divider */
+.footer-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2rem 0 1.5rem;
+}
+
+/* Copyright */
+.copyright {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.separator {
+    margin: 0 0.5rem;
+    color: var(--text-muted);
+}
+
+.seed-link {
+    color: var(--secondary-color);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 0.5rem;
+    padding: 4px 12px;
+    background-color: var(--soft-yellow);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.seed-link:hover {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    border-color: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-custom {
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+}

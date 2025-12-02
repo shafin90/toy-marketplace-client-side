@@ -1,0 +1,117 @@
+/* FAQ Section - Clean & Minimal */
+.faq-wrapper {
+    background-color: white;
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    box-shadow: var(--shadow-sm);
+    border: 2px solid var(--border-color);
+}
+
+.faq-main-title {
+    color: var(--text-dark);
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.emoji-wiggle {
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+.faq-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.faq-accordion {
+    margin-top: 2rem;
+}
+
+.faq-item {
+    border: none !important;
+    margin-bottom: 1rem;
+    border-radius: 15px !important;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    background-color: white;
+    border: 2px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color) !important;
+}
+
+.faq-accordion .accordion-button {
+    background-color: white;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 1.2rem 1.5rem;
+    border: none;
+    border-radius: 15px !important;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.faq-accordion .accordion-button:not(.collapsed) {
+    background-color: var(--soft-yellow);
+    color: var(--text-dark);
+    box-shadow: none;
+}
+
+.faq-accordion .accordion-button:focus {
+    box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.2);
+    border-color: transparent;
+}
+
+.question-icon {
+    font-size: 1.4rem;
+    display: inline-block;
+}
+
+.faq-accordion .accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%238D6E63'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transition: transform 0.3s ease;
+}
+
+.faq-accordion .accordion-button:not(.collapsed)::after {
+    transform: rotate(-180deg);
+}
+
+.faq-accordion .accordion-body {
+    background-color: white;
+    padding: 1.3rem 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .faq-main-title {
+        font-size: 1.8rem;
+    }
+
+    .faq-wrapper {
+        padding: 2rem 1.5rem;
+    }
+
+    .faq-accordion .accordion-button {
+        font-size: 0.95rem;
+        padding: 1rem;
+    }
+
+    .question-icon {
+        font-size: 1.2rem;
+    }
+}

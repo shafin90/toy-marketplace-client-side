@@ -1,19 +1,13 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from 'react';
+import toyService from '../../services/toyService';
+import userAPI from '../../api/userAPI';
 
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
-import { app } from "../../../firebase.config";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
-
+// Create a context for authentication and user data
 export const AuthContext = createContext();
 
-const auth = getAuth(app);
-
-
-
 const Provider = ({ children }) => {
-    // state declareation======================
-    const [data, setData] = useState([])
+    // ---------- State ----------
+    const [data, setData] = useState([]);
     const [regulerCar, setRegulerCar] = useState([]);
     const [trucks, setTrucks] = useState([]);
     const [sportsCar, setSportsCar] = useState([]);
@@ -22,167 +16,132 @@ const Provider = ({ children }) => {
     const [myToy, setMyToy] = useState([]);
     const [spinner, setSpinner] = useState(false);
     const [photoUrl, setPhotoUrl] = useState('');
-    const [latestToy, setLatestToy] = useState(null);// conains the latest 10 item of toys
-    const [featuredProducts, setFeaturedProducts] = useState(null) // contains the featured products
-    const [bestSellerProducts, setBestSellerProducts] = useState(null)// Contains best seller prodcuts
+    const [latestToy, setLatestToy] = useState(null);
+    const [featuredProducts, setFeaturedProducts] = useState(null);
+    const [bestSellerProducts, setBestSellerProducts] = useState(null);
+    const [userCredits, setUserCredits] = useState(0);
+    const [userRole, setUserRole] = useState(null);
 
-
-
-
-    // some functionaliteis================================================================
-
-    // Taking top 10 items form the updated data
+    // ---------- Data Processing ----------
+    // Latest 10 toys
     useEffect(() => {
-        const latestToys = data.slice(0, 10);
-        setLatestToy(latestToys);
+        const latest = data.slice(0, 10);
+        setLatestToy(latest);
     }, [data]);
 
-    // Taking  featured items form the updated data
+    // Featured (first 3) toys
     useEffect(() => {
-        const featuredItems = data.slice(0, 3);
-        setFeaturedProducts(featuredItems);
+        const featured = data.slice(0, 3);
+        setFeaturedProducts(featured);
     }, [data]);
 
-    // Taking the best seller products
+    // Best seller (first 5) toys
     useEffect(() => {
-        const bestSelleritems = data.slice(0, 5);
-        setBestSellerProducts(bestSelleritems);
+        const best = data.slice(0, 5);
+        setBestSellerProducts(best);
     }, [data]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // loading data========================================================================
+    // ---------- Load Toys ----------
     useEffect(() => {
-        fetch('https://carz-server-shafin90.vercel.app/users')
-            .then(res => res.json())
-            .then(data => setData(data))
+        const fetchToys = async () => {
+            try {
+                const toys = await toyService.getAllToys();
+                setData(toys);
+            } catch (err) {
+                console.error('Failed to load toys', err);
+            }
+        };
+        fetchToys();
+    }, []);
 
-    }, [])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // const userEmail = user&&user.email?user.email:user.user.email;
-
-
-
-
-    console.log(user)
-    //handle react tab====================================================================== 
-
+    // ---------- Categorize Cars ----------
     useEffect(() => {
-        const subCatagory_regulerCar = data.filter(e => e.sub_category === 'Regular Car');
-        setRegulerCar([...subCatagory_regulerCar])
+        const regular = data.filter(e => e.sub_category === 'Regular Car');
+        setRegulerCar(regular);
+        const truck = data.filter(e => e.sub_category === 'Truck');
+        setTrucks(truck);
+        const sport = data.filter(e => e.sub_category === 'Sports Car');
+        setSportsCar(sport);
+        setSpinner(true);
+    }, [data]);
 
-
-        const subCatagory_trucks = data.filter(e => e.sub_category === 'Truck');
-        setTrucks([...subCatagory_trucks])
-
-
-        const subCatagory_sportsCar = data.filter(e => e.sub_category === 'Sports Car');
-        setSportsCar([...subCatagory_sportsCar])
-
-
-
-
-        // const toys = data.filter(e=>e.email== userEmail);
-        // setMyToy(toys);
-
-
-        setSpinner(true)
-
-    }, [data])
-
-
-
-
+    // ---------- My Toys for Logged User ----------
     useEffect(() => {
-        const toys = data.filter(e => e.email == user?.email);
-        setMyToy([...toys])
+        const fetchMyToys = async () => {
+            if (user?.email) {
+                try {
+                    const toys = await toyService.getUserToys(user.email);
+                    setMyToy(toys);
+                } catch (err) {
+                    console.error('Failed to load my toys', err);
+                }
+            } else {
+                setMyToy([]);
+            }
+        };
+        fetchMyToys();
+    }, [user]);
 
-
-    }, [user, data])
-
-
-
-    // logout user=========================
-    const handleLogout = () => {
-        signOut(auth).then(() => {
-            // Sign-out successful.
-            setUser(null);
-
-        }).catch((error) => {
-            // An error happened.
-        });
-
-    }
-
-
-
-
-
-
-    // onAuth Change==========================
+    // ---------- Initialize User from localStorage ----------
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, loggedUser => {
-
-            setUser(loggedUser);
-
-
-
-        })
-
-        return () => {
-            unsubscribe();
+        const token = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+        
+        if (token && storedUser) {
+            try {
+                const userData = JSON.parse(storedUser);
+                setUser(userData);
+            } catch (err) {
+                console.error('Error parsing stored user:', err);
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+            }
         }
-    }, [])
+    }, []);
 
+    // ---------- Fetch User Credits and Role ----------
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (user && user.email) {
+                try {
+                    const userData = await userAPI.getUserByEmail(user.email);
+                    if (userData) {
+                        if (userData.coins !== undefined) {
+                            setUserCredits(userData.coins);
+                        } else if (userData.credits !== undefined) {
+                            setUserCredits(userData.credits);
+                        } else {
+                            setUserCredits(50); // default for new users
+                        }
+                        setUserRole(userData.role || 'user');
+                    } else {
+                        setUserCredits(50);
+                        setUserRole('user');
+                    }
+                } catch (err) {
+                    console.error('Failed to fetch user data', err);
+                    setUserCredits(50);
+                    setUserRole('user');
+                }
+            } else {
+                setUserCredits(0);
+                setUserRole(null);
+            }
+        };
+        fetchUserData();
+    }, [user]);
 
+    // ---------- Logout Handler ----------
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+        setUserCredits(0);
+        setUserRole(null);
+    };
 
-
-
-
-
-
-
-    // passing data================
+    // ---------- Context Value ----------
     const info = {
-
         regulerCar,
         sportsCar,
         trucks,
@@ -192,7 +151,6 @@ const Provider = ({ children }) => {
         user,
         setUser,
         handleLogout,
-        auth,
         setMyToy,
         myToy,
         spinner,
@@ -200,16 +158,15 @@ const Provider = ({ children }) => {
         photoUrl,
         latestToy,
         featuredProducts,
-        bestSellerProducts
-
-    }
-
-
+        bestSellerProducts,
+        userCredits,
+        setUserCredits,
+        userRole,
+    };
 
     return (
         <AuthContext.Provider value={info}>
             {children}
-
         </AuthContext.Provider>
     );
 };

@@ -56,7 +56,7 @@ const Gallery = () => {
   return (
     <div className="gallery my-5 " ref={galleryRef}>
       <Container className='mb-5 pb-5 border-bottom'>
-        <h1 className="h1 my-4 text-center">CarCarnival</h1>
+        <h1 className="h1 my-4 text-center">Toy Gallery 📸</h1>
         <Row>
           {images.map((image, index) => (
             <Col key={index} xs={6} md={3} className="gallery-item" data-aos="fade-up">

@@ -17,7 +17,8 @@ const ReactTab = () => {
     <Container className='tab'>
 
       {/* Heading of this catagory */}
-      <h1 className="text-center">Shop By Category</h1>
+      {/* Heading of this catagory */}
+      <h1 className="text-center">Browse Swaps by Category</h1>
 
       <Row className="my-5">
         <Col className='tab_container'>
@@ -49,7 +50,7 @@ const ReactTab = () => {
 
             <Tab eventKey="truck" title="Truck">
               <div className="grid">
-                
+
                 {/*  */}
                 {trucks.length == 0
                   &&

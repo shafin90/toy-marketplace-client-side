@@ -19,13 +19,20 @@ import Register from './component/Register/Register';
 import ViewDetails from './component/ViewDetails/ViewDetails';
 import Add_a_toy from './component/Add_a_toy/Add_a_toy';
 import ToyTable from './component/ToyTable/ToyTable';
-import Blog from './component/Blog/Blog';
+import FAQ from './component/FAQ/FAQ';
+import Seeder from './component/Seeder/Seeder';
 import NotFoundPage from './component/NotFoundPage/NotFoundPage';
-// import ToyTable from './component/ToyTable/ToyTable';
-// import Provider from './component/Provider/Provider';
-
-
-
+import Profile from './component/Profile/Profile';
+import ShopDashboard from './component/ShopDashboard/ShopDashboard';
+import ListOldToy from './component/ListOldToy/ListOldToy';
+import ListShopToy from './component/ListShopToy/ListShopToy';
+import AnalyticsDashboard from './component/AnalyticsDashboard/AnalyticsDashboard';
+import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
+import ShopList from './component/ShopList/ShopList';
+import ShopDetails from './component/ShopDetails/ShopDetails';
+import ShopManagement from './component/ShopManagement/ShopManagement';
+import { UserProvider } from './context/UserContext';
+import { API_CONFIG } from './config/apiConfig';
 
 const router = createBrowserRouter([
   {
@@ -51,35 +58,93 @@ const router = createBrowserRouter([
       {
         path: '/view_details/:id',
         element: <ViewDetails></ViewDetails>,
-        loader: ({ params }) => fetch(`https://carz-server-shafin90.vercel.app/users/${params.id}`)
+        loader: ({ params }) => fetch(`${API_CONFIG.BASE_URL}/toys/${params.id}`)
+          .then(res => {
+            if (!res.ok) {
+              throw new Error('Failed to fetch toy details');
+            }
+            return res.json();
+          })
       },
       {
         path: '/add_a_toy',
         element: <Add_a_toy></Add_a_toy>
       },
       {
+        path: '/list-old-toy',
+        element: <ListOldToy></ListOldToy>
+      },
+      {
+        path: '/list-shop-toy',
+        element: (
+          <ProtectedRoute requiredRole="shop_owner">
+            <ListShopToy></ListShopToy>
+          </ProtectedRoute>
+        )
+      },
+      {
         path: '/toy_table',
         element: <ToyTable></ToyTable>
       },
       {
-        path: '/blog',
-        element: <Blog></Blog>
+        path: '/profile',
+        element: <Profile></Profile>
       },
-      
+      {
+        path: '/shop-dashboard',
+        element: (
+          <ProtectedRoute requiredRole="shop_owner">
+            <ShopDashboard></ShopDashboard>
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/analytics',
+        element: (
+          <ProtectedRoute requiredRole="shop_owner">
+            <AnalyticsDashboard></AnalyticsDashboard>
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/faq',
+        element: <FAQ></FAQ>
+      },
+      {
+        path: '/seed',
+        element: <Seeder></Seeder>
+      },
+      {
+        path: '/shops',
+        element: <ShopList></ShopList>
+      },
+      {
+        path: '/shops/:shopOwnerEmail',
+        element: <ShopDetails></ShopDetails>
+      },
+      {
+        path: '/manage-shop',
+        element: (
+          <ProtectedRoute requiredRole="shop_owner">
+            <ShopManagement></ShopManagement>
+          </ProtectedRoute>
+        )
+      },
+
     ]
   },
   {
     path: '*',
-    element:<NotFoundPage></NotFoundPage>
+    element: <NotFoundPage></NotFoundPage>
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-
-    <Provider>
-      <RouterProvider router={router} />
-    </Provider>
-
+    <UserProvider>
+      <Provider>
+        <RouterProvider router={router} />
+      </Provider>
+    </UserProvider>
   </React.StrictMode>
 );

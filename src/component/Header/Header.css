@@ -1,9 +1,125 @@
-.nav_li{
-    text-decoration:  none;
-    margin-right: 10px;
-    
+/* Header/Navbar - Clean & Minimal */
+.navbar {
+    background-color: white !important;
+    box-shadow: var(--shadow-sm);
+    border-bottom: 3px solid var(--primary-color);
+    padding: 1rem 0;
 }
-.profile-image{
-    width: 30px;
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark) !important;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-brand:hover {
+    color: var(--primary-color) !important;
+}
+
+.navbar-brand img {
+    filter: drop-shadow(0 2px 4px rgba(66, 66, 66, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation Links */
+.nav_li {
+    text-decoration: none;
+    margin: 0 0.5rem;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    color: var(--text-dark) !important;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.nav_li:hover {
+    background-color: var(--soft-yellow);
+    color: var(--secondary-color) !important;
+}
+
+.nav_li.text-primary {
+    background-color: var(--primary-color);
+    color: var(--text-dark) !important;
+}
+
+.nav_li.text-primary:hover {
+    background-color: #FFCA28;
+}
+
+/* Profile Picture */
+.profile-image {
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    object-fit: cover;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+    border-color: var(--secondary-color);
+}
+
+/* Credit Badge */
+.me-2.fw-bold {
+    color: var(--secondary-color) !important;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* Buttons in Navbar */
+.navbar .btn-primary {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    padding: 0.5rem;
+    background: white;
+}
+
+.dropdown-item {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    color: var(--text-dark);
+    padding: 10px 15px;
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background-color: var(--soft-yellow);
+    color: var(--secondary-color);
+}
+
+/* Navbar Toggle */
+.navbar-toggler {
+    border: 2px solid var(--border-color);
+    padding: 8px 12px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .nav_li {
+        margin: 0.3rem 0;
+        display: block;
+    }
 }

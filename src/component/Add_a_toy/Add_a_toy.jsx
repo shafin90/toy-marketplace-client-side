@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
-import { Form, Row, Col, Button, Spinner } from 'react-bootstrap';
+import { useContext, useState } from 'react';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import { AuthContext } from '../Provider/Provider';
 import PageTitle from '../PageTitle/PageTitle';
 import { Toaster, toast } from 'react-hot-toast';
+import toyService from '../../services/toyService';
 
 
 
 const Add_a_toy = () => {
 
-    const { setMyToy, myToy, data, user } = useContext(AuthContext);
-    // state declaration=========================
-    const [email, setEmail] = useState('');
+    const { setMyToy, user } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
 
 
 
@@ -22,7 +22,7 @@ const Add_a_toy = () => {
 
 
 
-  
+
 
 
     const [formData, setFormData] = useState({
@@ -31,14 +31,12 @@ const Add_a_toy = () => {
         seller_name: '',
         seller_email: '',
         sub_category: '',
-        price: '',
+        creditCost: '',
         ratings: '',
         available_quantity: '',
         detail_description: '',
-        email: user.email? user.email:user.user.email
-        
     });
-    
+
 
     const handleInputChange = (event) => {
         const { id, value } = event.target;
@@ -49,44 +47,65 @@ const Add_a_toy = () => {
     };
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-       
 
-        // Send the form data to the backend using the POST method
-        fetch('https://carz-server-shafin90.vercel.app/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => response.json())
-            .then(datas => {
-                // Handle the response from the backend as needed
-                console.log(datas.insertedId);
-                // Clear the form fields
-                setFormData({
-                    picture: '',
-                    name: '',
-                    seller_name: '',
-                    seller_email: '',
-                    sub_category: '',
-                    price: '',
-                    ratings: '',
-                    available_quantity: '',
-                    detail_description: '',
-                    email: user.email? user.email:user.user.email
-                
-                });
+        if (!user?.email) {
+            toast.error('Please login to add a toy');
+            return;
+        }
 
-                // Show the toast message
-                toast.success('Item has been added to database');
-            })
-            .catch(error => {
-                // Handle any errors that occur during the POST request
-                console.error(error);
+        try {
+            setLoading(true);
+
+            // Map frontend field names to backend expected format
+            // Backend accepts any fields, but we'll use sellerEmail as required
+            const toyData = {
+                name: formData.name,
+                picture: formData.picture,
+                pictureUrl: formData.picture, // Support both field names
+                sellerName: formData.seller_name,
+                seller_name: formData.seller_name, // Support both
+                sellerEmail: formData.seller_email || user.email,
+                seller_email: formData.seller_email || user.email, // Support both
+                subcategory: formData.sub_category,
+                sub_category: formData.sub_category, // Support both
+                creditCost: parseInt(formData.creditCost) || 10,
+                ratings: formData.ratings,
+                quantity: parseInt(formData.available_quantity) || 1,
+                available_quantity: parseInt(formData.available_quantity) || 1, // Support both
+                description: formData.detail_description,
+                detail_description: formData.detail_description, // Support both
+            };
+
+            await toyService.addToy(toyData);
+
+            // Clear the form fields
+            setFormData({
+                picture: '',
+                name: '',
+                seller_name: '',
+                seller_email: '',
+                sub_category: '',
+                creditCost: '',
+                ratings: '',
+                available_quantity: '',
+                detail_description: '',
             });
+
+            // Refresh my toys list
+            if (user?.email) {
+                const updatedToys = await toyService.getUserToys(user.email);
+                setMyToy(updatedToys);
+            }
+
+            toast.success('Item has been added to database');
+        } catch (error) {
+            console.error('Error adding toy:', error);
+            toast.error(error.message || 'Failed to add toy. Please try again.');
+        } finally {
+            setLoading(false);
+        }
 
 
 
@@ -102,7 +121,7 @@ const Add_a_toy = () => {
     return (
         <Form className='container mb-5' onSubmit={handleSubmit}>
             <PageTitle title={"Add a toy"}></PageTitle>
-            <h1 className='h1 my-4 text-center'>Add an item</h1>
+            <h1 className='h1 my-4 text-center'>List a Toy for Swap</h1>
             <Row>
                 <Col xs={12} md={6}>
                     <Form.Group controlId="picture">
@@ -132,9 +151,9 @@ const Add_a_toy = () => {
                             <option value="Sports Car">Sports Car</option>
                         </Form.Control>
                     </Form.Group>
-                    <Form.Group controlId="price">
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control required type="number" placeholder="Enter price" value={formData.price} onChange={handleInputChange} />
+                    <Form.Group controlId="creditCost">
+                        <Form.Label>Credit Cost (💎)</Form.Label>
+                        <Form.Control required type="number" placeholder="e.g. 20" value={formData.creditCost} onChange={handleInputChange} />
                     </Form.Group>
                     <Form.Group controlId="ratings">
                         <Form.Label>Rating</Form.Label>
@@ -150,7 +169,9 @@ const Add_a_toy = () => {
                 <Form.Label>Detail Description</Form.Label>
                 <Form.Control required as="textarea" rows={5} placeholder="Enter detail description" value={formData.detail_description} onChange={handleInputChange} />
             </Form.Group>
-            <Button className='my-3' variant="primary" type="submit">Submit</Button>
+            <Button className='my-3' variant="primary" type="submit" disabled={loading}>
+                {loading ? 'Adding...' : 'Submit'}
+            </Button>
             <Toaster />
         </Form>
     );

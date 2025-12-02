@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Baby Theme - Clean & Minimal (No Gradients) */
+    --soft-yellow: #FFF9E6;
+    /* Very Soft Yellow */
+    --light-yellow: #FFE8A3;
+    /* Light Yellow */
+    --golden: #FFD54F;
+    /* Golden Yellow */
+
+    --light-brown: #D7CCC8;
+    /* Soft Brown */
+    --medium-brown: #A1887F;
+    /* Medium Brown */
+    --warm-brown: #8D6E63;
+    /* Warm Brown */
+
+    --soft-black: #424242;
+    /* Soft Black */
+    --white: #FFFFFF;
+    /* Pure White */
+
+    /* Primary Colors - Clean & Simple */
+    --primary-color: #FFD54F;
+    /* Golden Yellow */
+    --secondary-color: #8D6E63;
+    /* Warm Brown */
+    --background-color: #FFFEF9;
+    /* Off-White */
+
+    /* Text Colors */
+    --text-dark: #424242;
+    --text-light: #6D4C41;
+    --text-muted: #A1887F;
+
+    /* Borders */
+    --border-color: #E8E0D5;
+    --border-light: #F5F0E8;
+
+    /* Shadows - Soft */
+    --shadow-sm: 0 2px 8px rgba(66, 66, 66, 0.06);
+    --shadow-md: 0 4px 12px rgba(66, 66, 66, 0.08);
+    --shadow-lg: 0 8px 20px rgba(66, 66, 66, 0.1);
+
+    /* Font */
+    --font-family: 'Fredoka', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family) !important;
+    background-color: var(--background-color) !important;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.3;
+}
+
+/* Buttons - Clean & Simple */
+.btn {
+    border-radius: 50px !important;
+    font-weight: 600;
+    padding: 12px 28px;
+    border: none;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    color: var(--text-dark) !important;
+    border: 2px solid var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: #FFCA28 !important;
+    border-color: #FFCA28 !important;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+    border: 2px solid var(--secondary-color) !important;
+}
+
+.btn-secondary:hover {
+    background-color: #6D4C41 !important;
+    border-color: #6D4C41 !important;
+}
+
+.btn-outline-primary {
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+    border: 2px solid var(--primary-color) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--text-dark) !important;
+}
+
+/* Cards - Clean Design */
+.card {
+    border-radius: 20px !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-sm);
+    background-color: white;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color) !important;
+}
+
+.card-img-top {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Input Fields - Clean */
+.form-control {
+    border-radius: 12px !important;
+    border: 2px solid var(--border-color);
+    padding: 12px 18px;
+    background-color: white;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.15);
+    background-color: white;
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+/* Navbar - Clean & Minimal */
+.navbar {
+    background-color: white !important;
+    box-shadow: var(--shadow-sm);
+    border-bottom: 3px solid var(--primary-color);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark) !important;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-dark) !important;
+    padding: 0.5rem 1rem !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+/* Table Styles - Clean */
+.table {
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.table thead th {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    border: none;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-dark);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--soft-yellow);
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--light-yellow);
+}
+
+/* Badge Styles */
+.badge {
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+    color: var(--text-dark) !important;
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+}
+
+.bg-info {
+    background-color: var(--light-yellow) !important;
+    color: var(--text-dark) !important;
+}
+
+/* Links */
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection */
+::selection {
+    background-color: var(--light-yellow);
+    color: var(--text-dark);
+}
+
+/* Utility Classes */
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-secondary {
+    color: var(--secondary-color) !important;
+}
+
+.bg-light-yellow {
+    background-color: var(--soft-yellow) !important;
+}
+
+.border-primary {
+    border-color: var(--primary-color) !important;
+}
+
+/* Container Spacing */
+.container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}

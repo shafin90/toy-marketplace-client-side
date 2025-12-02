@@ -1,108 +1,89 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Provider/Provider';
-import { Table, Button, Form, FormControl } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 import PageTitle from '../PageTitle/PageTitle';
+import SearchFilter from '../SearchFilter/SearchFilter';
+import toyService from '../../services/toyService';
+import MyCard from '../MyCard/MyCard';
 
 const AllToy = () => {
-  const { data, user, setLocation } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  const [twentyData, setTwentyData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-
-
-  useEffect(() => {
-    if (data.length > 20) {
-      setTwentyData(data.slice(0, 20));
-    } else {
-      setTwentyData([...data]);
-    }
-  }, [data]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (searchQuery) {
-      const filteredData = data.filter((toy) =>
-        toy.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setTwentyData(filteredData.slice(0, 20));
-    } else {
-      setTwentyData([...data.slice(0, 20)]);
-    }
-  }, [searchQuery, data]);
+    fetchToys();
+  }, []);
 
-  const handleClear = () => {
-    setSearchQuery('');
-    setTwentyData(data.slice(0, 20));
+  const fetchToys = async (filters = {}) => {
+    try {
+      setLoading(true);
+      const toys = await toyService.getAllToys(filters);
+      setFilteredData(toys);
+      
+      // Extract unique categories
+      const uniqueCategories = [...new Set(toys.map(t => t.sub_category || t.subcategory).filter(Boolean))];
+      setCategories(uniqueCategories);
+    } catch (error) {
+      console.error('Error fetching toys:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const handleFilterChange = (filters) => {
+    // Build query params
+    const params = new URLSearchParams();
+    if (filters.search) params.append('search', filters.search);
+    if (filters.category) params.append('category', filters.category);
+    if (filters.minPrice) params.append('minPrice', filters.minPrice);
+    if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
+    if (filters.sortBy) params.append('sortBy', filters.sortBy);
 
-
-  const navigate = useNavigate();
-  const navigate_view = (id) => {
-
-    if (user) {
-      navigate(`/view_details/${id}`)
-    }
-    else{
-      setLocation(`/${id}`)
-      navigate('/login');
-      
-    }
-
-
-  }
+    fetchToys(Object.fromEntries(params));
+  };
 
   return (
-    
-    <div className="container">
-       <PageTitle title={"All Toy"}></PageTitle>
-      <h3 className="mt-5">Search by Name</h3>
-      <Form className="mb-4">
-        <Form.Group className='mb-3' controlId="searchBar">
-          <FormControl
-            type="text"
-            name="name"
-            placeholder="Enter your search query"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" className="me-2" type="submit">
-          Search
-        </Button>
-        <Button variant="danger" onClick={handleClear}>
-          Clear
-        </Button>
-      </Form>
+    <Container className="my-5">
+      <PageTitle title={"All Toys"}></PageTitle>
+      
+      <Row>
+        {/* Left Side - Filter Options */}
+        <Col lg={3} md={4} className="mb-4">
+          <div className="sticky-top" style={{ top: '20px' }}>
+            <SearchFilter onFilterChange={handleFilterChange} categories={categories} />
+          </div>
+        </Col>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Seller</th>
-            <th>Toy Name</th>
-            <th>Sub-category</th>
-            <th>Price</th>
-            <th>Available Quantity</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {twentyData.map((toy, index) => (
-            <tr key={index}>
-              <td>{toy.seller_name ? toy.seller_name : '-'}</td>
-              <td>{toy.name}</td>
-              <td>{toy.sub_category}</td>
-              <td>{toy.price}$</td>
-              <td>{toy.available_quantity}</td>
-              <td>
-                
-                <Button onClick={() => navigate_view(toy._id)} variant="primary">View Details</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+        {/* Right Side - Cards */}
+        <Col lg={9} md={8}>
+          {loading ? (
+            <div className="text-center my-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          ) : filteredData.length === 0 ? (
+            <div className="text-center my-5">
+              <h4>No toys found</h4>
+              <p className="text-muted">Try adjusting your search filters.</p>
+            </div>
+          ) : (
+            <Row>
+              {filteredData.map((toy) => (
+                <Col lg={4} md={6} sm={6} xs={12} key={toy._id} className="mb-4">
+                  <div style={{ maxWidth: '100%' }}>
+                    <MyCard info={toy} />
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
