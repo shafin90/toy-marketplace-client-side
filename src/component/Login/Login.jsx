@@ -146,7 +146,7 @@ const Login = () => {
                                 <div className="mb-3 p-3 bg-light rounded">
                                     <p className="mb-1"><strong>Account Type:</strong></p>
                                     <Badge bg={selectedRole === 'shop_owner' ? 'success' : 'primary'} className="fs-6">
-                                        {selectedRole === 'shop_owner' ? '🏪 Shop Owner' : '👤 Buyer / User'}
+                                        {selectedRole === 'shop_owner' ? 'Shop Owner' : 'Buyer / User'}
                                     </Badge>
                                     {userData.shopName && (
                                         <p className="mt-2 mb-0"><small>Shop: {userData.shopName}</small></p>

@@ -1,47 +1,48 @@
+/* Minimal Shop Dashboard */
+
 .stats-card {
-    transition: transform 0.2s, box-shadow 0.2s;
-    border-left: 4px solid transparent;
+    border-left: 3px solid transparent;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+    cursor: pointer;
 }
 
 .stats-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15) !important;
+    background-color: #f9fafb;
+    transform: translateY(-2px);
+    border-color: #000000;
 }
 
 .stats-card-primary {
-    border-left-color: #0d6efd;
+    border-left-color: #000000;
 }
 
 .stats-card-success {
-    border-left-color: #198754;
+    border-left-color: #374151;
 }
 
 .stats-card-info {
-    border-left-color: #0dcaf0;
+    border-left-color: #4b5563;
 }
 
 .stats-card-warning {
-    border-left-color: #ffc107;
+    border-left-color: #6b7280;
 }
 
 .stats-icon {
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 .product-card {
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
 }
 
 .shop-dashboard-card {
-    transition: transform 0.2s;
-}
-
-.shop-dashboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
 }

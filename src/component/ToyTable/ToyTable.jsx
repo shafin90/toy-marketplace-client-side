@@ -215,14 +215,14 @@ const ToyTable = () => {
                       </Button>
                       <div className="d-flex gap-2">
                         <Button 
-                          variant="warning" 
+                          variant="outline-dark" 
                           onClick={() => handleShowModal(toy)}
                           className="flex-fill"
                         >
                           Update
                         </Button>
                         <Button 
-                          variant="danger" 
+                          variant="dark" 
                           onClick={() => onDelete(toy._id)}
                           className="flex-fill"
                         >

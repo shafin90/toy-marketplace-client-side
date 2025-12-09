@@ -89,7 +89,7 @@ const AnalyticsDashboard = () => {
                 <Col md={3}>
                     <Card className="text-center">
                         <Card.Body>
-                            <h3 className="text-warning">⭐ {analytics.averageRating.toFixed(1)}</h3>
+                            <h3 className="text-warning">{analytics.averageRating.toFixed(1)}</h3>
                             <p className="text-muted mb-0">Average Rating ({analytics.totalReviews} reviews)</p>
                         </Card.Body>
                     </Card>
@@ -103,7 +103,7 @@ const AnalyticsDashboard = () => {
                             <h5>Revenue Summary</h5>
                         </Card.Header>
                         <Card.Body>
-                            <p><strong>Coin Revenue:</strong> 💎 {analytics.totalCoinRevenue}</p>
+                            <p><strong>Coin Revenue:</strong> {analytics.totalCoinRevenue} coins</p>
                             <p><strong>Money Revenue:</strong> ৳ {analytics.totalMoneyRevenue}</p>
                             <hr />
                             <h4 className="text-success">Total: ৳ {analytics.totalRevenue}</h4>
@@ -168,7 +168,7 @@ const AnalyticsDashboard = () => {
                                                 <td>{sale.amount}</td>
                                                 <td>
                                                     <Badge bg={sale.currency === 'coins' ? 'info' : 'success'}>
-                                                        {sale.currency === 'coins' ? '💎 Coins' : '৳ Money'}
+                                                        {sale.currency === 'coins' ? 'Coins' : '৳ Money'}
                                                     </Badge>
                                                 </td>
                                             </tr>

@@ -152,7 +152,7 @@ const Add_a_toy = () => {
                         </Form.Control>
                     </Form.Group>
                     <Form.Group controlId="creditCost">
-                        <Form.Label>Credit Cost (💎)</Form.Label>
+                        <Form.Label>Credit Cost</Form.Label>
                         <Form.Control required type="number" placeholder="e.g. 20" value={formData.creditCost} onChange={handleInputChange} />
                     </Form.Group>
                     <Form.Group controlId="ratings">

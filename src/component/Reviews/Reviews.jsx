@@ -67,7 +67,7 @@ const Reviews = ({ toyId, shopOwnerEmail }) => {
     };
 
     const renderStars = (rating) => {
-        return '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
+        return rating + ' / 5';
     };
 
     return (
@@ -125,11 +125,11 @@ const Reviews = ({ toyId, shopOwnerEmail }) => {
                                 value={reviewForm.rating}
                                 onChange={(e) => setReviewForm({ ...reviewForm, rating: e.target.value })}
                             >
-                                <option value="5">5 ⭐⭐⭐⭐⭐</option>
-                                <option value="4">4 ⭐⭐⭐⭐</option>
-                                <option value="3">3 ⭐⭐⭐</option>
-                                <option value="2">2 ⭐⭐</option>
-                                <option value="1">1 ⭐</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="1">1 - Poor</option>
                             </Form.Select>
                         </Form.Group>
 

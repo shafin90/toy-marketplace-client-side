@@ -23,7 +23,7 @@ const HowItWorks = () => {
     return (
         <Container className="my-5 py-5">
             <div className="text-center mb-5">
-                <h2 className="display-5 fw-bold text-primary">How Toy Swap Works 🔄</h2>
+                <h2 className="display-5 fw-bold text-primary">How Toy Swap Works</h2>
                 <p className="lead text-muted">Join the circle in 3 simple steps</p>
             </div>
             <Row>

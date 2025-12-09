@@ -124,7 +124,7 @@ const ExchangeModal = ({ show, onClose, productId, userId, onSuccess }) => {
                                             <h6 className="mb-1">{oldToy.name}</h6>
                                             <small className="text-muted">
                                                 {oldToy.purchaseLocation && (
-                                                    <>📍 {oldToy.purchaseLocation}<br /></>
+                                                    <>Location: {oldToy.purchaseLocation}<br /></>
                                                 )}
                                                 {oldToy.purchaseDate && (
                                                     <>📅 {new Date(oldToy.purchaseDate).toLocaleDateString()}</>

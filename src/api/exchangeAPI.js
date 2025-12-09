@@ -32,6 +32,11 @@ const exchangeAPI = {
         return response.data;
     },
 
+    confirmExchangePayment: async (exchangeId, paymentIntentId) => {
+        const response = await apiClient.post(`/exchange/${exchangeId}/confirm-payment`, { paymentIntentId });
+        return response.data;
+    },
+
     confirmExchange: async (exchangeId) => {
         const response = await apiClient.put(`/exchange/${exchangeId}/confirm`);
         return response.data;

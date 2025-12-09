@@ -47,7 +47,7 @@ const MyCard = ({ info }) => {
               <span className="text-decoration-line-through text-muted me-2">
                 ৳ {info.price || 0}
               </span>
-              <span className="badge bg-danger fs-6">৳ {info.offerPrice}</span>
+              <span className="badge bg-dark fs-6">৳ {info.offerPrice}</span>
             </>
           ) : (
             <span className="badge bg-success fs-6">
@@ -59,7 +59,7 @@ const MyCard = ({ info }) => {
           {description ? description.slice(0, 50) + '...' : 'No description available.'}
         </Card.Text>
         <Button onClick={() => handleNavigate(_id)} variant="primary" className="w-100 mt-2">
-          Swap Now 🔄
+          Swap Now
         </Button>
       </Card.Body>
     </Card>

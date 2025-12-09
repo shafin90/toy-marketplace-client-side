@@ -1,4 +1,5 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import './OurGoal.css';
 
 const OurGoal = () => {
     return (
@@ -8,10 +9,10 @@ const OurGoal = () => {
                     <h1 className="display-4 fw-bold mb-5 text-center">Our Goal</h1>
                     <Row className="g-4">
                         <Col md={4}>
-                            <Card className="h-100 border-0 shadow-sm">
+                            <Card className="h-100 border-0 shadow-sm our-goal-card">
                                 <Card.Body className="text-center p-4">
                                     <div className="mb-3">
-                                        <i className="fas fa-recycle fa-3x text-success"></i>
+                                        <h2 className="mb-0">RECYCLE</h2>
                                     </div>
                                     <h4 className="mb-3">Sustainable Shopping</h4>
                                     <p className="text-muted">
@@ -21,10 +22,10 @@ const OurGoal = () => {
                             </Card>
                         </Col>
                         <Col md={4}>
-                            <Card className="h-100 border-0 shadow-sm">
+                            <Card className="h-100 border-0 shadow-sm our-goal-card">
                                 <Card.Body className="text-center p-4">
                                     <div className="mb-3">
-                                        <i className="fas fa-handshake fa-3x text-primary"></i>
+                                        <h2 className="mb-0">HANDSHAKE</h2>
                                     </div>
                                     <h4 className="mb-3">Support Local Shops</h4>
                                     <p className="text-muted">
@@ -34,10 +35,10 @@ const OurGoal = () => {
                             </Card>
                         </Col>
                         <Col md={4}>
-                            <Card className="h-100 border-0 shadow-sm">
+                            <Card className="h-100 border-0 shadow-sm our-goal-card">
                                 <Card.Body className="text-center p-4">
                                     <div className="mb-3">
-                                        <i className="fas fa-smile fa-3x text-warning"></i>
+                                        <h2 className="mb-0">SMILE</h2>
                                     </div>
                                     <h4 className="mb-3">Happy Families</h4>
                                     <p className="text-muted">

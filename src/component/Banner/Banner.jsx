@@ -7,97 +7,94 @@ const Banner = () => {
         <section className="hero-section">
             <Container>
                 <Row className="align-items-center min-vh-70">
-                    {/* Left Content */}
-                    <Col lg={6} className="hero-content">
-                        <div className="hero-badge">
-                            <span className="badge-icon">🎉</span>
-                            <span className="badge-text">Join the Swap Circle</span>
+                    <Col lg={12} className="hero-content">
+                        {/* Tagline */}
+                        <div className="hero-tagline">
+                            <span className="tagline-text">CREDIT-BASED TOY EXCHANGE</span>
                         </div>
 
-                        <h1 className="hero-title">
-                            Give a Toy,<br />
-                            <span className="highlight">Get a Toy</span>
-                        </h1>
+                        {/* Main Headline */}
+                        <div className="hero-headline-wrapper">
+                            <h1 className="hero-headline">
+                                <span className="headline-line">STOP</span>
+                                <span className="headline-line highlight-line">BUYING</span>
+                                <span className="headline-line">START</span>
+                                <span className="headline-line highlight-line">SWAPPING</span>
+                            </h1>
+                        </div>
 
-                        <p className="hero-subtitle">
-                            Stop buying. Start swapping. Save money, reduce waste, and give your kids endless joy with our credit-based toy exchange.
+                        {/* Core Value Proposition */}
+                        <div className="hero-motto">
+                            <p className="motto-main">Give Your Old Toy</p>
+                            <p className="motto-arrow">→</p>
+                            <p className="motto-main">Get Credits</p>
+                            <p className="motto-arrow">→</p>
+                            <p className="motto-main">Take New Toy</p>
+                        </div>
+
+                        {/* Description */}
+                        <p className="hero-description">
+                            A sustainable marketplace where toys find new homes. 
+                            Shop owners list products. Users purchase with cash or exchange old toys for discounts. 
+                            Every swap reduces waste and saves money.
                         </p>
 
-                        <div className="hero-features">
-                            <div className="feature-item">
-                                <span className="feature-icon">💎</span>
-                                <div className="feature-text">
-                                    <strong>Earn Credits</strong>
-                                    <p>List your toys to earn swap credits</p>
+                        {/* Key Benefits Grid */}
+                        <div className="hero-benefits">
+                            <div className="benefit-item">
+                                <div className="benefit-number">01</div>
+                                <div className="benefit-content">
+                                    <h3 className="benefit-title">LIST OLD TOYS</h3>
+                                    <p className="benefit-text">Earn virtual credits by listing toys you no longer need</p>
                                 </div>
                             </div>
-
-                            <div className="feature-item">
-                                <span className="feature-icon">🔄</span>
-                                <div className="feature-text">
-                                    <strong>Swap Freely</strong>
-                                    <p>Use credits to get new toys for your kids</p>
+                            <div className="benefit-divider"></div>
+                            <div className="benefit-item">
+                                <div className="benefit-number">02</div>
+                                <div className="benefit-content">
+                                    <h3 className="benefit-title">SHOP VIRTUALLY</h3>
+                                    <p className="benefit-text">Browse toys from local shop owners or community members</p>
                                 </div>
                             </div>
-
-                            <div className="feature-item">
-                                <span className="feature-icon">🌍</span>
-                                <div className="feature-text">
-                                    <strong>Save Planet</strong>
-                                    <p>Reduce waste and help the environment</p>
+                            <div className="benefit-divider"></div>
+                            <div className="benefit-item">
+                                <div className="benefit-number">03</div>
+                                <div className="benefit-content">
+                                    <h3 className="benefit-title">EXCHANGE OR BUY</h3>
+                                    <p className="benefit-text">Use credits to swap or pay with cash. Get discounts with old toy exchange</p>
                                 </div>
                             </div>
                         </div>
 
+                        {/* CTA Section */}
                         <div className="hero-actions">
-                            <Link to="/all-toys">
-                                <Button className="btn btn-primary btn-lg">
-                                    Browse Toys 🚗
+                            <Link to="/all_toy">
+                                <Button className="btn btn-primary btn-lg hero-cta-primary">
+                                    EXPLORE TOYS
                                 </Button>
                             </Link>
-                            <Link to="/add-toy">
-                                <Button className="btn btn-outline-primary btn-lg">
-                                    List Your Toy
+                            <Link to="/list-old-toy">
+                                <Button className="btn btn-outline-primary btn-lg hero-cta-secondary">
+                                    LIST YOUR TOY
                                 </Button>
                             </Link>
                         </div>
 
+                        {/* Stats */}
                         <div className="hero-stats">
                             <div className="stat-item">
                                 <div className="stat-number">500+</div>
-                                <div className="stat-label">Toys Available</div>
+                                <div className="stat-label">TOYS AVAILABLE</div>
                             </div>
                             <div className="stat-divider"></div>
                             <div className="stat-item">
                                 <div className="stat-number">200+</div>
-                                <div className="stat-label">Happy Families</div>
+                                <div className="stat-label">ACTIVE SHOPS</div>
                             </div>
                             <div className="stat-divider"></div>
                             <div className="stat-item">
                                 <div className="stat-number">1000+</div>
-                                <div className="stat-label">Swaps Made</div>
-                            </div>
-                        </div>
-                    </Col>
-
-                    {/* Right Image */}
-                    <Col lg={6} className="hero-image-col">
-                        <div className="hero-image-wrapper">
-                            <div className="image-decoration decoration-1"></div>
-                            <div className="image-decoration decoration-2"></div>
-                            <img
-                                src="https://clipartmag.com/images/cartoon-images-of-cars-39.png"
-                                alt="Toy Car"
-                                className="hero-image"
-                            />
-                            <div className="floating-badge badge-1">
-                                <span className="emoji">🎈</span>
-                            </div>
-                            <div className="floating-badge badge-2">
-                                <span className="emoji">⭐</span>
-                            </div>
-                            <div className="floating-badge badge-3">
-                                <span className="emoji">🎁</span>
+                                <div className="stat-label">SUCCESSFUL SWAPS</div>
                             </div>
                         </div>
                     </Col>

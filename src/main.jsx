@@ -31,6 +31,7 @@ import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 import ShopList from './component/ShopList/ShopList';
 import ShopDetails from './component/ShopDetails/ShopDetails';
 import ShopManagement from './component/ShopManagement/ShopManagement';
+import Chat from './component/Chat/Chat';
 import { UserProvider } from './context/UserContext';
 import { API_CONFIG } from './config/apiConfig';
 
@@ -127,6 +128,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute requiredRole="shop_owner">
             <ShopManagement></ShopManagement>
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/chat',
+        element: (
+          <ProtectedRoute>
+            <Chat></Chat>
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/chat/:userEmail',
+        element: (
+          <ProtectedRoute>
+            <Chat></Chat>
           </ProtectedRoute>
         )
       },

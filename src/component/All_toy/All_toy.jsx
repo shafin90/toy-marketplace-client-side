@@ -73,7 +73,7 @@ const AllToy = () => {
           ) : (
             <Row>
               {filteredData.map((toy) => (
-                <Col lg={4} md={6} sm={6} xs={12} key={toy._id} className="mb-4">
+                <Col lg={6} md={6} sm={12} xs={12} key={toy._id} className="mb-4">
                   <div style={{ maxWidth: '100%' }}>
                     <MyCard info={toy} />
                   </div>

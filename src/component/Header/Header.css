@@ -1,125 +1,77 @@
-/* Header/Navbar - Clean & Minimal */
+/* Black & White Header - No Animations */
+
 .navbar {
-    background-color: white !important;
-    box-shadow: var(--shadow-sm);
-    border-bottom: 3px solid var(--primary-color);
-    padding: 1rem 0;
+    background-color: white;
+    border-bottom: 1px solid #000000;
+    padding: 12px 0;
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-dark) !important;
-    transition: all 0.3s ease;
+    font-size: 20px;
+    font-weight: 600;
+    color: #000000;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 8px;
 }
 
-.navbar-brand:hover {
-    color: var(--primary-color) !important;
-}
 
-.navbar-brand img {
-    filter: drop-shadow(0 2px 4px rgba(66, 66, 66, 0.1));
-    transition: transform 0.3s ease;
-}
-
-.navbar-brand img:hover {
-    transform: scale(1.05);
-}
-
-/* Navigation Links */
 .nav_li {
     text-decoration: none;
-    margin: 0 0.5rem;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-weight: 600;
-    color: var(--text-dark) !important;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
+    padding: 8px 16px;
+    color: #000000;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+}
+
+.nav_li::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    background-color: #000000;
+    transform: scaleX(0);
+    transition: transform 0.2s;
 }
 
 .nav_li:hover {
-    background-color: var(--soft-yellow);
-    color: var(--secondary-color) !important;
+    background-color: #f9fafb;
+    text-decoration: none;
+}
+
+.nav_li:hover::after {
+    transform: scaleX(1);
 }
 
 .nav_li.text-primary {
-    background-color: var(--primary-color);
-    color: var(--text-dark) !important;
+    color: #ffffff;
+    background-color: #000000;
 }
 
-.nav_li.text-primary:hover {
-    background-color: #FFCA28;
+.nav_li.text-primary::after {
+    background-color: #ffffff;
+    transform: scaleX(1);
 }
 
-/* Profile Picture */
-.profile-image {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 2px solid var(--primary-color);
-    object-fit: cover;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.profile-image:hover {
-    transform: scale(1.05);
-    border-color: var(--secondary-color);
-}
-
-/* Credit Badge */
-.me-2.fw-bold {
-    color: var(--secondary-color) !important;
-    font-size: 1.05rem;
-    font-weight: 700;
-}
-
-/* Buttons in Navbar */
-.navbar .btn-primary {
-    padding: 10px 24px;
-    font-size: 0.9rem;
-}
-
-/* Dropdown Menu */
-.dropdown-menu {
-    border-radius: 15px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
-    padding: 0.5rem;
-    background: white;
-}
-
-.dropdown-item {
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    color: var(--text-dark);
-    padding: 10px 15px;
-    font-weight: 500;
-}
-
-.dropdown-item:hover {
-    background-color: var(--soft-yellow);
-    color: var(--secondary-color);
-}
-
-/* Navbar Toggle */
 .navbar-toggler {
-    border: 2px solid var(--border-color);
-    padding: 8px 12px;
+    border: 1px solid #000000;
+    padding: 6px 10px;
 }
 
 .navbar-toggler:focus {
-    box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.2);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+    outline: none;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
+@media (max-width: 991px) {
     .nav_li {
-        margin: 0.3rem 0;
         display: block;
+        margin: 4px 0;
     }
 }

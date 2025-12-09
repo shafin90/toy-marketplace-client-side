@@ -1,0 +1,40 @@
+/* Black & White OurGoal - Text Hover Effects */
+
+.our-goal-card {
+    border: 1px solid #000000;
+    transition: background-color 0.2s;
+}
+
+.our-goal-card:hover {
+    background-color: #f9fafb;
+}
+
+.our-goal-card h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.our-goal-card:hover h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #000000;
+}
+
+.our-goal-card h4 {
+    color: #000000;
+    font-weight: 600;
+}
+
+.our-goal-card p {
+    color: #6b7280;
+}
+

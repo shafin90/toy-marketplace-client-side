@@ -1,10 +1,12 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { Container, Row, Col, Card, Badge, Image, Button, Modal, Form } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/Provider';
 import shopAPI from '../../api/shopAPI';
+import chatAPI from '../../api/chatAPI';
 import { toast } from 'react-hot-toast';
 import { getImageUrl } from '../../config/apiConfig';
+import { initializeSocket } from '../../utils/socket';
 import PageTitle from '../PageTitle/PageTitle';
 import './ShopDetails.css';
 
@@ -17,7 +19,9 @@ const ShopDetails = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [saving, setSaving] = useState(false);
     const [preview, setPreview] = useState(null);
+    const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
     const navigate = useNavigate();
+    const socketRef = useRef(null);
     
     const isOwner = user?.email === shopOwnerEmail && userRole === 'shop_owner';
     
@@ -31,7 +35,26 @@ const ShopDetails = () => {
 
     useEffect(() => {
         fetchShopDetails();
-    }, [shopOwnerEmail]);
+        if (isOwner && user?.email) {
+            fetchUnreadMessagesCount();
+            
+            // Set up socket connection for real-time message updates
+            const token = localStorage.getItem('token');
+            if (token) {
+                const socket = initializeSocket(token);
+                socketRef.current = socket;
+                
+                // Listen for new messages to update unread count
+                socket.on('new-message-notification', () => {
+                    fetchUnreadMessagesCount();
+                });
+                
+                return () => {
+                    socket.off('new-message-notification');
+                };
+            }
+        }
+    }, [shopOwnerEmail, isOwner, user?.email]);
 
     const fetchShopDetails = async () => {
         try {
@@ -148,6 +171,48 @@ const ShopDetails = () => {
         navigate(`/view_details/${toyId}`);
     };
 
+    const fetchUnreadMessagesCount = async () => {
+        try {
+            const conversations = await chatAPI.getUserConversations();
+            const unreadCount = conversations.reduce((total, conv) => {
+                return total + (conv.unreadCount || 0);
+            }, 0);
+            setUnreadMessagesCount(unreadCount);
+        } catch (error) {
+            console.error('Error fetching unread messages:', error);
+        }
+    };
+
+    const handleChatWithOwner = async () => {
+        if (!user) {
+            toast.error('Please login to chat with the shop owner');
+            navigate('/login');
+            return;
+        }
+
+        if (isOwner) {
+            toast.error('You cannot chat with yourself');
+            return;
+        }
+
+        try {
+            // Get or create conversation with shop owner
+            const conversation = await chatAPI.getOrCreateConversation(shopOwnerEmail);
+            
+            // Navigate to chat page with conversation
+            navigate(`/chat/${shopOwnerEmail}`, { 
+                state: { conversationId: conversation._id } 
+            });
+        } catch (error) {
+            console.error('Error starting chat:', error);
+            toast.error(error.response?.data?.message || 'Failed to start chat');
+        }
+    };
+
+    const handleViewMessages = () => {
+        navigate('/chat');
+    };
+
     if (loading) {
         return (
             <Container className="my-5">
@@ -197,7 +262,7 @@ const ShopDetails = () => {
                                             width: '200px', 
                                             height: '200px', 
                                             objectFit: 'cover',
-                                            border: '3px solid #0d6efd'
+                                            border: '3px solid #000000'
                                         }}
                                     />
                                 </Col>
@@ -205,13 +270,33 @@ const ShopDetails = () => {
                                     <div className="d-flex justify-content-between align-items-start mb-3">
                                         <h2 className="text-primary mb-0">{shop.shopName || 'Unnamed Shop'}</h2>
                                         {isOwner && (
-                                            <Button 
-                                                variant="outline-primary" 
-                                                size="sm"
-                                                onClick={handleEditClick}
-                                            >
-                                                <i className="fas fa-edit me-1"></i>Edit Shop
-                                            </Button>
+                                            <div className="d-flex gap-2">
+                                                <Button 
+                                                    variant="success" 
+                                                    size="sm"
+                                                    onClick={handleViewMessages}
+                                                    className="position-relative"
+                                                >
+                                                    <i className="fas fa-comments me-1"></i>Messages
+                                                    {unreadMessagesCount > 0 && (
+                                                        <Badge 
+                                                            bg="danger" 
+                                                            pill 
+                                                            className="position-absolute top-0 start-100 translate-middle"
+                                                            style={{ fontSize: '0.7rem' }}
+                                                        >
+                                                            {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
+                                                        </Badge>
+                                                    )}
+                                                </Button>
+                                                <Button 
+                                                    variant="outline-primary" 
+                                                    size="sm"
+                                                    onClick={handleEditClick}
+                                                >
+                                                    <i className="fas fa-edit me-1"></i>Edit Shop
+                                                </Button>
+                                            </div>
                                         )}
                                     </div>
                                     
@@ -224,21 +309,53 @@ const ShopDetails = () => {
                                     <Row>
                                         <Col md={6}>
                                             <p className="mb-2">
-                                                <strong>📍 Location:</strong> {shop.shopLocation || shop.shopAddress || 'Not specified'}
+                                                <strong>Location:</strong> {shop.shopLocation || shop.shopAddress || 'Not specified'}
                                             </p>
                                             <p className="mb-2">
-                                                <strong>👤 Owner:</strong> {shop.owner?.name || shop.owner?.email || 'N/A'}
+                                                <strong>Owner:</strong> {shop.owner?.name || shop.owner?.email || 'N/A'}
                                             </p>
                                         </Col>
                                         <Col md={6}>
                                             <p className="mb-2">
-                                                <strong>📧 Email:</strong> {shop.owner?.email || 'N/A'}
+                                                <strong>Email:</strong> {shop.owner?.email || 'N/A'}
                                             </p>
                                             <p className="mb-2">
-                                                <strong>📞 Phone:</strong> {shop.owner?.phone || 'Not specified'}
+                                                <strong>Phone:</strong> {shop.owner?.phone || 'Not specified'}
                                             </p>
                                         </Col>
                                     </Row>
+                                    
+                                    {/* Chat with Shop Owner Button */}
+                                    {!isOwner && user && (
+                                        <div className="mt-3">
+                                            <Button 
+                                                variant="success" 
+                                                size="lg"
+                                                onClick={handleChatWithOwner}
+                                                className="w-100"
+                                            >
+                                                <i className="fas fa-comments me-2"></i>
+                                                Chat with Shop Owner
+                                            </Button>
+                                        </div>
+                                    )}
+                                    
+                                    {!isOwner && !user && (
+                                        <div className="mt-3">
+                                            <Button 
+                                                variant="outline-primary" 
+                                                size="lg"
+                                                onClick={() => {
+                                                    toast.info('Please login to chat with the shop owner');
+                                                    navigate('/login');
+                                                }}
+                                                className="w-100"
+                                            >
+                                                <i className="fas fa-sign-in-alt me-2"></i>
+                                                Login to Chat with Shop Owner
+                                            </Button>
+                                        </div>
+                                    )}
                                 </Col>
                             </Row>
                         </Card.Body>
@@ -332,7 +449,7 @@ const ShopDetails = () => {
                                     <Card className="mb-3">
                                         <Card.Header className="bg-primary text-white">
                                             <h4 className="mb-0">
-                                                🎯 {category} ({categoryToys.length})
+                                                {category} ({categoryToys.length})
                                             </h4>
                                         </Card.Header>
                                     </Card>
@@ -355,7 +472,7 @@ const ShopDetails = () => {
                                                             <small className="text-muted">
                                                                 <strong>Price:</strong> ৳ {toy.price || 'N/A'}<br />
                                                                 {toy.coinPrice > 0 && (
-                                                                    <>💎 {toy.coinPrice} coins<br /></>
+                                                                    <>Coins: {toy.coinPrice}<br /></>
                                                                 )}
                                                                 {toy.allowOldToyExchange && (
                                                                     <Badge bg="success" className="mt-1">Exchange Available</Badge>

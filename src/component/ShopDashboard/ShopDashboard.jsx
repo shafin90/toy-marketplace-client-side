@@ -149,7 +149,7 @@ const ShopDashboard = () => {
                                     <h2 className="mb-0 fw-bold">{analytics?.totalToysListed || 0}</h2>
                                 </div>
                                 <div className="stats-icon">
-                                    <i className="fas fa-box fa-2x text-primary opacity-25"></i>
+                                    <i className="fas fa-box fa-2x text-dark opacity-25"></i>
                                 </div>
                             </div>
                             <small className="text-muted">
@@ -167,7 +167,7 @@ const ShopDashboard = () => {
                                     <h2 className="mb-0 fw-bold">{analytics?.salesCount || 0}</h2>
                                 </div>
                                 <div className="stats-icon">
-                                    <i className="fas fa-shopping-cart fa-2x text-success opacity-25"></i>
+                                    <i className="fas fa-shopping-cart fa-2x text-dark opacity-25"></i>
                                 </div>
                             </div>
                             <small className="text-muted">All time sales</small>
@@ -183,7 +183,7 @@ const ShopDashboard = () => {
                                     <h2 className="mb-0 fw-bold">৳ {analytics?.totalRevenue?.toLocaleString() || 0}</h2>
                                 </div>
                                 <div className="stats-icon">
-                                    <i className="fas fa-dollar-sign fa-2x text-info opacity-25"></i>
+                                    <i className="fas fa-dollar-sign fa-2x text-dark opacity-25"></i>
                                 </div>
                             </div>
                             <small className="text-muted">Total earnings</small>
@@ -198,11 +198,10 @@ const ShopDashboard = () => {
                                     <p className="text-muted mb-1 small">Average Rating</p>
                                     <h2 className="mb-0 fw-bold">
                                         {analytics?.averageRating ? analytics.averageRating.toFixed(1) : '0.0'}
-                                        <small className="fs-6 text-warning ms-1">⭐</small>
                                     </h2>
                                 </div>
                                 <div className="stats-icon">
-                                    <i className="fas fa-star fa-2x text-warning opacity-25"></i>
+                                    <i className="fas fa-star fa-2x text-dark opacity-25"></i>
                                 </div>
                             </div>
                             <small className="text-muted">{analytics?.totalReviews || 0} reviews</small>
@@ -245,11 +244,11 @@ const ShopDashboard = () => {
                                                             <Card.Body>
                                                                 <Card.Title className="h6">{toy.name}</Card.Title>
                                                                 <div className="mb-2">
-                                                                    <Badge bg={toy.status === 'available' ? 'success' : 'secondary'} className="me-2">
+                                                                    <Badge bg={toy.status === 'available' ? 'dark' : 'secondary'} className="me-2">
                                                                         {toy.status}
                                                                     </Badge>
                                                                     {toy.allowOldToyExchange && (
-                                                                        <Badge bg="warning" text="dark">Exchangeable</Badge>
+                                                                        <Badge bg="dark">Exchangeable</Badge>
                                                                     )}
                                                                 </div>
                                                                 <p className="mb-2">
@@ -280,7 +279,7 @@ const ShopDashboard = () => {
                                     <span>
                                         <i className="fas fa-exchange-alt me-2"></i>Exchange Requests
                                         {pendingExchangeCount > 0 && (
-                                            <Badge bg="danger" className="ms-2">{pendingExchangeCount}</Badge>
+                                            <Badge bg="dark" className="ms-2">{pendingExchangeCount}</Badge>
                                         )}
                                     </span>
                                 }>
@@ -317,23 +316,23 @@ const ShopDashboard = () => {
                                                             </td>
                                                             <td>{request.userId}</td>
                                                             <td>
-                                                                <Badge bg="info">{request.oldToys?.length || 0} toys</Badge>
+                                                                <Badge bg="dark">{request.oldToys?.length || 0} toys</Badge>
                                                             </td>
                                                             <td>৳ {request.originalPrice || 0}</td>
                                                             <td>
                                                                 {request.status === 'price_set' || request.status === 'user_accepted' || request.status === 'delivered' ? (
-                                                                    <span className="text-success fw-bold">৳ {request.finalPrice || 0}</span>
+                                                                    <span className="text-dark fw-bold">৳ {request.finalPrice || 0}</span>
                                                                 ) : (
                                                                     <span className="text-muted">-</span>
                                                                 )}
                                                             </td>
                                                             <td>
                                                                 <Badge bg={
-                                                                    request.status === 'pending_shop_owner' ? 'warning' :
-                                                                    request.status === 'price_set' ? 'info' :
-                                                                    request.status === 'user_accepted' ? 'success' :
-                                                                    request.status === 'user_rejected' ? 'danger' :
-                                                                    request.status === 'delivered' ? 'primary' :
+                                                                    request.status === 'pending_shop_owner' ? 'secondary' :
+                                                                    request.status === 'price_set' ? 'dark' :
+                                                                    request.status === 'user_accepted' ? 'dark' :
+                                                                    request.status === 'user_rejected' ? 'dark' :
+                                                                    request.status === 'delivered' ? 'dark' :
                                                                     'secondary'
                                                                 }>
                                                                     {request.status.replace(/_/g, ' ')}
@@ -359,7 +358,7 @@ const ShopDashboard = () => {
                                                                 )}
                                                                 {request.status === 'user_accepted' && (
                                                                     <Button
-                                                                        variant="success"
+                                                                        variant="dark"
                                                                         size="sm"
                                                                         onClick={async () => {
                                                                             try {

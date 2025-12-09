@@ -9,28 +9,22 @@ const Footer = () => {
                 <Row className="pt-4 pb-3">
                     <Col xs={12} md={4} className="text-center text-md-left mb-4">
                         <div className="footer-logo">
-                            <img
-                                src="https://clipartmag.com/images/cartoon-images-of-cars-39.png"
-                                alt="Toy Swap Logo"
-                                height="50"
-                                className="mb-3"
-                            />
-                            <h5>Toy Swap Circle 🔄</h5>
+                            <h5>Toy Swap Circle</h5>
                         </div>
                         <p className="footer-tagline">
-                            Swap toys, save money, help the planet! 🌍
+                            Swap toys, save money, help the planet.
                         </p>
                     </Col>
 
                     <Col xs={6} md={4} className="text-center mb-4">
-                        <h5>Contact Us 📧</h5>
+                        <h5>Contact Us</h5>
                         <p>Email: hello@toyswap.com</p>
                         <p>Phone: +1 (555) TOY-SWAP</p>
                         <p>Mon-Fri: 9AM - 6PM</p>
                     </Col>
 
                     <Col xs={6} md={4} className="text-center text-md-right">
-                        <h5>Follow Us 🌟</h5>
+                        <h5>Follow Us</h5>
                         <div className="social-links mb-3">
                             <a href="#facebook" className="social-icon facebook">
                                 <i className="fab fa-facebook"></i>

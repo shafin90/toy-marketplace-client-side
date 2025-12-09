@@ -72,7 +72,14 @@ const CheckoutForm = ({ toyId, buyerEmail, amount, toyName, onSuccess, onClose }
             }
 
             if (paymentIntent.status === 'succeeded') {
-                // Confirm purchase on backend
+                // For exchanges, let the parent component handle confirmation
+                if (isExchange) {
+                    toast.success(`Payment successful!`);
+                    onSuccess(paymentIntent.id);
+                    return;
+                }
+
+                // For regular purchases, confirm on backend
                 try {
                     const result = await purchaseAPI.confirmMoneyPurchase({
                         toyId,
@@ -81,8 +88,8 @@ const CheckoutForm = ({ toyId, buyerEmail, amount, toyName, onSuccess, onClose }
                     });
 
                     if (result.success) {
-                        toast.success(`🎉 Purchase successful! You got ${toyName}!`);
-                        onSuccess();
+                        toast.success(`Purchase successful! You got ${toyName}!`);
+                        onSuccess(paymentIntent.id);
                     } else {
                         setError('Payment succeeded but purchase confirmation failed. Please contact support.');
                     }
@@ -149,7 +156,7 @@ const CheckoutForm = ({ toyId, buyerEmail, amount, toyName, onSuccess, onClose }
     );
 };
 
-const StripePayment = ({ show, onClose, toyId, buyerEmail, amount, toyName, onSuccess }) => {
+const StripePayment = ({ show, onClose, toyId, buyerEmail, amount, toyName, onSuccess, isExchange = false }) => {
     if (!API_CONFIG.STRIPE_PUBLISHABLE_KEY) {
         return (
             <Modal show={show} onHide={onClose}>

@@ -9,7 +9,7 @@
  * @returns {string} Formatted credit string
  */
 export const formatCredits = (credits) => {
-    return `💎 ${credits} Credits`;
+    return `${credits} Credits`;
 };
 
 /**

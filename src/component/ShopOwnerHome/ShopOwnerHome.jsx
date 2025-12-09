@@ -20,7 +20,7 @@ const ShopOwnerHome = () => {
                 <Col>
                     <Card className="text-center bg-primary text-white">
                         <Card.Body>
-                            <h2>Welcome, {user?.name || 'Shop Owner'}! 🏪</h2>
+                            <h2>Welcome, {user?.name || 'Shop Owner'}</h2>
                             <p className="lead">Manage your toy shop and grow your business</p>
                         </Card.Body>
                     </Card>
@@ -31,7 +31,6 @@ const ShopOwnerHome = () => {
                 <Col md={4}>
                     <Card className="h-100 shadow-sm">
                         <Card.Body className="text-center">
-                            <h3 className="text-primary">📦</h3>
                             <h5>List New Toys</h5>
                             <p className="text-muted">Add toys to your shop inventory</p>
                             <Button 
@@ -48,7 +47,6 @@ const ShopOwnerHome = () => {
                 <Col md={4}>
                     <Card className="h-100 shadow-sm">
                         <Card.Body className="text-center">
-                            <h3 className="text-info">🏪</h3>
                             <h5>Manage Shop</h5>
                             <p className="text-muted">Set up your shop name, location, and details</p>
                             <Button 
@@ -65,7 +63,6 @@ const ShopOwnerHome = () => {
                 <Col md={4}>
                     <Card className="h-100 shadow-sm">
                         <Card.Body className="text-center">
-                            <h3 className="text-success">📊</h3>
                             <h5>Shop Dashboard</h5>
                             <p className="text-muted">View products, sales, and exchange requests</p>
                             <Button 

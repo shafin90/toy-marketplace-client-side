@@ -1,50 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+/* Black & White Minimal Theme - No Animations */
 
 :root {
-    /* Baby Theme - Clean & Minimal (No Gradients) */
-    --soft-yellow: #FFF9E6;
-    /* Very Soft Yellow */
-    --light-yellow: #FFE8A3;
-    /* Light Yellow */
-    --golden: #FFD54F;
-    /* Golden Yellow */
-
-    --light-brown: #D7CCC8;
-    /* Soft Brown */
-    --medium-brown: #A1887F;
-    /* Medium Brown */
-    --warm-brown: #8D6E63;
-    /* Warm Brown */
-
-    --soft-black: #424242;
-    /* Soft Black */
-    --white: #FFFFFF;
-    /* Pure White */
-
-    /* Primary Colors - Clean & Simple */
-    --primary-color: #FFD54F;
-    /* Golden Yellow */
-    --secondary-color: #8D6E63;
-    /* Warm Brown */
-    --background-color: #FFFEF9;
-    /* Off-White */
-
-    /* Text Colors */
-    --text-dark: #424242;
-    --text-light: #6D4C41;
-    --text-muted: #A1887F;
-
-    /* Borders */
-    --border-color: #E8E0D5;
-    --border-light: #F5F0E8;
-
-    /* Shadows - Soft */
-    --shadow-sm: 0 2px 8px rgba(66, 66, 66, 0.06);
-    --shadow-md: 0 4px 12px rgba(66, 66, 66, 0.08);
-    --shadow-lg: 0 8px 20px rgba(66, 66, 66, 0.1);
-
-    /* Font */
-    --font-family: 'Fredoka', sans-serif;
+    /* Black & White Color Palette */
+    --black: #000000;
+    --gray-900: #111827;
+    --gray-800: #1f2937;
+    --gray-700: #374151;
+    --gray-600: #4b5563;
+    --gray-500: #6b7280;
+    --gray-400: #9ca3af;
+    --gray-300: #d1d5db;
+    --gray-200: #e5e7eb;
+    --gray-100: #f3f4f6;
+    --gray-50: #f9fafb;
+    --white: #ffffff;
+    
+    /* Theme Colors - Override Bootstrap */
+    --bs-primary: #000000 !important;
+    --bs-primary-rgb: 0, 0, 0 !important;
+    --primary: #000000 !important;
+    --primary-dark: var(--gray-900);
+    --secondary: var(--gray-600);
+    --background: var(--white);
+    --surface: var(--gray-50);
+    --border: var(--gray-300);
+    --text: var(--black);
+    --text-muted: var(--gray-600);
+    --success: var(--gray-700);
+    --danger: var(--gray-800);
+    --warning: var(--gray-600);
 }
 
 * {
@@ -54,93 +38,193 @@
 }
 
 body {
-    font-family: var(--font-family) !important;
-    background-color: var(--background-color) !important;
-    color: var(--text-dark);
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    color: var(--text-dark);
-    line-height: 1.3;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
 }
 
-/* Buttons - Clean & Simple */
+p {
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+/* Buttons - Simple, No Animations */
 .btn {
-    border-radius: 50px !important;
-    font-weight: 600;
-    padding: 12px 28px;
-    border: none;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
+    border-radius: 4px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: 1px solid var(--black);
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }
 
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+.btn-primary,
+button.btn-primary,
+.btn.btn-primary,
+[class*="btn-primary"] {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
-.btn-primary {
-    background-color: var(--primary-color) !important;
-    color: var(--text-dark) !important;
-    border: 2px solid var(--primary-color) !important;
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    transition: left 0.3s;
+    z-index: 0;
 }
 
-.btn-primary:hover {
-    background-color: #FFCA28 !important;
-    border-color: #FFCA28 !important;
+.btn-primary:hover,
+button.btn-primary:hover,
+.btn.btn-primary:hover,
+[class*="btn-primary"]:hover {
+    background-color: #1f2937 !important;
+    border-color: #1f2937 !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-outline-primary,
+button.btn-outline-primary,
+.btn.btn-outline-primary,
+[class*="btn-outline-primary"] {
+    background-color: transparent !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.btn-outline-primary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--black);
+    transition: all 0.2s;
+    transform: translateX(-50%);
+}
+
+.btn-outline-primary:hover,
+button.btn-outline-primary:hover,
+.btn.btn-outline-primary:hover,
+[class*="btn-outline-primary"]:hover {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.btn-outline-primary:hover::after {
+    width: 80%;
+}
+
+.btn-success {
+    background-color: var(--gray-700);
+    color: var(--white);
+    border-color: var(--gray-700);
+}
+
+.btn-danger,
+.btn-dark {
+    background-color: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+}
+
+.btn-danger:hover:not(:disabled),
+.btn-dark:hover:not(:disabled) {
+    background-color: var(--gray-800);
+    border-color: var(--gray-800);
+}
+
+.btn-outline-danger,
+.btn-outline-dark {
+    background-color: transparent;
+    color: var(--black);
+    border-color: var(--black);
+}
+
+.btn-outline-danger:hover:not(:disabled),
+.btn-outline-dark:hover:not(:disabled) {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.btn-warning,
+.btn-success,
+.btn-info {
+    background-color: var(--gray-700);
+    color: var(--white);
+    border-color: var(--gray-700);
+}
+
+.btn-warning:hover:not(:disabled),
+.btn-success:hover:not(:disabled),
+.btn-info:hover:not(:disabled) {
+    background-color: var(--gray-800);
+    border-color: var(--gray-800);
 }
 
 .btn-secondary {
-    background-color: var(--secondary-color) !important;
-    color: white !important;
-    border: 2px solid var(--secondary-color) !important;
+    background-color: var(--gray-600);
+    color: var(--white);
+    border-color: var(--gray-600);
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
 }
 
-.btn-secondary:hover {
-    background-color: #6D4C41 !important;
-    border-color: #6D4C41 !important;
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--gray-700);
+    border-color: var(--gray-700);
+    transform: translateY(-1px);
 }
 
-.btn-outline-primary {
-    background-color: transparent !important;
-    color: var(--primary-color) !important;
-    border: 2px solid var(--primary-color) !important;
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
 }
 
-.btn-outline-primary:hover {
-    background-color: var(--primary-color) !important;
-    color: var(--text-dark) !important;
+.btn-lg {
+    padding: 12px 24px;
+    font-size: 16px;
 }
 
-/* Cards - Clean Design */
+/* Cards - Clean, Simple */
 .card {
-    border-radius: 20px !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: var(--shadow-sm);
-    background-color: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--white);
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s, background-color 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-color) !important;
-}
-
-.card-img-top {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    height: 200px;
-    object-fit: cover;
+    border-color: var(--black);
+    background-color: var(--gray-50);
 }
 
 .card-body {
@@ -148,170 +232,317 @@ h6 {
 }
 
 .card-title {
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+}
+
+.card:hover .card-title {
+    color: var(--black);
 }
 
 .card-text {
-    color: var(--text-light);
-    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-size: 14px;
 }
 
-/* Input Fields - Clean */
+.card-img-top,
+.card-img,
+img,
+[class*="card-img"] {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: none !important;
+    outline: none !important;
+}
+
+.card img,
+.card-img-top,
+.Card.Img {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Forms - Clean */
 .form-control {
-    border-radius: 12px !important;
-    border: 2px solid var(--border-color);
-    padding: 12px 18px;
-    background-color: white;
-    color: var(--text-dark);
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    background-color: var(--white);
+    color: var(--text);
+    font-size: 14px;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:hover {
+    border-color: var(--gray-600);
 }
 
 .form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.15);
-    background-color: white;
+    border-color: var(--black);
     outline: none;
-}
-
-.form-control::placeholder {
-    color: var(--text-muted);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .form-label {
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-}
-
-/* Navbar - Clean & Minimal */
-.navbar {
-    background-color: white !important;
-    box-shadow: var(--shadow-sm);
-    border-bottom: 3px solid var(--primary-color);
-    padding: 1rem 0;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-dark) !important;
-}
-
-.nav-link {
     font-weight: 500;
-    color: var(--text-dark) !important;
-    padding: 0.5rem 1rem !important;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
-.nav-link:hover,
-.nav-link.active {
-    color: var(--primary-color) !important;
+.form-select {
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    background-color: var(--white);
+    color: var(--text);
+    font-size: 14px;
 }
 
-/* Table Styles - Clean */
+/* Tables - Simple */
 .table {
-    background-color: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
 }
 
 .table thead th {
-    background-color: var(--primary-color);
-    color: var(--text-dark);
-    border: none;
-    padding: 1rem;
-    text-align: center;
+    background-color: var(--gray-100);
+    color: var(--text);
     font-weight: 600;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    font-size: 14px;
 }
 
 .table tbody td {
-    padding: 1rem;
-    vertical-align: middle;
-    text-align: center;
-    border-bottom: 1px solid var(--border-light);
-    color: var(--text-dark);
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
 }
 
 .table tbody tr:last-child td {
     border-bottom: none;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: var(--soft-yellow);
+.table tbody tr {
+    transition: background-color 0.2s;
 }
 
-.table-hover tbody tr:hover {
-    background-color: var(--light-yellow);
+.table tbody tr:hover {
+    background-color: var(--gray-50);
 }
 
-/* Badge Styles */
+/* Badges */
 .badge {
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-weight: 600;
-    font-size: 0.85rem;
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.2s;
+    cursor: default;
 }
 
-.bg-primary {
-    background-color: var(--primary-color) !important;
-    color: var(--text-dark) !important;
+.badge:hover {
+    transform: translateY(-1px);
+}
+
+.bg-primary,
+[class*="bg-primary"] {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.bg-danger,
+.bg-dark {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.bg-success,
+.bg-info,
+.bg-warning {
+    background-color: var(--gray-700);
+    color: var(--white);
+}
+
+.text-danger,
+.text-dark {
+    color: var(--black);
+}
+
+.text-success,
+.text-info,
+.text-warning {
+    color: var(--gray-700);
+}
+
+.text-primary {
+    color: var(--black);
+}
+
+.bg-success,
+.bg-info,
+.bg-warning {
+    background-color: var(--gray-700);
+    color: var(--white);
+}
+
+.bg-danger,
+.bg-dark {
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .bg-secondary {
-    background-color: var(--secondary-color) !important;
-    color: white !important;
-}
-
-.bg-info {
-    background-color: var(--light-yellow) !important;
-    color: var(--text-dark) !important;
+    background-color: var(--gray-600);
+    color: var(--white);
 }
 
 /* Links */
 a {
-    color: var(--secondary-color);
+    color: var(--black);
     text-decoration: none;
-    transition: color 0.3s ease;
+}
+
+a {
+    position: relative;
+    transition: color 0.2s;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--black);
+    transition: width 0.2s;
 }
 
 a:hover {
-    color: var(--primary-color);
+    color: var(--black);
 }
 
-/* Smooth Scrolling */
+a:hover::after {
+    width: 100%;
+}
+
+.text-primary,
+[class*="text-primary"],
+.text-danger,
+.text-dark {
+    color: #000000 !important;
+}
+
+.text-success,
+.text-info,
+.text-warning {
+    color: var(--gray-700);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0 16px;
+}
+
+/* Utilities */
+.text-primary {
+    color: var(--black);
+}
+
+.text-secondary {
+    color: var(--gray-600);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-dark {
+    color: var(--text);
+}
+
+.bg-light {
+    background-color: var(--surface);
+}
+
+.border {
+    border: 1px solid var(--border);
+}
+
+.rounded {
+    border-radius: 4px;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Remove smooth scrolling */
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
 }
 
 /* Selection */
 ::selection {
-    background-color: var(--light-yellow);
-    color: var(--text-dark);
+    background-color: var(--gray-300);
+    color: var(--black);
 }
 
-/* Utility Classes */
-.text-primary {
-    color: var(--primary-color) !important;
+/* Override Bootstrap spinner primary color */
+.spinner-border.text-primary,
+.spinner-border[class*="text-primary"] {
+    color: #000000 !important;
+    border-color: #000000 !important;
 }
 
-.text-secondary {
-    color: var(--secondary-color) !important;
+/* Override all Bootstrap primary variants */
+[class*="primary"]:not([class*="outline"]) {
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
 }
 
-.bg-light-yellow {
-    background-color: var(--soft-yellow) !important;
+[class*="primary"]:not([class*="outline"]):hover {
+    background-color: #1f2937 !important;
+    border-color: #1f2937 !important;
+    color: #ffffff !important;
 }
 
-.border-primary {
-    border-color: var(--primary-color) !important;
+/* Override Bootstrap Tabs - Remove Blue Active State */
+.nav-tabs .nav-link {
+    color: #000000 !important;
+    border-color: transparent !important;
 }
 
-/* Container Spacing */
-.container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+.nav-tabs .nav-link:hover {
+    border-color: #e5e7eb #e5e7eb #000000 !important;
+    color: #000000 !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: #000000 !important;
+    background-color: transparent !important;
+    border-color: #000000 #000000 transparent !important;
+    border-bottom: 2px solid #000000 !important;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #e5e7eb !important;
 }

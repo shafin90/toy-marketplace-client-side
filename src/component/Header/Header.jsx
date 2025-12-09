@@ -42,15 +42,8 @@ const Header = () => {
   return (
     <Navbar className='py-3' expand="lg" >
       <Container>
-        <Navbar.Brand className='text-dark d-flex justify-content-center align-items-center' href="#home">
-          <img
-            src="https://clipartmag.com/images/cartoon-images-of-cars-39.png"
-            width="70"
-            height="60"
-            className="d-inline-block align-top me-2"
-            alt="Website Logo"
-          />
-          {' CARZ'}
+        <Navbar.Brand className='text-dark' href="#home">
+          CARZ
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -68,6 +61,7 @@ const Header = () => {
                 <Link to='/shops' className={location.pathname == '/shops' ? 'nav_li text-primary' : 'text-dark nav_li'}>Shops</Link>
                 <Link to='/toy_table' className={!user ? 'd-none text-dark nav_li' : `${location.pathname == '/toy_table' ? 'd-block text-primary nav_li' : 'd-block text-dark nav_li'}`} >My Toys</Link>
                 <Link to='/list-old-toy' className={!user ? 'd-none text-dark nav_li' : `${location.pathname == '/list-old-toy' ? 'd-block text-primary nav_li' : 'd-block text-dark nav_li'}`} >List Old Toy</Link>
+                <Link to='/chat' className={!user ? 'd-none text-dark nav_li' : `${location.pathname == '/chat' || location.pathname.startsWith('/chat/') ? 'd-block text-primary nav_li' : 'd-block text-dark nav_li'}`} >Chat</Link>
                 <Link to='/faq' className={location.pathname == '/faq' ? 'nav_li text-primary' : 'text-dark nav_li'}>FAQ</Link>
               </>
             )}
@@ -81,7 +75,7 @@ const Header = () => {
                   handleLogout();
                   navigate('/login');
                 }} 
-                className='btn btn-outline-danger px-4'
+                className='btn btn-outline-primary px-4'
               >
                 Logout
               </button>
@@ -91,7 +85,7 @@ const Header = () => {
                   handleLogout();
                   navigate('/login');
                 }} 
-                className='btn btn-outline-danger px-4'
+                className='btn btn-outline-primary px-4'
               >
                 Logout
               </button>

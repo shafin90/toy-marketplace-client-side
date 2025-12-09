@@ -44,10 +44,18 @@ const ExchangeConfirmation = ({ show, onClose, exchange, onSuccess }) => {
         }
     };
 
-    const handlePaymentSuccess = () => {
-        setShowStripeModal(false);
-        onClose();
-        if (onSuccess) onSuccess();
+    const handlePaymentSuccess = async (paymentIntentId) => {
+        try {
+            // Confirm exchange payment on backend
+            await exchangeAPI.confirmExchangePayment(exchange._id, paymentIntentId);
+            toast.success('Payment confirmed! Shop owner will arrange delivery.');
+            setShowStripeModal(false);
+            onClose();
+            if (onSuccess) onSuccess();
+        } catch (error) {
+            console.error('Error confirming exchange payment:', error);
+            toast.error(error.response?.data?.message || 'Payment succeeded but confirmation failed. Please contact support.');
+        }
     };
 
     return (
@@ -126,7 +134,7 @@ const ExchangeConfirmation = ({ show, onClose, exchange, onSuccess }) => {
                     <Button variant="secondary" onClick={onClose} disabled={loading}>
                         Close
                     </Button>
-                    <Button variant="danger" onClick={handleReject} disabled={loading}>
+                    <Button variant="outline-dark" onClick={handleReject} disabled={loading}>
                         Reject
                     </Button>
                     <Button variant="success" onClick={handleAccept} disabled={loading}>
@@ -143,7 +151,8 @@ const ExchangeConfirmation = ({ show, onClose, exchange, onSuccess }) => {
                     buyerEmail={exchange.userId}
                     amount={exchange.finalPrice}
                     toyName={exchange.product.name || 'Product'}
-                    onSuccess={handlePaymentSuccess}
+                    onSuccess={(paymentIntentId) => handlePaymentSuccess(paymentIntentId)}
+                    isExchange={true}
                 />
             )}
         </>

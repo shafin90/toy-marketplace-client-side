@@ -76,7 +76,7 @@ const Profile = () => {
                             />
                             <h3>{userProfile.name || user?.displayName}</h3>
                             <Badge bg={userProfile.role === 'shop_owner' ? 'success' : 'primary'} className="mb-3">
-                                {userProfile.role === 'shop_owner' ? '🏪 Shop Owner' : '👤 User'}
+                                {userProfile.role === 'shop_owner' ? 'Shop Owner' : 'User'}
                             </Badge>
                             {userProfile.role === 'shop_owner' && (
                                 <div className="mt-3">
@@ -91,7 +91,7 @@ const Profile = () => {
                                         <p className="mb-1"><strong>Phone:</strong> {userProfile.phone}</p>
                                     )}
                                     {userProfile.rating > 0 && (
-                                        <p className="mb-0"><strong>Shop Rating:</strong> ⭐ {userProfile.rating?.toFixed(1)} / 5.0 ({userProfile.totalRatings || 0} reviews)</p>
+                                        <p className="mb-0"><strong>Shop Rating:</strong> {userProfile.rating?.toFixed(1)} / 5.0 ({userProfile.totalRatings || 0} reviews)</p>
                                     )}
                                 </div>
                             )}
@@ -104,7 +104,7 @@ const Profile = () => {
                         </Card.Header>
                         <Card.Body>
                             <div className="mb-3">
-                                <strong>💎 Coins:</strong> {userProfile.coins || userCredits || 0}
+                                <strong>Coins:</strong> {userProfile.coins || userCredits || 0}
                             </div>
                             <div className="mb-3">
                                 <strong>Total Earned:</strong> {userProfile.totalEarned || 0} coins
@@ -114,7 +114,7 @@ const Profile = () => {
                             </div>
                             {userProfile.rating > 0 && (
                                 <div>
-                                    <strong>Rating:</strong> ⭐ {userProfile.rating?.toFixed(1)} / 5.0
+                                    <strong>Rating:</strong> {userProfile.rating?.toFixed(1)} / 5.0
                                 </div>
                             )}
                         </Card.Body>
@@ -158,7 +158,7 @@ const Profile = () => {
                                                 <td>{txn.description}</td>
                                                 <td>
                                                     {txn.amount > 0 ? '+' : ''}
-                                                    {txn.amount} {txn.currency === 'coins' ? '💎' : '৳'}
+                                                    {txn.amount} {txn.currency === 'coins' ? 'coins' : '৳'}
                                                 </td>
                                                 <td>
                                                     <Badge bg={txn.status === 'completed' ? 'success' : 'warning'}>

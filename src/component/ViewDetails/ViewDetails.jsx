@@ -67,13 +67,13 @@ const ViewDetails = () => {
           <div className="p-3 bg-light rounded mb-3">
             <p className="mb-1"><strong>Seller: </strong> {seller_name}</p>
             <p className="mb-1"><strong>Seller Email: </strong> {seller_email}</p>
-            <p className="mb-1"><strong>Ratings: </strong> ⭐ {ratings || 'N/A'}</p>
+            <p className="mb-1"><strong>Ratings: </strong> {ratings || 'N/A'}</p>
             <p className="mb-0">
               <strong>Available Quantity: </strong> 
               {currentQuantity > 0 ? (
                 <span className="text-success">{currentQuantity}</span>
               ) : (
-                <span className="text-danger">Out of Stock</span>
+                <span className="text-dark">Out of Stock</span>
               )}
             </p>
           </div>
@@ -87,8 +87,8 @@ const ViewDetails = () => {
                       <strong>Regular Price:</strong> <span className="text-decoration-line-through text-muted me-2">৳ {moneyPrice}</span>
                     </div>
                     <div>
-                      <strong>Offer Price:</strong> <span className="badge bg-danger fs-6">৳ {offer}</span>
-                      <Badge bg="success" className="ms-2">Save ৳ {moneyPrice - offer}</Badge>
+                      <strong>Offer Price:</strong> <span className="badge bg-dark fs-6">৳ {offer}</span>
+                      <Badge bg="dark" className="ms-2">Save ৳ {moneyPrice - offer}</Badge>
                     </div>
                   </>
                 ) : (
@@ -110,7 +110,7 @@ const ViewDetails = () => {
           </div>
 
           {!isAvailable && (
-            <Badge bg="danger" className="mb-3">Not Available</Badge>
+            <Badge bg="dark" className="mb-3">Not Available</Badge>
           )}
 
           <div className="d-flex gap-3 flex-wrap">
@@ -131,7 +131,7 @@ const ViewDetails = () => {
                     onClick={() => {
                       setShowExchangeModal(true);
                     }} 
-                    variant="warning" 
+                    variant="outline-dark" 
                     size="lg" 
                     disabled={loading}
                   >
