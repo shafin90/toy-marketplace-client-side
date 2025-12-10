@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 
 const SearchFilter = ({ onFilterChange, categories = [] }) => {
@@ -10,10 +10,44 @@ const SearchFilter = ({ onFilterChange, categories = [] }) => {
         sortBy: ''
     });
 
+    // Debounce timer ref
+    const debounceTimerRef = useRef(null);
+
+    // Debounced callback for search input (300ms delay)
+    const debouncedFilterChange = useCallback((newFilters) => {
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+        
+        debounceTimerRef.current = setTimeout(() => {
+            onFilterChange(newFilters);
+        }, 300);
+    }, [onFilterChange]);
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current);
+            }
+        };
+    }, []);
+
+    // Immediate callback for non-search filters (category, price, sort)
+    const immediateFilterChange = useCallback((newFilters) => {
+        onFilterChange(newFilters);
+    }, [onFilterChange]);
+
     const handleChange = (field, value) => {
         const newFilters = { ...filters, [field]: value };
         setFilters(newFilters);
-        onFilterChange(newFilters);
+        
+        // Debounce search input, immediate for other filters
+        if (field === 'search') {
+            debouncedFilterChange(newFilters);
+        } else {
+            immediateFilterChange(newFilters);
+        }
     };
 
     const handleClear = () => {

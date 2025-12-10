@@ -46,8 +46,6 @@ const Footer = () => {
                     <Col className="text-center">
                         <p className="copyright">
                             &copy; 2024 Toy Swap Circle. All rights reserved.
-                            <span className="separator">|</span>
-                            <Link to="/seed" className="seed-link">Seed Database</Link>
                         </p>
                     </Col>
                 </Row>

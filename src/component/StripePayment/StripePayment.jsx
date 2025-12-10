@@ -17,6 +17,10 @@ const CheckoutForm = ({ toyId, buyerEmail, amount, toyName, onSuccess, onClose }
     const [clientSecret, setClientSecret] = useState(null);
 
     useEffect(() => {
+        if (!buyerEmail) {
+            setError('You must be logged in to complete a purchase.');
+            return;
+        }
         // Create payment intent when component mounts
         const createPaymentIntent = async () => {
             try {
@@ -181,16 +185,22 @@ const StripePayment = ({ show, onClose, toyId, buyerEmail, amount, toyName, onSu
                 <Modal.Title>Complete Payment</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Elements stripe={stripePromise}>
-                    <CheckoutForm
-                        toyId={toyId}
-                        buyerEmail={buyerEmail}
-                        amount={amount}
-                        toyName={toyName}
-                        onSuccess={onSuccess}
-                        onClose={onClose}
-                    />
-                </Elements>
+                {!buyerEmail ? (
+                    <Alert variant="warning">
+                        You must be logged in to purchase. Please close this dialog and log in.
+                    </Alert>
+                ) : (
+                    <Elements stripe={stripePromise}>
+                        <CheckoutForm
+                            toyId={toyId}
+                            buyerEmail={buyerEmail}
+                            amount={amount}
+                            toyName={toyName}
+                            onSuccess={onSuccess}
+                            onClose={onClose}
+                        />
+                    </Elements>
+                )}
             </Modal.Body>
         </Modal>
     );

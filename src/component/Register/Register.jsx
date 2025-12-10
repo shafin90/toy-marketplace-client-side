@@ -1,109 +1,77 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/Provider';
 import { Toaster, toast } from 'react-hot-toast';
 import authAPI from '../../api/authAPI';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 
 const Register = () => {
     // context Api==========
-    const {setPhotoUrl,photoUrl, setUser} = useContext(AuthContext);
+  const {setPhotoUrl,photoUrl, setUser} = useContext(AuthContext);
 
     const navigate = useNavigate();
-    
-
-
-
-
-
-  const [isChecked, setIsChecked] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [userRole, setUserRole] = useState('user'); // 'user' or 'shop_owner'
-  const [shopName, setShopName] = useState('');
-  const [shopAddress, setShopAddress] = useState('');
-  const [phone, setPhone] = useState('');
- 
-
-  const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
-  };
-
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const handlePhotoUrlChange = (e) => {
-    setPhotoUrl(e.target.value);
-  };
-
-  const handleRoleChange = (e) => {
-    setUserRole(e.target.value);
-  };
-
-  const handleShopNameChange = (e) => {
-    setShopName(e.target.value);
-  };
-
-  const handleShopAddressChange = (e) => {
-    setShopAddress(e.target.value);
-  };
-
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Validation
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match!');
-      return;
+  const registerSchema = z.object({
+    userRole: z.enum(['user','shop_owner']),
+    firstName: z.string().min(1, 'First name is required'),
+    lastName: z.string().min(1, 'Last name is required'),
+    email: z.string().email('Enter a valid email'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string().min(6, 'Confirm password'),
+    photoUrl: z.string().url('Enter a valid URL').optional().or(z.literal('')),
+    shopName: z.string().optional(),
+    shopAddress: z.string().optional(),
+    phone: z.string().optional(),
+    terms: z.boolean().refine(val => val === true, { message: 'You must accept terms' })
+  }).superRefine((values, ctx) => {
+    if (values.password !== values.confirmPassword) {
+      ctx.addIssue({ code: 'custom', path: ['confirmPassword'], message: 'Passwords do not match' });
     }
-
-    if (userRole === 'shop_owner') {
-      if (!shopName || !shopAddress || !phone) {
-        toast.error('Please fill in all shop owner fields!');
-        return;
-      }
+    if (values.userRole === 'shop_owner') {
+      if (!values.shopName) ctx.addIssue({ code: 'custom', path: ['shopName'], message: 'Shop name is required' });
+      if (!values.shopAddress) ctx.addIssue({ code: 'custom', path: ['shopAddress'], message: 'Shop address is required' });
+      if (!values.phone) ctx.addIssue({ code: 'custom', path: ['phone'], message: 'Phone is required' });
     }
+  });
 
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset } = useForm({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      userRole: 'user',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      photoUrl: '',
+      shopName: '',
+      shopAddress: '',
+      phone: '',
+      terms: false
+    }
+  });
+
+  const userRole = watch('userRole');
+
+  const handleSubmitForm = async (values) => {
     try {
       // Prepare user data for registration
       const userData = {
-        email: email,
-        password: password,
-        name: `${firstName} ${lastName}`.trim(),
-        photoURL: photoUrl || '',
-        role: userRole,
+        email: values.email,
+        password: values.password,
+        name: `${values.firstName} ${values.lastName}`.trim(),
+        photoURL: values.photoUrl || '',
+        role: values.userRole,
       };
 
       // Add shop owner specific fields
-      if (userRole === 'shop_owner') {
-        userData.shopName = shopName;
-        userData.shopAddress = shopAddress;
-        userData.phone = phone;
+      if (values.userRole === 'shop_owner') {
+        userData.shopName = values.shopName;
+        userData.shopAddress = values.shopAddress;
+        userData.phone = values.phone;
       }
 
       // Register user with JWT
@@ -116,13 +84,14 @@ const Register = () => {
       toast.success('Registration successful!');
       
       // Redirect shop owners to shop setup
-      if (userRole === 'shop_owner') {
+      if (values.userRole === 'shop_owner') {
         setTimeout(() => {
           navigate('/manage-shop');
         }, 1000);
       } else {
         navigate('/');
       }
+      reset();
     } catch (error) {
       console.error('Registration error:', error);
       toast.error(error.response?.data?.message || error.message || 'Registration failed. Please try again.');
@@ -136,13 +105,14 @@ const Register = () => {
         <Col md={8} lg={6}>
           <Card>
             <Card.Body>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit(handleSubmitForm)}>
                 <Form.Group className="mb-3" controlId="formUserRole">
                   <Form.Label><strong>Account Type</strong></Form.Label>
-                  <Form.Select value={userRole} onChange={handleRoleChange}>
+                  <Form.Select {...register('userRole')}>
                     <option value="user">Buyer / User</option>
                     <option value="shop_owner">Shop Owner</option>
                   </Form.Select>
+                  {errors.userRole && <div className="text-danger small mt-1">{errors.userRole.message}</div>}
                   <Form.Text className="text-muted">
                     {userRole === 'user' 
                       ? 'As a buyer, you can purchase toys and list old toys to earn coins.'
@@ -157,10 +127,10 @@ const Register = () => {
                   <Form.Control 
                     type="text" 
                     placeholder="Enter your first name" 
-                    value={firstName} 
-                    onChange={handleFirstNameChange} 
-                    required
+                    {...register('firstName')}
+                    isInvalid={!!errors.firstName}
                   />
+                  <Form.Control.Feedback type="invalid">{errors.firstName?.message}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formLastName">
@@ -168,10 +138,10 @@ const Register = () => {
                   <Form.Control 
                     type="text" 
                     placeholder="Enter your last name" 
-                    value={lastName} 
-                    onChange={handleLastNameChange} 
-                    required
+                    {...register('lastName')}
+                    isInvalid={!!errors.lastName}
                   />
+                  <Form.Control.Feedback type="invalid">{errors.lastName?.message}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formEmail">
@@ -179,10 +149,10 @@ const Register = () => {
                   <Form.Control 
                     type="email" 
                     placeholder="Enter your email" 
-                    value={email} 
-                    onChange={handleEmailChange} 
-                    required
+                    {...register('email')}
+                    isInvalid={!!errors.email}
                   />
+                  <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formPassword">
@@ -190,11 +160,10 @@ const Register = () => {
                   <Form.Control 
                     type="password" 
                     placeholder="Enter your password" 
-                    value={password} 
-                    onChange={handlePasswordChange} 
-                    required
-                    minLength={6}
+                    {...register('password')}
+                    isInvalid={!!errors.password}
                   />
+                  <Form.Control.Feedback type="invalid">{errors.password?.message}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formConfirmPassword">
@@ -202,10 +171,10 @@ const Register = () => {
                   <Form.Control 
                     type="password" 
                     placeholder="Confirm your password" 
-                    value={confirmPassword} 
-                    onChange={handleConfirmPasswordChange} 
-                    required
+                    {...register('confirmPassword')}
+                    isInvalid={!!errors.confirmPassword}
                   />
+                  <Form.Control.Feedback type="invalid">{errors.confirmPassword?.message}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formPhotoUrl">
@@ -213,9 +182,10 @@ const Register = () => {
                   <Form.Control 
                     type="text" 
                     placeholder="Enter your photo URL" 
-                    value={photoUrl} 
-                    onChange={handlePhotoUrlChange} 
+                    {...register('photoUrl')}
+                    isInvalid={!!errors.photoUrl}
                   />
+                  <Form.Control.Feedback type="invalid">{errors.photoUrl?.message}</Form.Control.Feedback>
                 </Form.Group>
 
                 {userRole === 'shop_owner' && (
@@ -227,10 +197,10 @@ const Register = () => {
                       <Form.Control 
                         type="text" 
                         placeholder="Enter your shop name" 
-                        value={shopName} 
-                        onChange={handleShopNameChange} 
-                        required={userRole === 'shop_owner'}
+                      {...register('shopName')}
+                      isInvalid={!!errors.shopName}
                       />
+                    <Form.Control.Feedback type="invalid">{errors.shopName?.message}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formShopAddress">
@@ -239,10 +209,10 @@ const Register = () => {
                         as="textarea" 
                         rows={3}
                         placeholder="Enter your shop address" 
-                        value={shopAddress} 
-                        onChange={handleShopAddressChange} 
-                        required={userRole === 'shop_owner'}
+                      {...register('shopAddress')}
+                      isInvalid={!!errors.shopAddress}
                       />
+                    <Form.Control.Feedback type="invalid">{errors.shopAddress?.message}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formPhone">
@@ -250,10 +220,10 @@ const Register = () => {
                       <Form.Control 
                         type="tel" 
                         placeholder="Enter your phone number" 
-                        value={phone} 
-                        onChange={handlePhoneChange} 
-                        required={userRole === 'shop_owner'}
+                      {...register('phone')}
+                      isInvalid={!!errors.phone}
                       />
+                    <Form.Control.Feedback type="invalid">{errors.phone?.message}</Form.Control.Feedback>
                     </Form.Group>
                   </>
                 )}
@@ -262,14 +232,14 @@ const Register = () => {
                   <Form.Check
                     type="checkbox"
                     label="I agree to the terms and policy"
-                    checked={isChecked}
-                    onChange={handleCheckboxChange}
-                    required
+                    {...register('terms')}
+                    isInvalid={!!errors.terms}
                   />
+                  {errors.terms && <div className="text-danger small mt-1">{errors.terms.message}</div>}
                 </Form.Group>
 
                 <div className="d-grid">
-                  <Button variant="primary" type="submit" size="lg" disabled={!isChecked}>
+                  <Button variant="primary" type="submit" size="lg" disabled={isSubmitting}>
                     Register as {userRole === 'user' ? 'Buyer' : 'Shop Owner'}
                   </Button>
                 </div>

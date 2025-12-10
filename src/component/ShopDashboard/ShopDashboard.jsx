@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Badge, Modal, Form, Table, Tabs, Tab, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge, Modal, Form, Table, Tabs, Tab, ListGroup, Alert } from 'react-bootstrap';
 import { AuthContext } from '../Provider/Provider';
 import PageTitle from '../PageTitle/PageTitle';
 import toyAPI from '../../api/toyAPI';
@@ -9,6 +9,20 @@ import { toast } from 'react-hot-toast';
 import { getImageUrl } from '../../config/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import './ShopDashboard.css';
+import {
+    ResponsiveContainer,
+    LineChart,
+    Line,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Tooltip,
+    PieChart,
+    Pie,
+    Cell,
+    Legend
+} from 'recharts';
+import { requestPushPermission } from '../../utils/pushNotifications';
 
 const ShopDashboard = () => {
     const { user, userRole } = useContext(AuthContext);
@@ -21,11 +35,14 @@ const ShopDashboard = () => {
     const [showDiscountModal, setShowDiscountModal] = useState(false);
     const [selectedExchange, setSelectedExchange] = useState(null);
     const [discounts, setDiscounts] = useState({});
+    const [salesTrend, setSalesTrend] = useState([]);
+    const [pushEnabled, setPushEnabled] = useState(Notification?.permission === 'granted');
 
     useEffect(() => {
         if (user?.email) {
             fetchDashboardData();
             fetchExchangeRequests();
+            fetchSalesTrend();
         }
     }, [user]);
 
@@ -43,6 +60,15 @@ const ShopDashboard = () => {
             toast.error('Failed to load dashboard data');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchSalesTrend = async () => {
+        try {
+            const trend = await analyticsAPI.getSalesTrend(user.email, 30);
+            setSalesTrend(Array.isArray(trend) ? trend : []);
+        } catch (error) {
+            console.error('Error fetching sales trend:', error);
         }
     };
 
@@ -87,6 +113,16 @@ const ShopDashboard = () => {
         }
     };
 
+    const handleEnablePush = async () => {
+        const granted = await requestPushPermission();
+        setPushEnabled(granted);
+        if (granted) {
+            toast.success('Push notifications enabled');
+        } else {
+            toast.error('Push permission denied');
+        }
+    };
+
     if (!user || userRole !== 'shop_owner') {
         return (
             <Container className="my-5">
@@ -115,6 +151,18 @@ const ShopDashboard = () => {
         r.status === 'pending_shop_owner' || r.status === 'price_set'
     ).length;
 
+    const trendData = salesTrend.map(item => ({
+        date: item.date || item.day || item.label || '',
+        revenue: item.revenue ?? item.totalRevenue ?? 0,
+        orders: item.orders ?? item.salesCount ?? item.count ?? 0,
+    }));
+
+    const inventoryData = [
+        { name: 'Available', value: analytics?.availableToys || 0, color: '#0d6efd' },
+        { name: 'Sold', value: analytics?.soldToys || 0, color: '#20c997' },
+        { name: 'Other', value: Math.max((analytics?.totalToysListed || 0) - (analytics?.availableToys || 0) - (analytics?.soldToys || 0), 0), color: '#ffc107' },
+    ].filter(d => d.value > 0);
+
     return (
         <Container fluid className="my-4">
             <PageTitle title="Shop Dashboard" />
@@ -132,6 +180,19 @@ const ShopDashboard = () => {
                                 <Button variant="primary" onClick={() => navigate('/list-shop-toy')}>
                                     <i className="fas fa-plus me-2"></i>Add New Product
                                 </Button>
+                            </div>
+                            <div className="mt-3">
+                                {!pushEnabled && (
+                                    <Alert variant="light" className="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>Enable push notifications</strong>
+                                            <div className="text-muted">Get order, exchange, and price alerts instantly (no emails).</div>
+                                        </div>
+                                        <Button variant="outline-primary" size="sm" onClick={handleEnablePush}>
+                                            Enable Push
+                                        </Button>
+                                    </Alert>
+                                )}
                             </div>
                         </Card.Body>
                     </Card>
@@ -205,6 +266,65 @@ const ShopDashboard = () => {
                                 </div>
                             </div>
                             <small className="text-muted">{analytics?.totalReviews || 0} reviews</small>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+
+            {/* Charts */}
+            <Row className="mb-4 g-3">
+                <Col lg={8} md={12}>
+                    <Card className="border-0 shadow-sm h-100">
+                        <Card.Body>
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h5 className="mb-0">Revenue & Orders (30d)</h5>
+                                <small className="text-muted">Line chart</small>
+                            </div>
+                            {trendData.length === 0 ? (
+                                <div className="text-muted text-center py-4">No trend data yet</div>
+                            ) : (
+                                <div style={{ width: '100%', height: 300 }}>
+                                    <ResponsiveContainer>
+                                        <LineChart data={trendData}>
+                                            <CartesianGrid strokeDasharray="3 3" />
+                                            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                                            <YAxis yAxisId="left" tick={{ fontSize: 12 }} />
+                                            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
+                                            <Tooltip />
+                                            <Legend />
+                                            <Line yAxisId="left" type="monotone" dataKey="revenue" stroke="#0d6efd" strokeWidth={2} dot={false} name="Revenue" />
+                                            <Line yAxisId="right" type="monotone" dataKey="orders" stroke="#20c997" strokeWidth={2} dot={false} name="Orders" />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            )}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col lg={4} md={12}>
+                    <Card className="border-0 shadow-sm h-100">
+                        <Card.Body>
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h5 className="mb-0">Inventory Mix</h5>
+                                <small className="text-muted">Pie chart</small>
+                            </div>
+                            {inventoryData.length === 0 ? (
+                                <div className="text-muted text-center py-4">No inventory data</div>
+                            ) : (
+                                <div style={{ width: '100%', height: 260 }}>
+                                    <ResponsiveContainer>
+                                        <PieChart>
+                                            <Pie data={inventoryData} dataKey="value" nameKey="name" outerRadius={90} label>
+                                                {inventoryData.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip />
+                                            <Legend />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

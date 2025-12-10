@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import shopAPI from '../../api/shopAPI';
@@ -7,7 +7,7 @@ import { getImageUrl } from '../../config/apiConfig';
 import PageTitle from '../PageTitle/PageTitle';
 import './ShopList.css';
 
-const ShopList = () => {
+const ShopList = memo(() => {
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -29,9 +29,9 @@ const ShopList = () => {
         }
     };
 
-    const handleShopClick = (shopOwnerEmail) => {
+    const handleShopClick = useCallback((shopOwnerEmail) => {
         navigate(`/shops/${shopOwnerEmail}`);
-    };
+    }, [navigate]);
 
     if (loading) {
         return (
@@ -81,6 +81,7 @@ const ShopList = () => {
                                     <Card.Img 
                                         variant="top" 
                                         src={getImageUrl(shop.shopImage)} 
+                                        loading="lazy"
                                         style={{ height: '200px', objectFit: 'cover' }}
                                     />
                                 )}
@@ -113,7 +114,9 @@ const ShopList = () => {
             )}
         </Container>
     );
-};
+});
+
+ShopList.displayName = 'ShopList';
 
 export default ShopList;
 

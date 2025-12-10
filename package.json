@@ -16,13 +16,18 @@
     "aos": "^2.3.4",
     "axios": "^1.13.2",
     "bootstrap": "^5.2.3",
+    "@tanstack/react-query": "^4.36.1",
     "dotenv": "^16.0.3",
     "firebase": "^9.22.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
+    "react-hook-form": "^7.52.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
+    "react-window": "^1.8.10",
+    "@hookform/resolvers": "^3.3.4",
+    "zod": "^3.22.4",
     "react-google-button": "^0.7.2",
     "react-hot-toast": "^2.4.1",
     "react-parallax": "^3.5.1",
@@ -31,7 +36,8 @@
     "react-tabs": "^6.0.1",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.8.1",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "recharts": "^2.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

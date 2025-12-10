@@ -9,13 +9,18 @@ const toyService = {
     /**
      * Get all available toys
      * @param {Object} filters - Filter options (search, category, minPrice, maxPrice, minCoins, maxCoins, sortBy)
+     * @param {Object} options - Request options (signal for cancellation)
      * @returns {Promise} Array of toys
      */
-    getAllToys: async (filters = {}) => {
+    getAllToys: async (filters = {}, options = {}) => {
         try {
-            const toys = await toyAPI.getAllToys(filters);
+            const toys = await toyAPI.getAllToys(filters, options);
             return toys;
         } catch (error) {
+            // Don't throw if request was aborted
+            if (error.name === 'AbortError' || error.name === 'CanceledError') {
+                throw error;
+            }
             console.error('Error fetching toys:', error);
             throw new Error('Failed to fetch toys. Please try again.');
         }

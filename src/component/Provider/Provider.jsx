@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useMemo, useCallback } from 'react';
 import toyService from '../../services/toyService';
 import userAPI from '../../api/userAPI';
 
@@ -8,38 +8,60 @@ export const AuthContext = createContext();
 const Provider = ({ children }) => {
     // ---------- State ----------
     const [data, setData] = useState([]);
-    const [regulerCar, setRegulerCar] = useState([]);
-    const [trucks, setTrucks] = useState([]);
-    const [sportsCar, setSportsCar] = useState([]);
     const [user, setUser] = useState({});
     const [location, setLocation] = useState('');
     const [myToy, setMyToy] = useState([]);
     const [spinner, setSpinner] = useState(false);
     const [photoUrl, setPhotoUrl] = useState('');
-    const [latestToy, setLatestToy] = useState(null);
-    const [featuredProducts, setFeaturedProducts] = useState(null);
-    const [bestSellerProducts, setBestSellerProducts] = useState(null);
     const [userCredits, setUserCredits] = useState(0);
     const [userRole, setUserRole] = useState(null);
 
-    // ---------- Data Processing ----------
-    // Latest 10 toys
-    useEffect(() => {
-        const latest = data.slice(0, 10);
-        setLatestToy(latest);
+    // ---------- Optimized Derived States with useMemo ----------
+    // Latest 10 toys - computed only when data changes
+    const latestToy = useMemo(() => {
+        return data.slice(0, 10);
     }, [data]);
 
-    // Featured (first 3) toys
-    useEffect(() => {
-        const featured = data.slice(0, 3);
-        setFeaturedProducts(featured);
+    // Featured (first 3) toys - computed only when data changes
+    const featuredProducts = useMemo(() => {
+        return data.slice(0, 3);
     }, [data]);
 
-    // Best seller (first 5) toys
-    useEffect(() => {
-        const best = data.slice(0, 5);
-        setBestSellerProducts(best);
+    // Best seller (first 5) toys - computed only when data changes
+    const bestSellerProducts = useMemo(() => {
+        return data.slice(0, 5);
     }, [data]);
+
+    // Categorize toys - single useMemo instead of multiple useEffect hooks
+    const categorizedToys = useMemo(() => {
+        if (!data.length) {
+            return {
+                regular: [],
+                trucks: [],
+                sports: []
+            };
+        }
+        
+        const regular = data.filter(e => e.sub_category === 'Regular Car');
+        const trucks = data.filter(e => e.sub_category === 'Truck');
+        const sports = data.filter(e => e.sub_category === 'Sports Car');
+        
+        // Set spinner to true once data is categorized
+        if (!spinner && data.length > 0) {
+            setTimeout(() => setSpinner(true), 0);
+        }
+        
+        return {
+            regular,
+            trucks,
+            sports
+        };
+    }, [data, spinner]);
+
+    // Destructure categorized toys for backward compatibility
+    const regulerCar = categorizedToys.regular;
+    const trucks = categorizedToys.trucks;
+    const sportsCar = categorizedToys.sports;
 
     // ---------- Load Toys ----------
     useEffect(() => {
@@ -53,17 +75,6 @@ const Provider = ({ children }) => {
         };
         fetchToys();
     }, []);
-
-    // ---------- Categorize Cars ----------
-    useEffect(() => {
-        const regular = data.filter(e => e.sub_category === 'Regular Car');
-        setRegulerCar(regular);
-        const truck = data.filter(e => e.sub_category === 'Truck');
-        setTrucks(truck);
-        const sport = data.filter(e => e.sub_category === 'Sports Car');
-        setSportsCar(sport);
-        setSpinner(true);
-    }, [data]);
 
     // ---------- My Toys for Logged User ----------
     useEffect(() => {
@@ -131,38 +142,86 @@ const Provider = ({ children }) => {
         fetchUserData();
     }, [user]);
 
-    // ---------- Logout Handler ----------
-    const handleLogout = () => {
+    // ---------- Optimized Handlers with useCallback ----------
+    // Logout Handler - memoized to prevent unnecessary re-renders
+    const handleLogout = useCallback(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
         setUserCredits(0);
         setUserRole(null);
-    };
+    }, []);
 
-    // ---------- Context Value ----------
-    const info = {
+    // Memoized location setter
+    const handleSetLocation = useCallback((newLocation) => {
+        setLocation(newLocation);
+    }, []);
+
+    // Memoized photo URL setter
+    const handleSetPhotoUrl = useCallback((newPhotoUrl) => {
+        setPhotoUrl(newPhotoUrl);
+    }, []);
+
+    // Memoized user setter
+    const handleSetUser = useCallback((newUser) => {
+        setUser(newUser);
+    }, []);
+
+    // Memoized myToy setter
+    const handleSetMyToy = useCallback((newToys) => {
+        setMyToy(newToys);
+    }, []);
+
+    // Memoized credits setter
+    const handleSetUserCredits = useCallback((credits) => {
+        setUserCredits(credits);
+    }, []);
+
+    // ---------- Memoized Context Value ----------
+    // Prevents unnecessary re-renders of all consumers
+    const info = useMemo(() => ({
         regulerCar,
         sportsCar,
         trucks,
         data,
         location,
-        setLocation,
+        setLocation: handleSetLocation,
         user,
-        setUser,
+        setUser: handleSetUser,
         handleLogout,
-        setMyToy,
+        setMyToy: handleSetMyToy,
         myToy,
         spinner,
-        setPhotoUrl,
+        setPhotoUrl: handleSetPhotoUrl,
         photoUrl,
         latestToy,
         featuredProducts,
         bestSellerProducts,
         userCredits,
-        setUserCredits,
+        setUserCredits: handleSetUserCredits,
         userRole,
-    };
+    }), [
+        regulerCar,
+        sportsCar,
+        trucks,
+        data,
+        location,
+        handleSetLocation,
+        user,
+        handleSetUser,
+        handleLogout,
+        handleSetMyToy,
+        myToy,
+        spinner,
+        handleSetPhotoUrl,
+        photoUrl,
+        latestToy,
+        featuredProducts,
+        bestSellerProducts,
+        userCredits,
+        handleSetUserCredits,
+        userRole,
+    ]);
 
     return (
         <AuthContext.Provider value={info}>

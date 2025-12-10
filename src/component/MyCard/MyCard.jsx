@@ -1,12 +1,12 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { useContext } from 'react';
+import { useContext, memo, useCallback } from 'react';
 import { AuthContext } from '../Provider/Provider';
 import { useNavigate } from 'react-router-dom';
 import { getImageUrl } from '../../config/apiConfig';
 import './MyCard.css'
 
-const MyCard = ({ info }) => {
+const MyCard = memo(({ info }) => {
   const { name, picture, pictureUrl, images, detail_description, detailDescription, _id } = info;
   
   // Get image from various possible field names
@@ -22,23 +22,26 @@ const MyCard = ({ info }) => {
 
 
 
-  const handleNavigate = (id) => {
-
+  // Memoized handler to prevent recreation on every render
+  const handleNavigate = useCallback((id) => {
     if (user) {
       navigation(`/view_details/${id}`)
     }
     else {
       setLocation(`/view_details/${id}`)
       navigation('/login');
-
     }
-
-
-  }
+  }, [user, navigation, setLocation])
 
   return (
     <Card className="h-100" style={{ width: '100%', maxWidth: '100%' }}>
-      <Card.Img className='card_img' variant="top" src={imageUrl} style={{ height: '300px', objectFit: 'cover', width: '100%' }} />
+      <Card.Img 
+        className='card_img' 
+        variant="top" 
+        src={imageUrl} 
+        loading="lazy"
+        style={{ height: '300px', objectFit: 'cover', width: '100%' }} 
+      />
       <Card.Body className='d-flex flex-column justify-content-between card-body align-items-start'>
         <Card.Title>{name}</Card.Title>
         <div className="mb-2">
@@ -64,6 +67,27 @@ const MyCard = ({ info }) => {
       </Card.Body>
     </Card>
   );
-};
+}, (prevProps, nextProps) => {
+  // Custom comparison function to prevent unnecessary re-renders
+  // Only re-render if toy data actually changed
+  const prevInfo = prevProps.info;
+  const nextInfo = nextProps.info;
+  
+  // Compare key fields that affect rendering
+  return (
+    prevInfo._id === nextInfo._id &&
+    prevInfo.name === nextInfo.name &&
+    prevInfo.picture === nextInfo.picture &&
+    prevInfo.pictureUrl === nextInfo.pictureUrl &&
+    prevInfo.price === nextInfo.price &&
+    prevInfo.offerPrice === nextInfo.offerPrice &&
+    prevInfo.status === nextInfo.status &&
+    prevInfo.creditCost === nextInfo.creditCost &&
+    prevInfo.detail_description === nextInfo.detail_description &&
+    prevInfo.detailDescription === nextInfo.detailDescription
+  );
+});
+
+MyCard.displayName = 'MyCard';
 
 export default MyCard;

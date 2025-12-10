@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Button, Container, Row, Col, Image, Badge } from 'react-bootstrap';
+import { Button, Container, Row, Col, Image, Badge, Form, InputGroup } from 'react-bootstrap';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/Provider';
 import { toast } from 'react-hot-toast';
@@ -7,6 +7,7 @@ import { getImageUrl } from '../../config/apiConfig';
 import Reviews from '../Reviews/Reviews';
 import StripePayment from '../StripePayment/StripePayment';
 import ExchangeModal from '../ExchangeModal/ExchangeModal';
+import { priceAlertAPI } from '../../api/priceAlertAPI';
 
 const ViewDetails = () => {
   const carData = useLoaderData();
@@ -15,6 +16,8 @@ const ViewDetails = () => {
   const [loading, setLoading] = useState(false);
   const [showStripeModal, setShowStripeModal] = useState(false);
   const [showExchangeModal, setShowExchangeModal] = useState(false);
+  const [alertSaving, setAlertSaving] = useState(false);
+  const [targetPrice, setTargetPrice] = useState(carData.offerPrice || carData.price || '');
 
   const handleGoBack = () => {
     navigate(-1);
@@ -50,6 +53,47 @@ const ViewDetails = () => {
     }
 
     setShowStripeModal(true);
+  };
+
+  const ensureLoggedIn = () => {
+    if (!user) {
+      navigate('/login');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSavePriceAlert = async () => {
+    if (!ensureLoggedIn()) return;
+    if (!targetPrice || Number(targetPrice) <= 0) {
+      toast.error('Enter a target price greater than 0');
+      return;
+    }
+    setAlertSaving(true);
+    try {
+      await priceAlertAPI.createAlert(user.email, _id, Number(targetPrice));
+      toast.success('Price alert saved');
+    } catch (error) {
+      console.error('Price alert error:', error);
+      toast.error('Could not save price alert');
+    } finally {
+      setAlertSaving(false);
+    }
+  };
+
+  const handleBackInStockAlert = async () => {
+    if (!ensureLoggedIn()) return;
+    setAlertSaving(true);
+    try {
+      const fallbackPrice = displayPrice || moneyPrice || 0;
+      await priceAlertAPI.createAlert(user.email, _id, fallbackPrice);
+      toast.success('We will notify you when this toy is back in stock');
+    } catch (error) {
+      console.error('Back-in-stock alert error:', error);
+      toast.error('Could not save back-in-stock alert');
+    } finally {
+      setAlertSaving(false);
+    }
   };
 
 
@@ -107,6 +151,45 @@ const ViewDetails = () => {
                 <Badge bg="warning" text="dark">Exchangeable with Old Toys</Badge>
               </div>
             )}
+          </div>
+
+          <div className="p-3 bg-light rounded mb-3">
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <h5 className="mb-0">Alerts</h5>
+              {!user && <Badge bg="secondary">Login to enable</Badge>}
+            </div>
+            <Form>
+              <Form.Label className="fw-semibold">Target price alert</Form.Label>
+              <InputGroup className="mb-3">
+                <InputGroup.Text>৳</InputGroup.Text>
+                <Form.Control
+                  type="number"
+                  min="1"
+                  value={targetPrice}
+                  onChange={(e) => setTargetPrice(e.target.value)}
+                  disabled={!user || alertSaving}
+                />
+                <Button
+                  variant="primary"
+                  onClick={handleSavePriceAlert}
+                  disabled={!user || alertSaving}
+                >
+                  {alertSaving ? 'Saving...' : 'Save alert'}
+                </Button>
+              </InputGroup>
+              {!isAvailable && (
+                <Button
+                  variant="outline-dark"
+                  onClick={handleBackInStockAlert}
+                  disabled={!user || alertSaving}
+                >
+                  {alertSaving ? 'Saving...' : 'Notify me when back in stock'}
+                </Button>
+              )}
+              <Form.Text className="text-muted d-block mt-2">
+                We&apos;ll notify you via your account email {user?.email ? `(${user.email})` : ''}.
+              </Form.Text>
+            </Form>
           </div>
 
           {!isAvailable && (

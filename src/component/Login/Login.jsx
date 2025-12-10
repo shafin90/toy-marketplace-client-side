@@ -1,10 +1,13 @@
-import  { useContext, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card, Badge } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/Provider';
 import authAPI from '../../api/authAPI';
 import userAPI from '../../api/userAPI';
 import { toast } from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const Login = () => {
     // Context API======================
@@ -12,11 +15,20 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [selectedRole, setSelectedRole] = useState(''); // For display purposes
     const [userData, setUserData] = useState(null);
 
+    const schema = z.object({
+        email: z.string().email('Enter a valid email'),
+        password: z.string().min(6, 'Password must be at least 6 characters')
+    });
+
+    const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
+        resolver: zodResolver(schema),
+        defaultValues: { email: '', password: '' }
+    });
+
+    const watchedEmail = watch('email');
 
     const fetchUserRole = async (userEmail) => {
         try {
@@ -32,46 +44,32 @@ const Login = () => {
         return 'user';
     };
 
-
-    const handleEmailChange = async (e) => {
-        const emailValue = e.target.value;
-        setEmail(emailValue);
-        
-        // Fetch user role when email is entered (optional - for preview)
-        if (emailValue && emailValue.includes('@')) {
-            try {
-                const data = await userAPI.getUserByEmail(emailValue);
-                if (data) {
-                    setUserData(data);
-                    setSelectedRole(data.role || 'user');
-                } else {
+    useEffect(() => {
+        const checkRole = async () => {
+            if (watchedEmail && watchedEmail.includes('@')) {
+                try {
+                    const data = await userAPI.getUserByEmail(watchedEmail);
+                    if (data) {
+                        setUserData(data);
+                        setSelectedRole(data.role || 'user');
+                    } else {
+                        setUserData(null);
+                        setSelectedRole('');
+                    }
+                } catch (error) {
                     setUserData(null);
                     setSelectedRole('');
                 }
-            } catch (error) {
-                // User doesn't exist yet, that's okay
+            } else {
                 setUserData(null);
                 setSelectedRole('');
             }
-        } else {
-            setUserData(null);
-            setSelectedRole('');
-        }
-    };
+        };
+        checkRole();
+    }, [watchedEmail]);
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-
-
-    const handleEmailLogin = async (e) => {
-        e.preventDefault();
-        
-        if (!email || !password) {
-            toast.error('Please enter both email and password');
-            return;
-        }
+    const handleEmailLogin = async (formValues) => {
+        const { email, password } = formValues;
         
         try {
             const result = await authAPI.login(email, password);
@@ -160,10 +158,12 @@ const Login = () => {
                                     <Form.Control 
                                         type="email" 
                                         placeholder="Enter your email" 
-                                        value={email} 
-                                        onChange={handleEmailChange} 
-                                        required
+                                        {...register('email')}
+                                        isInvalid={!!errors.email}
                                     />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.email?.message}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formPassword">
@@ -171,10 +171,12 @@ const Login = () => {
                                     <Form.Control 
                                         type="password" 
                                         placeholder="Enter your password" 
-                                        value={password} 
-                                        onChange={handlePasswordChange} 
-                                        required
+                                        {...register('password')}
+                                        isInvalid={!!errors.password}
                                     />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.password?.message}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <p className='mt-2 mb-3'>
@@ -182,8 +184,8 @@ const Login = () => {
                                 </p>
 
                                 <div className="d-grid mb-3">
-                                    <Button variant="primary" type="submit" size="lg" onClick={handleEmailLogin}>
-                                        Login
+                                    <Button variant="primary" type="submit" size="lg" onClick={handleSubmit(handleEmailLogin)} disabled={isSubmitting}>
+                                        {isSubmitting ? 'Logging in...' : 'Login'}
                                     </Button>
                                 </div>
 

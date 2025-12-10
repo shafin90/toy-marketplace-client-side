@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 import { AuthContext } from '../Provider/Provider';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, memo, useCallback } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import PageTitle from '../PageTitle/PageTitle';
@@ -9,7 +9,7 @@ import toyService from '../../services/toyService';
 import { getImageUrl } from '../../config/apiConfig';
 import { useNavigate } from 'react-router-dom';
 
-const ToyTable = () => {
+const ToyTable = memo(() => {
   const { myToy, setMyToy, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -174,6 +174,7 @@ const ToyTable = () => {
                   <Card.Img 
                     variant="top" 
                     src={getImageUrl(toy.picture || toy.pictureUrl || (toy.images && toy.images[0]))} 
+                    loading="lazy"
                     style={{ height: '300px', objectFit: 'cover' }} 
                   />
                   <Card.Body className="d-flex flex-column">
@@ -240,6 +241,8 @@ const ToyTable = () => {
       <Toaster />
     </div>
   );
-};
+});
+
+ToyTable.displayName = 'ToyTable';
 
 export default ToyTable;

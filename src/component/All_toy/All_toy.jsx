@@ -1,37 +1,50 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AuthContext } from '../Provider/Provider';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import PageTitle from '../PageTitle/PageTitle';
 import SearchFilter from '../SearchFilter/SearchFilter';
 import toyService from '../../services/toyService';
 import MyCard from '../MyCard/MyCard';
+import CardSkeleton from '../../components/LoadingSkeleton/CardSkeleton';
+import { useQuery } from '@tanstack/react-query';
 
 const AllToy = () => {
   const { user } = useContext(AuthContext);
 
-  const [filteredData, setFilteredData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({});
+  const [visibleCount, setVisibleCount] = useState(20);
   const [categories, setCategories] = useState([]);
+  const loadMoreRef = useRef(null);
+
+  const { data: toys = [], isLoading, isFetching } = useQuery(['toys', filters], () => toyService.getAllToys(filters), {
+    keepPreviousData: true
+  });
 
   useEffect(() => {
-    fetchToys();
-  }, []);
+    const uniqueCategories = [...new Set(toys.map(t => t.sub_category || t.subcategory).filter(Boolean))];
+    setCategories(uniqueCategories);
+  }, [toys]);
 
-  const fetchToys = async (filters = {}) => {
-    try {
-      setLoading(true);
-      const toys = await toyService.getAllToys(filters);
-      setFilteredData(toys);
-      
-      // Extract unique categories
-      const uniqueCategories = [...new Set(toys.map(t => t.sub_category || t.subcategory).filter(Boolean))];
-      setCategories(uniqueCategories);
-    } catch (error) {
-      console.error('Error fetching toys:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    setVisibleCount(20);
+  }, [filters]);
+
+  useEffect(() => {
+    const node = loadMoreRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setVisibleCount((current) => Math.min(current + 20, toys.length));
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [toys.length]);
+
+  const isLoadingState = isLoading && toys.length === 0;
+  const visibleToys = useMemo(() => toys.slice(0, visibleCount), [toys, visibleCount]);
 
   const handleFilterChange = (filters) => {
     // Build query params
@@ -42,7 +55,7 @@ const AllToy = () => {
     if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
     if (filters.sortBy) params.append('sortBy', filters.sortBy);
 
-    fetchToys(Object.fromEntries(params));
+    setFilters(Object.fromEntries(params));
   };
 
   return (
@@ -59,26 +72,34 @@ const AllToy = () => {
 
         {/* Right Side - Cards */}
         <Col lg={9} md={8}>
-          {loading ? (
-            <div className="text-center my-5">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          ) : filteredData.length === 0 ? (
+          {isLoadingState ? (
+            <Row>
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <Col lg={6} md={6} sm={12} xs={12} key={idx} className="mb-4">
+                  <CardSkeleton />
+                </Col>
+              ))}
+            </Row>
+          ) : toys.length === 0 ? (
             <div className="text-center my-5">
               <h4>No toys found</h4>
               <p className="text-muted">Try adjusting your search filters.</p>
             </div>
           ) : (
             <Row>
-              {filteredData.map((toy) => (
+              {visibleToys.map((toy) => (
                 <Col lg={6} md={6} sm={12} xs={12} key={toy._id} className="mb-4">
                   <div style={{ maxWidth: '100%' }}>
                     <MyCard info={toy} />
                   </div>
                 </Col>
               ))}
+              <div ref={loadMoreRef} className="w-100 text-center my-3">
+                {isFetching && <Spinner animation="border" size="sm" />}
+                {visibleToys.length < toys.length && !isFetching && (
+                  <span className="text-muted">Scroll to load more...</span>
+                )}
+              </div>
             </Row>
           )}
         </Col>

@@ -1,17 +1,24 @@
 import apiClient from './apiClient';
+import { dedupeRequest, invalidateCache } from '../utils/requestCache';
 
 /**
  * Data Access Layer - Toy API
  * Handles all HTTP requests related to toys
+ * 
+ * Optimizations:
+ * - Request deduplication for GET requests
+ * - Response caching (30s TTL by default)
+ * - Automatic cache invalidation on mutations
  */
 
 const toyAPI = {
     /**
      * Get all toys
      * @param {Object} filters - Filter options (search, category, minPrice, maxPrice, minCoins, maxCoins, sortBy)
+     * @param {Object} options - Request options (ttl, skipCache, signal for cancellation)
      * @returns {Promise} Array of toys
      */
-    getAllToys: async (filters = {}) => {
+    getAllToys: async (filters = {}, options = {}) => {
         const params = new URLSearchParams();
         Object.keys(filters).forEach(key => {
             if (filters[key] !== '' && filters[key] !== null && filters[key] !== undefined) {
@@ -21,28 +28,70 @@ const toyAPI = {
         
         const queryString = params.toString();
         const url = queryString ? `/toys?${queryString}` : '/toys';
-        const response = await apiClient.get(url);
-        return response.data;
+        
+        return await dedupeRequest(
+            url,
+            async () => {
+                const response = await apiClient.get(url, {
+                    signal: options.signal // Support AbortController
+                });
+                return response.data;
+            },
+            {
+                method: 'GET',
+                params: filters,
+                ttl: options.ttl || 30000, // 30 seconds default
+                skipCache: options.skipCache || false
+            }
+        );
     },
 
     /**
      * Get toy by ID
      * @param {string} id - Toy ID
+     * @param {Object} options - Request options (ttl, skipCache)
      * @returns {Promise} Toy object
      */
-    getToyById: async (id) => {
-        const response = await apiClient.get(`/toys/${id}`);
-        return response.data;
+    getToyById: async (id, options = {}) => {
+        const url = `/toys/${id}`;
+        
+        return await dedupeRequest(
+            url,
+            async () => {
+                const response = await apiClient.get(url);
+                return response.data;
+            },
+            {
+                method: 'GET',
+                params: { id },
+                ttl: options.ttl || 60000, // 60 seconds for individual toys
+                skipCache: options.skipCache || false
+            }
+        );
     },
 
     /**
      * Get toys by seller email
      * @param {string} email - Seller email
+     * @param {Object} options - Request options (ttl, skipCache)
      * @returns {Promise} Array of toys
      */
-    getToysByEmail: async (email) => {
-        const response = await apiClient.get(`/mytoys?email=${email}`);
-        return response.data;
+    getToysByEmail: async (email, options = {}) => {
+        const url = `/mytoys?email=${email}`;
+        
+        return await dedupeRequest(
+            url,
+            async () => {
+                const response = await apiClient.get(url);
+                return response.data;
+            },
+            {
+                method: 'GET',
+                params: { email },
+                ttl: options.ttl || 30000,
+                skipCache: options.skipCache || false
+            }
+        );
     },
 
     /**
@@ -63,6 +112,13 @@ const toyAPI = {
         const response = await apiClient.post('/toys', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
+        
+        // Invalidate cache after adding toy
+        invalidateCache('/toys');
+        if (toyData.sellerEmail) {
+            invalidateCache(`/mytoys?email=${toyData.sellerEmail}`);
+        }
+        
         return response.data;
     },
 
@@ -127,20 +183,41 @@ const toyAPI = {
         const response = await apiClient.put(`/toys/${id}`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
+        
+        // Invalidate cache after updating toy
+        invalidateCache('/toys');
+        invalidateCache(`/toys/${id}`);
+        if (toyData.sellerEmail) {
+            invalidateCache(`/mytoys?email=${toyData.sellerEmail}`);
+        }
+        
         return response.data;
     },
 
     /**
      * Get pending old toys
      * @param {string} shopOwnerEmail - Shop owner email (optional)
+     * @param {Object} options - Request options (ttl, skipCache)
      * @returns {Promise} Array of pending old toys
      */
-    getPendingOldToys: async (shopOwnerEmail) => {
+    getPendingOldToys: async (shopOwnerEmail, options = {}) => {
         const url = shopOwnerEmail 
             ? `/toys/pending?shopOwnerEmail=${shopOwnerEmail}`
             : '/toys/pending';
-        const response = await apiClient.get(url);
-        return response.data;
+        
+        return await dedupeRequest(
+            url,
+            async () => {
+                const response = await apiClient.get(url);
+                return response.data;
+            },
+            {
+                method: 'GET',
+                params: { shopOwnerEmail },
+                ttl: options.ttl || 30000,
+                skipCache: options.skipCache || false
+            }
+        );
     },
 
     /**
@@ -180,6 +257,11 @@ const toyAPI = {
      */
     deleteToy: async (id) => {
         const response = await apiClient.delete(`/toys/${id}`);
+        
+        // Invalidate cache after deleting toy
+        invalidateCache('/toys');
+        invalidateCache(`/toys/${id}`);
+        
         return response.data;
     },
 };

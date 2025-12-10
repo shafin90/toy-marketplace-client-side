@@ -258,6 +258,7 @@ const ShopDetails = () => {
                                     <Image 
                                         src={getImageUrl(shop.shopImage || shop.owner?.photoURL)} 
                                         rounded 
+                                        loading="lazy"
                                         style={{ 
                                             width: '200px', 
                                             height: '200px', 
@@ -464,6 +465,7 @@ const ShopDetails = () => {
                                                     <Card.Img 
                                                         variant="top" 
                                                         src={getImageUrl(toy.picture || toy.pictureUrl)} 
+                                                        loading="lazy"
                                                         style={{ height: '200px', objectFit: 'cover' }}
                                                     />
                                                     <Card.Body>
@@ -512,6 +514,7 @@ const ShopDetails = () => {
                                         <Card.Img 
                                             variant="top" 
                                             src={getImageUrl(toy.picture || toy.pictureUrl)} 
+                                            loading="lazy"
                                             style={{ height: '200px', objectFit: 'cover' }}
                                         />
                                         <Card.Body>
