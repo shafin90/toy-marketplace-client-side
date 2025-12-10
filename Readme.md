@@ -6,6 +6,21 @@
 
 This is the React/Vite frontend for Toy Swap Circle, a toy marketplace and swap platform with credit-based exchanges, cash purchases, and shop-owner tooling.
 
+### Purpose
+- Make quality toys affordable and circular by letting families **swap** or buy with minimal cost.
+- Reduce waste and clutter by keeping toys in circulation instead of landfills.
+- Empower shop owners to sell, manage inventory, and handle exchanges with clear analytics.
+
+### Problem We Solve
+- **High cost & short lifespan:** Kids outgrow toys quickly; quality items are expensive.
+- **Waste & storage:** Unused toys pile up or get trashed.
+- **Discovery & trust:** Families need an easy, trustworthy way to find, trade, or buy age-appropriate toys.
+
+### How Swapping Works
+- Users list old toys to earn credits/discounts.
+- They can apply those credits to get other toys, or combine with cash checkout.
+- Exchanges can include old-toy-for-new flows with shop owners setting discounts.
+
 ## Highlights
 - Modern React (hooks) with React Router.
 - Auth-gated flows (login required for purchase/exchange).
